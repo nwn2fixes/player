@@ -1,0 +1,1 @@
+Fixes in this folder affect the Original Campaign specifically, for instance scripts and dialogs.

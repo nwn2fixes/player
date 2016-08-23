@@ -1,0 +1,1 @@
+Fixes in this folder affect the Mask of the Betrayer campaign specifically, for instance scripts and dialogs.
