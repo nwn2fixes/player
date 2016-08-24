@@ -1,19 +1,22 @@
 Fixes in this folder affect all official content, for instance models, textures, and stock-installation scripts.
 
-[version!]
+MANIFEST
+--------
+
 Plate Mail 01 Fix by Drew Rechner
+[version!]
 http://www.nexusmods.com/neverwinter2/mods/1061/?
 This fixes the matte material appearance for most male characters' Plate Mail 01 appearance and makes it appear much more similar to the female/other races' version.
 [specific files should be listed and conflicts noted]
 
-[version!]
 Skeleton Cloth Armor Tint Fix by rjshae
+[version!]
 http://neverwintervault.org/project/nwn2/images/texture/skeleton-cloth-armor-tint-fix
 The file name was assigned to the tint map slot of the skeleton model but is missing from the final release of the game. As a result, the unpatched skeleton model does not tint properly and it shows the missing tint map error texture on the model. 
 [specific files should be listed and conflicts noted]
 
-[version!]
 OC Doors Fix by crystal violet
+[version!]
 http://neverwintervault.org/project/nwn2/hakpak/original-hakpak/oc-doors-repair-override
 These are replacements for some of the original door models and one normalmap. I've tried to repair some minor texturing errors, odd shading issues and logical errors (doors that have a window on one side but not on the other).
 [specific files should be listed and conflicts noted]

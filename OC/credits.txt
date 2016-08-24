@@ -1,1 +1,13 @@
 Fixes in this folder affect the Original Campaign specifically, for instance scripts and dialogs.
+
+MANIFEST
+--------
+
+Tholopsyx fix by kevL
+v160822
+Fixes a typo.
+files:
+- 3000_Neverwinter_A3
+ai_reddragon_spawnscript.nss
+ai_reddragon_spawnscript.ncs
+
