@@ -21,3 +21,11 @@ http://neverwintervault.org/project/nwn2/hakpak/original-hakpak/oc-doors-repair-
 These are replacements for some of the original door models and one normalmap. I've tried to repair some minor texturing errors, odd shading issues and logical errors (doors that have a window on one side but not on the other).
 [specific files should be listed and conflicts noted]
 
+'gc_alignment' fix by kevL's
+v.160824
+Fixes "nCheck" to "nAlignCheck".
+files:
+- scripts
+gc_alignment.nss
+gc_alignment.ncs
+
