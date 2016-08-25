@@ -29,3 +29,10 @@ files:
 gc_alignment.nss
 gc_alignment.ncs
 
+Tiefling Feat fix by Pain of Dungeon Eternal
+v.160824
+Switches Feat.2da rows #1088 and #1089 (tiefling darkness and resistance) to conform to nwscript.nss constants.
+files:
+- 2da
+feat.2da
+
