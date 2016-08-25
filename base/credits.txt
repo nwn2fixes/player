@@ -36,3 +36,10 @@ files:
 - 2da
 feat.2da
 
+Weapon Proficiency Feat fix by kevL's
+v.160825
+Switches Iprp_feats.2da rows #22 and #23 (weapon prof. martial and simple) to conform to nwscript.nss constants.
+files
+- 2da
+iprp_feats.2da
+
