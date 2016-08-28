@@ -11,3 +11,6 @@ files:
 ai_reddragon_spawnscript.nss
 ai_reddragon_spawnscript.ncs
 
+Nasher Set Fix by Kaldor Silverwand
+https://neverwintervault.org/project/nwn2/script/nwn2-oc-nasher-set-fix
+Makes the Nasher item set available, it was not available ingame (and the unique ring appeared in two places). Adds cloak and gloves to OC and gives a set bonus.
