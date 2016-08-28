@@ -43,3 +43,6 @@ files
 - 2da
 iprp_feats.2da
 
+Blueprint Fixes by Kaldor Silverwand
+https://drive.google.com/drive/folders/0B0yWOHhOwN6WMnJWb3M4aXVwdlE
+Fixes various blueprints that are broken in the stock game.
