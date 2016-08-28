@@ -1,10 +1,11 @@
 Fixes in this folder affect the Mask of the Betrayer campaign specifically, for instance scripts and dialogs.
 
+
+MANIFEST
+--------
+
 Enhanced Dream Weapon by Kaldor Silverwand
 https://neverwintervault.org/project/nwn2/prefab/placeable/enhanced-dream-weapon
 The longsword version is corrected, so that it no longer prevents future shape changes.The ability of the weapon to change is dependent on the feats of the wielder, rather than the main PC. The weapon now has a form for each weapon type.
 
-
-MANIFEST
---------
 
