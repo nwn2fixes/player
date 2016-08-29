@@ -7,19 +7,83 @@ Plate Mail 01 Fix by Drew Rechner
 [version!]
 http://www.nexusmods.com/neverwinter2/mods/1061/?
 This fixes the matte material appearance for most male characters' Plate Mail 01 appearance and makes it appear much more similar to the female/other races' version.
-[specific files should be listed and conflicts noted]
+files:
+- models
+P_EEM_PF_Body01.MDB
+P_GGM_PF_Body01.MDB
+P_HHM_PF_Body01.MDB
+- textures
+P_HHM_PF_Body01.dds
+P_HHM_PF_Body01_n.dds
+P_HHM_PF_Body01_T.dds
+
 
 Skeleton Cloth Armor Tint Fix by rjshae
 [version!]
 http://neverwintervault.org/project/nwn2/images/texture/skeleton-cloth-armor-tint-fix
 The file name was assigned to the tint map slot of the skeleton model but is missing from the final release of the game. As a result, the unpatched skeleton model does not tint properly and it shows the missing tint map error texture on the model. 
-[specific files should be listed and conflicts noted]
+files:
+- textures
+C_Skel_CL_Body02_t.dds
+
 
 OC Doors Fix by crystal violet
 [version!]
 http://neverwintervault.org/project/nwn2/hakpak/original-hakpak/oc-doors-repair-override
 These are replacements for some of the original door models and one normalmap. I've tried to repair some minor texturing errors, odd shading issues and logical errors (doors that have a window on one side but not on the other).
-[specific files should be listed and conflicts noted]
+files:
+- models
+PLC_DC_CKDoor_01.MDB
+PLC_DC_CKDoor_02.MDB
+PLC_DC_CKDoor02_01.MDB
+PLC_DC_CKDoor02_02.MDB
+PLC_DC_CWALL1_01.MDB
+PLC_DC_CWALL1_02.MDB
+PLC_DC_CWATCH01_01.MDB
+PLC_DC_CWATCH01_02.MDB
+PLC_DC_MAUS1_01.MDB
+PLC_DC_MAUS1_02.MDB
+PLC_DC_Merch01.MDB
+PLC_DC_Slum01.MDB
+PLC_DC_StateB01.MDB
+PLC_DC_StateB01_01.MDB
+PLC_DC_StateB01_02.MDB
+PLC_DC_WAREH01_01.MDB
+PLC_DC_WAREH01_02.MDB
+PLC_DP_IFENCE1.MDB
+PLC_DP_IFENCE1_01.MDB
+PLC_DP_IFENCE1_02.MDB
+PLC_DP_JAIL1.MDB
+PLC_DR_MINEENT02_01.MDB
+PLC_DR_MINEENT02_02.MDB
+PLC_DT_CVSECRET1_01.MDB
+PLC_DT_IRONGAT01.MDB
+PLC_DT_IRONGAT01_01.MDB
+PLC_DT_IRONGAT01_02.MDB
+PLC_DT_IRONGAT02.MDB
+PLC_DT_IRONGAT02_01.MDB
+PLC_DT_IRONGAT02_02.MDB
+PLC_DT_METATROOM_01.MDB
+PLC_DT_SCGate1.MDB
+PLC_DT_SCGate2.MDB
+PLC_DT_SFDOOR1.mdb
+PLC_DT_SFDOOR1_01.MDB
+PLC_DT_SFDOOR1_02.MDB
+PLC_DT_SFDOOR1_03.MDB
+PLC_DT_SFDOOR1_04.MDB
+PLC_DT_SFDoor2.MDB
+PLC_DT_SFDoor2_01.MDB
+PLC_DT_SFDoor2_02.MDB
+PLC_DT_SFDoor2_03.MDB
+PLC_DT_SFDoor2_04.MDB
+PLC_DT_SISECRET2_01.MDB
+PLC_DT_StdCav01.MDB
+PLC_DT_STDCAV02.MDB
+PLC_DT_STDCAV02_01.MDB
+PLC_DT_STDCAV02_02.MDB
+- textures
+PLC_DC_TempleE01_N.dds
+
 
 'gc_alignment' fix by kevL's
 v.160824
@@ -27,14 +91,15 @@ Fixes "nCheck" to "nAlignCheck".
 files:
 - scripts
 gc_alignment.nss
-gc_alignment.ncs
+
 
 Tiefling Feat fix by Pain of Dungeon Eternal
-v.160824
+v.160824 (implemented by kevL's)
 Switches Feat.2da rows #1088 and #1089 (tiefling darkness and resistance) to conform to nwscript.nss constants.
 files:
 - 2da
 feat.2da
+
 
 Weapon Proficiency Feat fix by kevL's
 v.160825
@@ -43,6 +108,30 @@ files
 - 2da
 iprp_feats.2da
 
+
 Blueprint Fixes by Kaldor Silverwand
+[version!]
 https://drive.google.com/drive/folders/0B0yWOHhOwN6WMnJWb3M4aXVwdlE
 Fixes various blueprints that are broken in the stock game.
+files:
+- blueprints
+n2_itset_mnk2.UTI
+n2_itset_rog1.UTI
+nw_arhe003.UTI
+nw_it_mbelt006.UTI
+nw_it_mbelt009.UTI
+nw_it_mbelt010.UTI
+nw_it_mbelt011.UTI
+nw_it_mbelt012.UTI
+nw_it_mbelt013.UTI
+nw_it_mbelt014.UTI
+nw_mcloth005.UTI
+nw_mcloth011.UTI
+nx1_ring06.UTI
+x2_helm_001.UTI
+x2_it_arhelm01.UTI
+x2_it_arhelm03.UTI
+x2_it_drowcl001.UTI
+x2_it_mring017.UTI
+
+

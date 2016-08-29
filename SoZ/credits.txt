@@ -13,10 +13,12 @@ wp_2_to_14.ncs
 wp_3_to_7.nss [created]
 wp_3_to_7.ncs [created]
 
+
 Prototype declaration fix by Pain of Dungeon Eternal
 v.160824 (implemented by kevL's)
 Change return of ProcessCompanyIncome() from int to void.
 files:
 - Campaign
 kinc_trade_system.nss
+
 
