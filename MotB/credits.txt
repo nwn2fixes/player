@@ -52,3 +52,14 @@ nx1_dream_spear.UTI			[created]
 nx1_dream_warhammer.UTI		[created]
 
 
+Golem Fighting Bugfix by Vandervecken
+v.160820
+http://neverwintervault.org/project/nwn2/prefab/item/golem-fighting-bugfix-red-wizard-academy-motb
+At the Academy of Shapers and Binders in Act II of Mask of the Betrayer, you can participate in a Golem fighting ring. You can construct you Golem out of a number of different Golem pieces you have acquired during your travels. Part of the purpose of this minigame is to construct and disassemble your Golem until you hit upon winning combinations against the various combinations your golem faces. Unfortunately, if you install the Galvanized Golem Torso or the Weather-resistant Golem Torso, disassembling your Golem will return you only a generic Golem Torso. Those advanced torso pieces are gone for good. You don't even get their benefits on the golem.
+The cause of this is some mis-set variables on the objects themselves.
+files:
+- Campaign
+nx1_e_golem_torso1.UTI
+nx1_e_golem_torso2.UTI
+
+
