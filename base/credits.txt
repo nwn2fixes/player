@@ -135,3 +135,13 @@ x2_it_drowcl001.UTI
 x2_it_mring017.UTI
 
 
+Script include fixes by kevL's
+v.160903
+These include files had mismatched prototypes/definitions.
+files
+- scripts
+ginc_companion.nss
+x0_i0_anims.nss
+x0_i0_enemy.nss
+x2_inc_switches.nss
+
