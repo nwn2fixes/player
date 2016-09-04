@@ -32,3 +32,11 @@ i_x2_nash_ring_eq.NSS
 i_x2_nash_ring_ue.NSS
 
 
+Logram and Yaisog fix by kevL
+v.160903
+In module 1300_Old_Owl_Well, area 1319_eyegougerl2, Logram can't equip his arms and armor because he doesn't have the necessary proficiences and the items are not identified. Yaisog needs his arms and armor identified before he can equip them. This fix brings both NPCs to combat readiness.
+files:
+- 1300_Old_Owl_Well
+13a_logram_atk.NSS
+
+
