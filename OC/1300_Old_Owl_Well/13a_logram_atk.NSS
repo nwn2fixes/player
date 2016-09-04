@@ -5,7 +5,7 @@
 // JYL 2/11/05
 // JYL 09/13/05 Changed to a switch statement as Logram's scene got more complex.
 // ChazM 6/26/06 - Fixed some Yaisog Tag problems.
-// kevL 160903 - let Logram and Yaisog equip their armor and weapons.
+// kevL 160904 - let Logram and Yaisog equip their armor and weapons.
 
 #include "13_inc_npc"
 #include "ginc_item" // kL
@@ -43,7 +43,7 @@ void main(int nDialogNode)
 			if (GetGlobalInt("13_UrgatEnd") == 1)
 			{
 				location lYaisog = GetLocation(GetWaypointByTag("13_wp_yaisog_sp"));
-				CreateObject(OBJECT_TYPE_CREATURE, "yaisog", lYaisog, FALSE, sYaisogTag);
+				oYaisog = CreateObject(OBJECT_TYPE_CREATURE, "yaisog", lYaisog, FALSE, sYaisogTag);
 
 				// Feat fixes begin - Yaisog
 				IdentifyInventory(oYaisog);
