@@ -154,3 +154,11 @@ files
 nx1_book_of_waves.UTI
 
 
+'ginc_group' fix
+v.160904
+Fix mismatching prototype/definition for GroupSetNoise().
+files:
+- scripts
+ginc_group.NSS
+
+
