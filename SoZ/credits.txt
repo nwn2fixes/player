@@ -22,3 +22,11 @@ files:
 kinc_trade_system.nss
 
 
+Final Battle door lock fix by kevL's
+v.160904
+The script locks the door but doesn't make sure it's shut first. This shuts the door and locks it.
+files:
+- O_X2
+o08_a_battle.NSS
+
+
