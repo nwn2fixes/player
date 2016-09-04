@@ -145,3 +145,12 @@ x0_i0_anims.nss
 x0_i0_enemy.nss
 x2_inc_switches.nss
 
+
+Book of Waves fix by kevL's
+v.160903
+The stock .Uti for the Book of Waves says that it must be equipped for its ArcaneSpellFailure bonus to be active. But since the Book is not equippable, this fix allows it to work as an inventory item. w/ Thanks to Heppad.
+files
+- blueprints
+nx1_book_of_waves.UTI
+
+
