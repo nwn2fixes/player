@@ -40,3 +40,12 @@ files:
 13a_logram_atk.NSS
 
 
+Temple of Seasons fix by kevL
+v.160906
+The final dialog can be borked if an uncontrolled companion crosses its trigger. This fix changes the OnEnter script of the trigger, and ensures that the player's Owned PC becomes the object of the conversation.
+files:
+- 2400_Illefarn_Ruins
+2430_area_ce.NSS
+2430_fix_statue.nss [created]
+
+
