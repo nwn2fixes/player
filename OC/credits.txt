@@ -41,8 +41,8 @@ files:
 
 
 Temple of Seasons fix by kevL
-v.160906
-The final dialog can be borked if an uncontrolled companion crosses its trigger. This fix changes the OnEnter script of the trigger, and ensures that the player's Owned PC becomes the object of the conversation.
+v.160907
+The final dialog can be borked if an uncontrolled companion crosses its trigger. This fix changes the OnEnter script of the trigger, and ensures that only a controlled character can start the Purification Ritual. A second change is for the door to the final statue room, raising its DC from 18 to 99 so it's no longer an egregious exploit.
 files:
 - 2400_Illefarn_Ruins
 2430_area_ce.NSS

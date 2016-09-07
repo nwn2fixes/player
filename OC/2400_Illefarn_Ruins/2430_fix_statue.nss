@@ -1,6 +1,6 @@
 // '2430_fix_statue'
 //
-// kevL's 160906 - based on 'gtr_speak_node'
+// kevL's 160907 - based on 'gtr_speak_node'
 // - prevents the associated plot-critical dialog from starting unless
 //   entered by a player-controlled character. Also shunts this player
 //   to his/her Owned PC.
@@ -10,9 +10,7 @@
 void main()
 {
 	object oPC = GetEnteringObject();
-	if (GetIsPC(oPC)
-		&& GetIsObjectValid(SetOwnersControlledCompanion(oPC))
-		&& StandardSpeakTriggerConditions(oPC))
+	if (GetIsPC(oPC) && StandardSpeakTriggerConditions(oPC))
 	{
 		DoSpeakTrigger(oPC);
 	}
