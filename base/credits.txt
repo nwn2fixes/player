@@ -154,11 +154,29 @@ files
 nx1_book_of_waves.UTI
 
 
-'ginc_group' fix
+'ginc_group' fix by kevL's
 v.160904
 Fix mismatching prototype/definition for GroupSetNoise().
 files:
 - scripts
 ginc_group.NSS
+
+
+Imbue Item Indexing Bug Fix by Lord Grave
+v.150122
+https://neverwintervault.org/project/nwn2/script/imbue-item-indexing-bug-fix
+This is most commonly known as "Power Essence Bug" when using Warlock's Imbue Item feat to add basic enchantments to weapons and armor with Power Essences in MotB crafting system. Although you put correct item and correct essences in the satchel, when you use Imbue Item on it you get a message saying that it is not a valid recipe.
+NWN2 has a recipe index used to make searching for valid recipes faster and it is located in crafting_index.2da file. Function GetRowIndexes() is used to fetch a short list of valid recipes for the spell the player cast on the crafting container. MotB developers used this function to fool the containers into thinking that Imbue Item feat is the correct spell. Basically, their piece of code for Imbue Item feat fetches all recipes that require spells by checking if category column contains a numerical string with StringToInt() function, which will return 0 if you try to convert a non-numerical string into an integer. However, they forgot that this function will also return 0 for a '0' string, and there is a group of recipes, starting at ID 40, that requires the spell ID 0 (Acid Fog). The function will simply return a list of recipes starting form the beginning and ending just before the recipes that require Acid Fog spell, leaving slightly more than half of the list unusable for a Warlock. Instead of rewriting their code, I just altered it slightly so that it skips row 40 from the index file when checking whether StringToInt of the category row returns 0.
+NOTE: These scripts were implemented/compiled by kevL: I added a few scripts that can be traced back to the changed function, although this might not be strictly required.
+NOTE: Lord Grave also fixed a mismatched prototype/definition for GetIsItemPropertyAnUpgrade() in 'ginc_crafting'.
+files:
+- base/scripts
+ginc_crafting.NSS
+gp_forgemagic_ca.NSS
+gr_domagiccrafting.NSS
+i_mortar_ac.NSS [kL]
+i_nx1_container01_ci.NSS
+i_smithhammer_ac.NSS [kL]
+nx_s2_shapers_alembic.NSS [kL]
 
 
