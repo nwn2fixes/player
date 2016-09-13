@@ -222,7 +222,7 @@ void ExplodeBarrel(object oBarrel)
 		//Don't damage neutral guys
 		if(GetFactionEqual(oVictim, oPC) || GetIsEnemy(oPC, oVictim))
 		{
-			ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(8)),oVictim);
+			ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(8)),oVictim); // kamal
 		}
 		oVictim = GetNextObjectInShape(SHAPE_SPHERE,RADIUS_SIZE_HUGE,lBarrel);
 	}

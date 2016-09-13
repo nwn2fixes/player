@@ -70,3 +70,11 @@ files:
 26_cs_geyser.DLG
 
 
+Blast Globe fix addition by kevL
+v.160912
+Recompiled '20p_blastglobe_da' to use the fixed '20_inc_cyran' ExplodeBarrel() function. Also added some documentation to '20_inc_cyran' and '20_blast_globe_barrel'.
+files:
+- 2000_Neverwinter
+20p_blastglobe_da.NSS
+
+

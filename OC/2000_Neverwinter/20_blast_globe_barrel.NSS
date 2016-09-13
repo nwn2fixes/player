@@ -26,9 +26,8 @@ void main(int nEvent)
 		break;
 	case 2:	//player gets barrel into inventory
 		CreateItemOnObject("20_it_blastglobe_barrel",oPC);
-		SetLocalInt(GetModule(),"collected_blastbarrels",1); 
+		SetLocalInt(GetModule(),"collected_blastbarrels",1); // kamal
 		DestroyObject(oBarrel);
-		
 		break;
 	}
 		
