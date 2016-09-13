@@ -49,3 +49,24 @@ files:
 2430_fix_statue.nss [created]
 
 
+Blast Globe Barrel fix by kamal
+v.160910
+Fixes the setting of local_int "collected_blastbarrels" and several dialogs relating to the Collector, etc.
+files:
+- 2000_Neverwinter
+20_blast_globe_barrel.DLG
+20_blast_globe_barrel.NSS
+20_collector.DLG
+20_inc_cyran.NSS
+20_servants.DLG
+20_vania.DLG
+
+
+Steam Vents fix by kamal
+v.160910
+Fixes the dialog for steam vents around AJ's Haven.
+files:
+- 2600_AJ_Haven
+26_cs_geyser.DLG
+
+

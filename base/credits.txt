@@ -180,3 +180,19 @@ i_smithhammer_ac.NSS [kL]
 nx_s2_shapers_alembic.NSS [kL]
 
 
+Greatclub description fix by Lance Botelle (implemented by kevL)
+v.160912
+Greatclubs were set to use a description that has 1d6 piercing damage and small weapon size. The actual statistics are 1d10 bludgeoning damage and large weapon size. So the baseitems.2da column "BaseItemStatRef" has been changed to reflect something similar. The new description, however, says the Greatclub needs proficiency with Martial weapons while the actual reference is to either Martial or Rogue, and the Critical threat says 19-20 while the actual reference is 20 (stock values were Martial and Rogue, and 19-20). To achieve maximal conformity, the Dialog.Tlk file would need to be changed also (and that's beyond the purview of this partial fix).
+files:
+- 2da
+baseitems.2da
+
+
+Script include fix (ginc_death) by kevL
+v.160912
+Fixes a mismatched prototype/definition for ShowProperDeathScreen().
+files:
+- scripts
+ginc_death.NSS
+
+
