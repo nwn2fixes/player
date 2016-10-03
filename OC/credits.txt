@@ -78,3 +78,11 @@ files:
 20p_blastglobe_da.NSS
 
 
+Black Garius + nightwalker fix by kevL
+v.161003
+At the defense of Crossroad Keep, when Black Garius is about to summon his nightwalker, he gets distracted and often doesn't complete his dialog successfully due to all the fighting going on in the courtyard. If the nightwalker does not summon, the plot breaks because it needs to be defeated for the plot to continue. This fix temporarily removes several of Black Garius' AI scripts related to combat, so that he does not react to being hit by arrows and so is no longer tempted to retaliate against the greycloaks that surround the barricade. This allows his dialog to complete and the nightwalker to be summoned correctly. His AI then returns to normal and the Battle of Crossroad Keep commences.
+files:
+- 3500_Crossroad_Keep_Siege
+3541a_cut_garius.NSS
+
+
