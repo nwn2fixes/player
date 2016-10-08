@@ -196,3 +196,11 @@ files:
 ginc_death.NSS
 
 
+GUI improvement by kevL
+v.161008
+The area for an intro-message in the default UI's stringinputmessagebox.xml has so little vertical height that only one line is displayed at a time and the up/down scroll-buttons almost completely overlap, making them difficult to use. This improvement adds 50 pixels to the height for the into-message.
+files:
+- ui
+stringinputmessagebox.xml
+
+
