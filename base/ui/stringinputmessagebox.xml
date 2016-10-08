@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8">
+
+<UIScene name="SCREEN_STRINGINPUT_MESSAGEBOX" width=385 height=250 x="ALIGN_RIGHT" y="ALIGN_CENTER" draggable="true" idleexpiretime="60.0f" scriptloadable="true"
+	OnCreate="UIScene_OnCreate_SetupMessageBox(320,195,10,10,10,10)" priority="SCENE_SCRIPT" modal="true"
+	OnAdd=UIScene_OnAdd_SetFocus(inputbox) />
+
+	<!-- Message Listbox -->
+	<UIListBox name="messageboxlb" x=ALIGN_CENTER y=20 width=320 height=78 showpartialchild="true" xPadding=0 yPadding=0
+		hidescrollbarwhennotneeded=true scrollsegmentsize="17" unequalcontrols="true">
+
+		<UIText name="messagetext" fontfamily="Body_Font" style=3 width="PARENT_WIDTH" height="DYNAMIC" color="EEEEEE" sizetofit="true" align="left" />
+
+		<UIScrollBar name="SB" style="STYLE_SB_ULTRA_THIN"></UIScrollBar>
+	</UIListBox>
+
+	<UIPane name="INPUT_CONTAINER" x=ALIGN_CENTER y=100 width=300 height=75 >
+
+		<UIListBox name="INPUTBOX_LISTBOX" x=4 y=4 width=292 height=67 showpartialchild=true
+			unequalcontrols=true scrollsegmentsize=30 hidescrollbarwhennotneeded=false >
+
+			<!-- WAS filter="alphanumeric" and not allowspace="true" -->
+			<UIText name="inputbox" allowspace="true" width=PARENT_WIDTH height=DYNAMIC align=left valign=top 
+				fontfamily="International" multiline="true" returnrestricted="true" editable=true selectable=true maxlength=128
+				OnReturn=UIText_Input_HandleStringInputBoxOK("inputbox") />
+
+			<UIScrollBar name="SB" style="STYLE_SB_ULTRA_THIN"></UIScrollBar>	
+		</UIListBox>	
+
+		<!-- Input Frame-->
+		<UIFrame x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT topleft="tp_frame_tl.tga" topright="tp_frame_tr.tga" bottomleft="tp_frame_bl.tga"
+			bottomright="tp_frame_BR.tga" top="tp_frame_t.tga" bottom="tp_frame_b.tga"
+			left="tp_frame_l.tga" right="tp_frame_r.tga" fillstyle="stretch" fill="tp_frame_bg.tga"
+			border=5 />
+	</UIPane>
+
+	<!-- BUTTON CONTAINER -->
+	<UIPane name="BUTTON_CONTAINER" x=ALIGN_CENTER y=ALIGN_BOTTOM width=258 height=50 >
+		<!-- OK Button -->
+		<UIButton name="okbutton" strref="66" x=0 y=0 style="STYLE_SMALL_BUTTON" OnLeftClick=UIButton_Input_HandleStringInputBoxOK("inputbox") />
+
+		<!-- Cancel Button -->
+		<UIButton name="cancelbutton" strref="67" x=134 y=0 style="STYLE_SMALL_BUTTON" OnLeftClick=UIButton_Input_HandleStringInputBoxCancel() />
+	</UIPane>
+
+	<UIFrame x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT topleft="frame1_tl.tga" topright="frame1_tr.tga" bottomleft="frame1_bl.tga"
+		bottomright="frame1_BR.tga" top="frame1_t.tga" bottom="frame1_b.tga"
+		left="frame1_l.tga" right="frame1_r.tga" border=32 />	
+
+	<UIFrame x=8 y=8 width=369 height=234 fillstyle="tile" fill="frame_main_bg.tga"/>
