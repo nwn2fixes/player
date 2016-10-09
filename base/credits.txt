@@ -204,3 +204,11 @@ files:
 stringinputmessagebox.xml
 
 
+'x2_inc_restsys' fix by kevL's
+v.161009
+Fix mismatching prototype/definition for WMSetAreaTable().
+files:
+- scripts
+x2_inc_restsys.nss
+
+
