@@ -86,3 +86,57 @@ files:
 3541a_cut_garius.NSS
 
 
+dialog fix by kamal
+v.170205
+13_bugbear_dwarf: Chaotic response chaos adjustment fixed when talking to Khelgar after freeing the dwarf prisoner from bugbears (would adjust alignment towards law instead of chaos)
+files:
+- 1300_Old_Owl_Well
+13_bugbear_dwarf.DLG
+
+
+dialog fix by kamal
+v.170205
+previously you didn't gain influence with Khelgar though the conversation said you did
+files:
+- 1300_Old_Owl_Well
+13_deaddwarf.DLG
+
+
+dialog fixes by kamal
+v.170205
+11_georg: Georg will now comment on shandra/casavir/Bishop being your spouse correctly, was previously not possible
+11_daegun: PC response for successful wisdom check now checks wisdom instead of intelligence
+files:
+- 1100_West_Harbor
+11_daeghun.DLG
+11_georg.DLG
+
+
+dialog fixes by kamal
+v.170205
+10_axle: Axle now correctly recognizes the classes (was an and check), and restored a line regarding the gith that could never happen
+10_moire: previously a bluff check with Moire was not implemented when the dialog says there is one, so the bluff was always successful
+files:
+- 1000_Neverwinter_A1
+10_axle.DLG
+10_moire.DLG
+
+
+dialog fixes by kamal
+v.170205
+12_mozah: fixed broken skill check, was using non-existent script
+12_cx_sp_garius: shadow priest will not only tell Garius the other priest was killed if the priest actually was
+files:
+- 1200_Highcliff
+12_cs_sp_garius.DLG
+12_mozah.DLG
+
+
+script fix by kamal
+v.170205
+This is the deathscript for Fenthick, but it was in the wrong module, so it never fired. (This script does not seem to have any game effect)
+files:
+- 1700_Merchant_Quarter
+10n_fen_dead.NSS
+
+
