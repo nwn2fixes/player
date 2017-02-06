@@ -140,3 +140,11 @@ files:
 10n_fen_dead.NSS
 
 
+Construct upgrade fix by player1
+v.150717
+This mod fixes issues with upgrading Construct companion from official Neverwinter Nights 2 campaign.
+- https://neverwintervault.org/project/nwn2/other/construct-upgrade-fix
+files:
+gl_construct.DLG
+
+
