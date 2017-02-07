@@ -149,8 +149,8 @@ gl_construct.DLG
 
 
 Deekin Keep Dialog fix by kevL
-v.140715
-If you're having the common problem of Deekin not even showing his store, this file 21_deekin.DLG might fix it ....
+v.170207
+Allows Deekin to upgrade his store (twice), allows any/all of his various greetings to show, and increases what he's willing to pay for items (instead of decreasing). WARNING: I arbitrarily decreased the increase from 10% to 5% on his initial store, then on Upgrade 1 it resets to 0% (stock), and on Upgrade 2 it jumps to its full 10% MarkUp/MarkDown (always in favor of the player).
 - https://neverwintervault.org/project/nwn2/other/patch/deekin-keep-dialog
 files:
 - 2100_Crossroad_Keep_A2
