@@ -157,3 +157,11 @@ files:
 21_deekin.DLG
 
 
+Mental Shard bonus typo fix by kevL
+v.170207
+fix typo "16_get_shard4" -> "16_got_shard4"
+files:
+- 1600_Githyanki_Caves
+i_nwn2_it_shard4_aq.NSS
+
+
