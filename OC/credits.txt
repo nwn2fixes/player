@@ -165,3 +165,90 @@ files:
 i_nwn2_it_shard4_aq.NSS
 
 
+dialog fix by kamal
+v.170210
+16_ar_puzzle: characters with high lore skills no longer require the books to answer the questions, and fixes cases where the pc previously not use the lore skill if they had aquired the book. Also fixes an influence increase with grobnar
+files:
+- 1600_Githyanki_Caves
+16_ar_puzzle.DLG
+
+
+dialog fix by kamal
+v.170210
+16_bishop_emb: two checks that were listed as intelligence by the dialog were actually checking charisma.
+files:
+- 1600_Githyanki_Caves
+16_bishop_emb.DLG
+
+
+dialog fix by kamal
+v.170210
+16_marcus: it was possible that giving Marcus Bishop's knife would not set the variable that you did so, preventing you from being able to ask Bishop about it later. Also there was no influence gain with Bishop for some choices though the conversation said there was.
+files:
+- 1600_Githyanki_Caves
+16_marcus.DLG
+
+
+dialog fix by kamal
+v.170210
+16_zaxis: Fixed Influence gain with Neeshka, fixed 2 Bluff checks (were checking Diplomacy instead), fixed Taunt skill check (was checked on player node, so it would only appear if you had already passed the check, so if you got the option to taunt it was automatically a success)
+files:
+- 1600_Githyanki_Caves
+16_zaxis.DLG
+
+
+dialog fix by kamal
+v.170210
+16_zeeaire: 1st first Diplomacy/Bluff/Taunt check is supposed to be one time only, now it is. 2nd bluff check ("So it was as I suspected, this blade is more important to you than anyone knows.") could not be passed unless Neeshka is in the party since the conditions were in the wrong order
+files:
+- 1600_Githyanki_Caves
+16_zeeaire.DLG
+
+
+dialog fix by kamal
+v.170210
+10_informant_st: there was no intimidate check though the conversation says there is, causing automatic success in intimidation
+files:
+- 1700_Merchant_Quarter
+10_informant_st.DLG
+
+
+dialog fix by kamal
+v.170210
+16_mephasm: intelligence check was mistakenly checking wisdom
+files:
+- 1600_Githyanki_Caves
+16_mephasm.DLG
+
+
+dialog fixes by kamal
+v.170210
+20_cain: Fixed Sleight of Hand check during the Battle of Bards with Caine (was checking player's Perform skill rank instead). "[Sleight of Hand] [Cut one of the strings on Cain's lute.]" Fixed several influence checks with Grobnar.
+20_cs_kyli: Fixed Kyli's convo getting abruptly cut off (only if player is female and Elanee is in party. "Elanee's right. Lisbet will listen to us." only had a continuation if the pc was male.
+20_painter: Fixed Shandra influence gain and loss during the convo with the painter (conversation says there is influence change but no influence change was happening; fixed painter's convo getting cut off if you are female and say it's the work of an amateur
+files:
+- 2000_Neverwinter
+20_cain.DLG
+20_cs_kyli.DLG
+20_painter.DLG
+
+
+dialog fixes by kamal
+v.170210
+22_cs_kistrel: party is now checked for having the insect collection, not just player.
+22_nya: spellcraft check in her convo was set to DC1, set to a more reasonable 15.
+files:
+- 2200_Port_Llast
+22_cs_kistrel.DLG
+22_nya.DLG
+
+
+dialog fixes by kamal
+v.170210
+gl_bishop: Fixed Diplomacy check in Bishop convo. Convo wasn't checking any skill, resulting in auto-success.
+gl_guyven: guyven's join variable now correctly set on "You are welcome to stay at my home." previously it was only on "You will always have a place at my fire.", which is no different
+files:
+gl_bishop.DLG
+gl_guyven.DLG
+
+
