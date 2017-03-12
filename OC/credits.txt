@@ -252,3 +252,12 @@ gl_bishop.DLG
 gl_guyven.DLG
 
 
+Harvest Festival brawl fix by kevL
+v.170312
+The mock brawlers weren't brawling in the ring. This fix keeps up their mock battle until the player starts his/her match.
+files:
+- 0_Tutorial
+0_brawler_generic_sp.NSS
+0_center.NSS
+
+
