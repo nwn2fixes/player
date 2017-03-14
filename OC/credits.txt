@@ -261,3 +261,11 @@ files:
 0_center.NSS
 
 
+Hlam dialog fix by kevL
+v.170314
+One of the influence-checks on Khelgar (declining to become a Monk) wasn't quite right. This fix allows Khelgar to say his response and close his Quest if the PC's influence is high enough.
+files:
+- 1700_Merchant_Quarter
+10_hlam.DLG
+
+
