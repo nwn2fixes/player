@@ -269,3 +269,9 @@ files:
 10_hlam.DLG
 
 
+Khelgar dialog fix by AxeEdge
+v.170806
+This fixes a minor gramatical error in Khelgar's speech when finding his clan's heirloom ("placed" change to "place").
+files:
+- 1300_Old_Owl_Well
+13_heirloom.DLG
