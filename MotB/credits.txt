@@ -63,3 +63,11 @@ nx1_e_golem_torso1.UTI
 nx1_e_golem_torso2.UTI
 
 
+Open Gawatha's Door by kevL
+v.171011
+In Coveya Kurg'annis, if Kepob is ransomed, Gawatha's party exits through the north door. But the door is closed and they won't open it themselves. This fix simply inserts 'ga_door_open' on the dialog-node that forces Gawatha's party to exit.
+files:
+- D_X1
+d03_gawatha.DLG
+
+
