@@ -72,3 +72,11 @@ d03_gawatha.DLG
 ga_door_open_gawatha.nss [created]
 
 
+Anya Sleep fix by kevL
+v.171019
+In Janiik's Farmhouse, Anya doesn't want to sleep sometimes. The fix is to use GetNearestObjectByTag() instead of GetObjectByTag() since it seems more robust at getting the Anya-object. Also (cosmetic) Anya tries to face the fireplace when she sleeps.
+files:
+- B_X1
+b13_p_anya_sleep.NSS
+
+
