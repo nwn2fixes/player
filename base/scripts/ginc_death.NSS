@@ -413,7 +413,7 @@ void ShowProperDeathScreen( object oPC=OBJECT_SELF )
 	{
 		oPC = SetOwnersControlledCompanion( oPC );
 	}
-	else if (!bIsSoZ)
+	else if (bIsSoZ)
 	{
 		oPC = GetFirstPC(FALSE);
 	}
