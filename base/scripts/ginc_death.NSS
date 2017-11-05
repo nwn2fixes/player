@@ -117,13 +117,13 @@ int GetIsSoZ()
 {
 	string sModuleTag = GetTag(GetModule());
 	return sModuleTag == "F_X2"
-		&& sModuleTag == "G_X2"
-		&& sModuleTag == "M_X2"
-		&& sModuleTag == "N_X2"
-		&& sModuleTag == "O_X2"
-		&& sModuleTag == "S_X2"
-		&& sModuleTag == "T_X2"
-		&& sModuleTag == "X_X2";
+		|| sModuleTag == "G_X2"
+		|| sModuleTag == "M_X2"
+		|| sModuleTag == "N_X2"
+		|| sModuleTag == "O_X2"
+		|| sModuleTag == "S_X2"
+		|| sModuleTag == "T_X2"
+		|| sModuleTag == "X_X2";
 }
 
 
