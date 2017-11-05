@@ -189,8 +189,9 @@ baseitems.2da
 
 
 Script include fix (ginc_death) by kevL
-v.160912
+v.171104
 Fixes a mismatched prototype/definition for ShowProperDeathScreen().
+Merged with the SoZ Campaign 'ginc_death' so it's suitable for /Override.
 files:
 - scripts
 ginc_death.NSS

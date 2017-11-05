@@ -9,7 +9,9 @@
 // BMA-OEI 3/15/06 reduced wake up retry delay, added getisdead check to ShowPartyDefeatedGUI
 // BMA-OEI 4/17/06 cleaned up various functions, add support for GetIsCompanionPossessionBlocked()
 // BMA-OEI 8/22/06 -- Merged with kinc_death
-// kevL's 16.09.09 fix mismatch prototype/definition for ShowProperDeathScreen().
+// JWR-OEI 10/07/08 -- removed respawn button from multiplayer.
+// kevL's 2016.09.09 fix mismatch prototype/definition for ShowProperDeathScreen().
+// kevL's 2017.11.04 merge this with the SoZ Campaign 'ginc_death' so it's suitable for /Override.
 
 
 #include "ginc_debug"	
@@ -31,7 +33,9 @@ const int KNOCKOUT_CRYFORHELP 				= 183382; 						// StringRef for "... groan ..
 // FUNCTION PROTOTYPES
 //*********************************************************
 
-	
+// kL_funct. Gets if this is SoZ.
+int GetIsSoZ();
+
 // Determine if oMember is a party member (either a PC, owned by a PC, or a roster member)
 int GetIsPartyMember( object oMember=OBJECT_SELF );
 
@@ -107,6 +111,20 @@ void HideHiddenDeathScreen( object oPC );
 //*********************************************************
 // FUNCTION DEFINITIONS
 //*********************************************************
+
+// kL_funct. Gets if this is SoZ.
+int GetIsSoZ()
+{
+	string sModuleTag = GetTag(GetModule());
+	return sModuleTag == "F_X2"
+		&& sModuleTag == "G_X2"
+		&& sModuleTag == "M_X2"
+		&& sModuleTag == "N_X2"
+		&& sModuleTag == "O_X2"
+		&& sModuleTag == "S_X2"
+		&& sModuleTag == "T_X2"
+		&& sModuleTag == "X_X2";
+}
 
 
 // Determine if oMember is a party member (either a PC, owned by a PC, or a roster member)
@@ -195,14 +213,16 @@ int GetIsObjectPossessible( object oPossessor, object oObject )
 // Determine if there is at least one object that can be validly possessed by oPartyMember
 int GetIsPartyPossessible( object oPartyMember=OBJECT_SELF )
 {
+	int bIsSoZ = GetIsSoZ(); // kL_add.
+
 	object oMember = GetFirstFactionMember( oPartyMember, FALSE );
 
 	while ( GetIsObjectValid( oMember ) == TRUE )
 	{
-		// If oMember is not dead, not possessed, and possessible by oPartyMember	
+		// If oMember is not dead, not possessed, and possessible by oPartyMember
 		if ( GetIsDead( oMember ) == FALSE )
-			if ( GetIsPC( oMember ) == FALSE )
-				if ( GetIsObjectPossessible( oPartyMember, oMember ) == TRUE )
+			if ( GetIsPC( oMember ) == FALSE || (bIsSoZ && GetPartyMembersDyingFlag()) ) // kL_add.
+				if ( GetIsObjectPossessible( oPartyMember, oMember ) == TRUE  || (bIsSoZ && GetIsOwnedByPlayer(oMember)) ) // kL_add.
 					return ( TRUE );
 
 		oMember = GetNextFactionMember( oPartyMember, FALSE );
@@ -388,7 +408,15 @@ void SetIsDeathPopUpDisplayed( object oPC, int bDisplayed )
 void ShowProperDeathScreen( object oPC=OBJECT_SELF )
 {
 	// Force PC into original character
-	oPC = SetOwnersControlledCompanion( oPC );
+	int bIsSoZ = GetIsSoZ(); // kL_add ->
+	if (!bIsSoZ || GetIsPC(oPC))
+	{
+		oPC = SetOwnersControlledCompanion( oPC );
+	}
+	else if (!bIsSoZ)
+	{
+		oPC = GetFirstPC(FALSE);
+	}
 
 	int bWaitForHelp = FALSE;
 	int bRespawn = FALSE;
@@ -399,7 +427,7 @@ void ShowProperDeathScreen( object oPC=OBJECT_SELF )
 	if ( bMultiplayer == TRUE )
 	{
 		bWaitForHelp = TRUE;
-		bRespawn = TRUE;
+		bRespawn = !bIsSoZ; // kL_add. <--- JWR-OEI removing respawn from our campaign!! Even in multiplayer.
 		bLoadGame = GetIsPCHost(oPC);
 	}
 	else
