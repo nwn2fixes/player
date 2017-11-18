@@ -269,3 +269,11 @@ files:
 10_hlam.DLG
 
 
+Get Soldiers Dead fix by kevL
+v.171117
+In Module 2000_Neverwinter, dialog '20_deorwin', Deorwin gives one response if he's the only soldier left alive and a different one if he's not. Bug: The script that checks this condition returns FALSE only if no soldiers died (which is redundant since Doerwin is a soldier and the PC is talking to him); so, the condition is always TRUE, causing Doeorwin to state that he has to bury "four sons" - instead of falling through to the next dialog-node, in which he gives the PC thanks for bringing "us" through. This fix modifies the script to check that all other four soldiers have died in the battle with Qaggoth, while protecting Cyran, and indeed Deorwin is the only soldier left alive.
+files:
+- 2000_Neverwinter
+20c_soldiers_dead.NSS
+
+
