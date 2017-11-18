@@ -213,3 +213,11 @@ files:
 x2_inc_restsys.nss
 
 
+Preference AI fix, by kevL
+v.171118
+In 'gai_preference_dcr', type ATTACK_PREFERENCE_TANK, an NPC-tank may try to heal itself by calling TalentHealingSelf() from 'x0_i0_talent'. The return was checked against a value of 99, but the function will return 0 or 1 only. The condition has been changed to check against TRUE, to properly bypass regular DCR when the NPC-tank performs a heal action on itself.
+files:
+- scripts
+gai_preference_dcr.NSS
+
+
