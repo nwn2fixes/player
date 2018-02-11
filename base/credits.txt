@@ -221,3 +221,17 @@ files:
 gai_preference_dcr.NSS
 
 
+Tool Items model fixes by rjshae
+v.180211
+Here's a small contribution to "correct" the pan, rake, shovel, smithy hammer, and wine bottle items so that they can be equipped and carried in game. It includes a modified baseitems.2da file, revised models, and an itemized list of the changes. [See ToolItemsModelFixes.txt in the base directory.]
+files:
+- models
+i_Pan01.MDB
+i_rake01.MDB
+i_shovel01.MDB
+i_smithy_Hammer01.MDB
+i_Wine_Bottle01.MDB
+- 2da
+baseitems.2da
+
+

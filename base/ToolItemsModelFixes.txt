@@ -1,0 +1,37 @@
+Modifications:
+
+ i_pan:
+  * row 133 of baseitems.2da
+    + WeaponType = 1
+    + WeaponSize = 2
+  * modified the model to correct placement and orientation
+
+ i_rake:
+  * row 135 of baseitems.2da
+    + WeaponType = 1
+    + WeaponSize = 4
+  * modified the model to correct placement and orientation
+
+ i_shovel:
+  * row 136 of baseitems.2da
+    + WeaponType = 1
+    + WeaponSize = 3
+  * changed packet name name in model
+  * modified the model to correct orientation
+
+ i_smithyHammer:
+  * row 137 of baseitems.2da
+    + WeaponType = 1
+    + WeaponSize = 2
+  * changed model name to match ItemClass in baseitems.2da
+  * changed packet name in model
+  * modified the model to correct the size
+
+ i_wine_bottle:
+  * row 139 of baseitems.2da
+    + WeaponType = 1
+    + WeaponSize = 1
+  * changed packet name in model
+  * modified the model to correct placement
+
+The rake and shovel were verified using the associated animations.
