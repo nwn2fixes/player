@@ -30,3 +30,11 @@ files:
 o08_a_battle.NSS
 
 
+Lizardfolk Warrior fix by kevL's
+v.180214
+This lizard should not drop its Claw and Bite creature-weapons. The fix here gives its blueprint Creature Weapon Proficiency.
+files:
+- G_X2
+g13_lizardfolk_2.UTC
+
+
