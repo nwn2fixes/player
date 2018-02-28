@@ -38,3 +38,11 @@ files:
 g13_lizardfolk_2.UTC
 
 
+Goodie (diary) fix by kevL's
+v.180228
+One of the goodies that appear randomly on the OverlandMap is a diary. Unfortunately the placeable is flagged static and it doesn't have an OnUsed script. So, while it appears on the OL like any other goodie, the PC can't activate it to get a reward. This fix removes the static-flag, enables the usable-flag, and assigns it the standard OnUsed script for goodies.
+files:
+- Campaign
+nx2_plc_gd_book.UTP
+
+
