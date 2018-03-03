@@ -46,3 +46,23 @@ files:
 nx2_plc_gd_book.UTP
 
 
+More Lizardfolk fixes by kevL's
+v.180303
+Lizardmen shouldn't drop their claws. This gives them Creature Weapon Proficiency so they'll equip their claws and keep them equipped instead. Same with the umberhulk thrall creature.
+files:
+- T_X2
+t03_lizmanhunt.UTC
+t03_lizmanhunt01.UTC
+t03_lizmanhunt02.UTC
+t03_lizmanhunt03.UTC
+t03_lizmanmage.UTC
+t03_lizmanmage01.UTC
+t03_lizmanmage02.UTC
+t03_lizmanmage03.UTC
+t03_lizmanscout.UTC
+t03_lizmansh.UTC
+t03_lizmansh01.UTC
+t03_lizmansh02.UTC
+t03_umber.UTC
+
+
