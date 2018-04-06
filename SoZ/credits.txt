@@ -66,3 +66,16 @@ t03_lizmansh02.UTC
 t03_umber.UTC
 
 
+Teamwork Training fixes by kevL's
+v.180406
+The script (m_c_tw_rush) that checks prerequisites for Team Rush should require that the pc-speaker has *both* the Toughness feat AND Survival skill 8+. The script (m_c_tw_cob) that checks prerequisites for Circle of Blades should require that the pc-speaker has *both* BAB 6+ AND Weapon Specialization (any melee). The script (m_c_tw_foe) that checks prerequisites for Foe Hunting should require that other party-members have *both* BAB 4+ AND Survival skill 1+; also allow Favored Enemy Plant to satisfy pc-speaker prerequisite. The script (m_c_teamwork) that checks if Circle of Blades has already been trained also mistakenly checked that Superior Flank had not been trained yet (note: this script may clash with an alternate method using global_ints that also get used to check if a particular Teamwork feat has been trained - usage seems arbitrary). Daerred's dialog (m11_daerred) was missing several navigation nodes (these were fixed by someone else and I only include the file here). Candril's dialog (m11_candril) referenced a non-existent script (m_c_trance_prereq) and is properly 'm_c_tw_trance' (this was fixed by someone else and I only include the file here).
+files:
+- M_X2
+m_c_teamwork.NSS
+m_c_tw_cob.NSS
+m_c_tw_foe.NSS
+m_c_tw_rush.NSS
+m11_candril.DLG
+m11_daerred.DLG
+
+
