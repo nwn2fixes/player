@@ -79,3 +79,11 @@ m11_candril.DLG
 m11_daerred.DLG
 
 
+Trip fix by kevL's
+v.180406
+Worgs and Mastiffs (tag-based creature-weapon scripts) were disallowing knockdown on higher difficulty levels. The fix is to invert the operation and disallow knockdown on lower difficulties.
+- M_X2
+i_m_bite_mastiff_hc.NSS
+i_m_bite_worg_hc.NSS
+
+
