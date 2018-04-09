@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8">
+
+<!-- nx2_market.xml\
+This is the UI for the Market at various towns.
+
+Local Variables:
+1-99 Trade Good Index Values (see GOODS_2DA)
+101-199 Rare Resource Index Values (see RES_2DA)
+1000 - Location Index Value (see ECON_2DA)
+
+
+-->
+
+<UIScene name="SCREEN_CARAVAN" x="ALIGN_LEFT" y="ALIGN_TOP" width="890" height="400"  priority="SCENE_INGAME" scriptloadable="true" backoutkey=true
+	draggable="true" capturemouseclicks="true" capturemouseevents="true" idleexpiretime="1.0" OnBackout=UIObject_Misc_ExecuteServerScript("gui_enc_ignore","0") />
+	<UIText name="SCENE_TITLE" strref="233874" x=30 y=12 width=280 height=24 align=left valign=middle uppercase=true fontfamily="Title_Font" style="1" />	
+		<UIButton name="CloseButton" x=855 y=8 style="STYLE_CLOSE_BUTTON" 
+			OnLeftClick0=UIButton_Input_ScreenClose()
+			OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_enc_ignore","0") >
+	</UIButton>		
+	
+	<UIPane name="SCENE_PANE" x=32 y=32 width="836" height="336" >
+
+		<UIText name="SOURCE_TITLE"x=0 y=10 width=230 height=20 strref="233875" />
+		<UIPane name="SOURCE_PANE" x=0 y=30 width=230 height=336 capturemouseclicks=false >
+			<!-- Column Headings -->
+			
+			<UIListbox name="CARAVAN_SOURCE_LB" x=0 y=0 height=300 width=220 yPadding=5
+				showpartialchild=false scrollbaronright=true selectonleftclick=true update=true>
+				
+				<UIPane name="CARAVAN_SOURCE_PROTO" x=0 y=0 width=200 height=30 prototype=true tupple=true
+					update=true >
+					<UIButton name="SOURCE_NAME" style="STYLE_LARGE_BUTTON" text="INVALID"
+					 OnLeftClick0=UIObject_Misc_ExtractData("selected:CARAVAN_SOURCE_LB","string",1,local:1)
+					 OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_caravan_pop_dest",local:1) />
+				</UIPane>
+				<UIScrollBar name="SB" style="STYLE_SB_THIN"></UIScrollBar>
+			</UIListbox>
+			<!-- Buy and Sell Buttons -->
+		</UIPane>
+		<UIText name="DEST_TITLE"x=240 y=10 width=230 height=20 strref="233876" />
+		<UIPane name="DEST_PANE" x=240 y=30 width=230 height=336 capturemouseclicks=false >
+			<!-- Column Headings -->
+			
+			<UIListbox name="CARAVAN_DEST_LB" x=0 y=0 height=300 width=220 yPadding=5
+				showpartialchild=false scrollbaronright=true selectonleftclick=true update=true>
+				
+				<UIPane name="CARAVAN_DEST_PROTO" x=0 y=0 width=200 height=30 prototype=true tupple=true
+					update=true >
+					<UIButton name="DEST_NAME" style="STYLE_LARGE_BUTTON" text="INVALID"
+					 OnLeftClick0=UIObject_Misc_ExtractData("selected:CARAVAN_DEST_LB","string",1,local:2)
+					 OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_caravan_pop_text",local:1,local:2,local:9000) />
+				</UIPane>
+				<UIScrollBar name="SB" style="STYLE_SB_THIN"></UIScrollBar>
+			</UIListbox>
+			<!-- Buy and Sell Buttons -->
+		</UIPane>
+		<UIText name="TEXT_TITLE"x=480 y=10 width=376 height=20 strref="233877" />
+		<UIPane name="TEXT_PANE" x=480 y=30 width=376 height=300 capturemouseclicks=false >
+			<!-- Column Headings -->
+			<UIButton name="UPGRADE_BUTTON" style="STYLE_LARGE_BUTTON" strref="233878" x=80 y="ALIGN_BOTTOM" hidden="TRUE" 
+				OnLeftClick=UIObject_Misc_ExecuteServerScript("gui_caravan_upgrade",local:1,local:2) />
+			<UIButton name="ESTABLISH_BUTTON" style="STYLE_LARGE_BUTTON" strref="233879" x=80 y="ALIGN_BOTTOM" hidden="TRUE"
+				OnLeftClick=UIObject_Misc_ExecuteServerScript("gui_caravan_spawn",local:1,local:2) />
+			
+			<UIListbox name="CARAVAN_TEXT_LB" x=0 y=0 height="170" width=350 yPadding=5
+				showpartialchild="true" unequalcontrols="true" scrollbaronright=true selectonleftclick=true update=true >
+				<UIPane name="CARAVAN_TEXT_PROTO" x=0 y=0 width=340 height="170" prototype=true tupple=true
+					update=true >
+					<UIText name="CARAVAN_DESC_TEXT" text="INVALID" width=320 height="160" update=true />
+				</UIPane>
+				<UIScrollBar name="SB" style="STYLE_SB_THIN"></UIScrollBar>
+			</UIListbox>
+			<UIText name="CARAVAN_INCOME_TEXT" x="0" y="190" text="INVALID" width="340" height="24" update="true" hidden="TRUE" />
+			<UIText name="CARAVAN_PRICE_TEXT" x="0" y="210" text="INVALID" width="340" height="24" update="true" hidden="TRUE" />
+			<UIText name="CARAVAN_STATUS_TEXT" x="0" y="240" text="INVALID" width="340" height="24" update="true" hidden="TRUE" />
+
+			<!-- Buy and Sell Buttons -->
+			
+		</UIPane>
+
+
+		<UIText name="PARTY_BARS_TEXT" text="DEFAULT" x="65" y="560" width="120" height="32" fontfamily="Default" style="2" align="left" valign="middle" />
+		<UIText name="PARTY_BARS_LABEL_TEXT" strref="234252" x="22" y="560" width="40" height="32" fontfamily="Default" style="2" align="right" valign="middle" />
+	</UIPane>
+		<!-- Background Image -->
+	<UIFrame width=PARENT_WIDTH height=PARENT_HEIGHT topleft="frame1_tl.tga" topright="frame1_tr.tga" bottomleft="frame1_bl.tga"
+			 bottomright="frame1_BR.tga" top="frame1_t.tga" bottom="frame1_b.tga" left="frame1_l.tga" right="frame1_r.tga" border=32 />
+
+	<UIFrame x="7" y="8" width=876 height=385 fillstyle="stretch" fill="frame_main_bg.tga" />

@@ -87,3 +87,14 @@ i_m_bite_mastiff_hc.NSS
 i_m_bite_worg_hc.NSS
 
 
+Trade UI backout fix by kevL's
+v.180408
+In the UIScene of these XML files, closing them by pressing the Escape key would try to fire a script 'ga_enc_ignore' but it doesn't exist. The proper script to fire is 'gui_enc_ignore' when these Trade UI screens close. That is, nearby encounters on the OL Map should ignore the PC when a Trade UI screen is open, and then stop ignoring the PC when the screen is closed.
+- Campaign
+nx2_caravan.xml
+nx2_market.xml
+nx2_shipping.xml
+nx2_storage.xml
+nx2_trade_inv.xml
+
+

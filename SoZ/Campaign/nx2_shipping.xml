@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8">
+
+<!-- nx2_market.xml\
+This is the UI for the Market at various towns.
+
+Local Variables:
+1-99 Trade Good Index Values (see GOODS_2DA)
+101-199 Rare Resource Index Values (see RES_2DA)
+1000 - Location Index Value (see ECON_2DA)
+
+
+-->
+
+<UIScene name="SCREEN_SHIPPING" x="ALIGN_CENTER" y="ALIGN_CENTER" width="520" height="506"  priority="SCENE_INGAME" scriptloadable="true" backoutkey=true
+	draggable="true" capturemouseclicks="true" capturemouseevents="true" idleexpiretime="0.1" OnBackout=UIObject_Misc_ExecuteServerScript("gui_enc_ignore","0") />
+	
+	<!-- ***SCENE TITLE*** -->
+	<UIText name="SCENE_TITLE" strref="233890"	x="135" y="50" width=250 height=35 align=center valign=middle uppercase=true fontfamily="Special_Font_2" style="3" multiline="true" color="593600" />
+	<UIPane name="TAB_CONTAINER" x="0" y="97" width="PARENT_WIDTH" height="20">
+		<UIButton name="SHOW_GOODS" x="145" y="0" width="120" height="PARENT_HEIGHT" strref="233886" buttontype=radio groupid=1 groupmemberid=1
+		OnSelected=UIButton_Input_ShowObject("GOODS_PAGE") OnUnselected=UIButton_Input_HideObject("GOODS_PAGE") >
+			<UIText align=center valign=middle fontfamily="Title_Font" style="1"/>
+			<UIFrame state=up		fill="trade_tab_normal.tga" />
+			<UIFrame state=down		fill="trade_tab_pressed.tga" />
+			<UIFrame state=focused	fill="trade_tab_pressed.tga" />
+			<UIFrame state=hilited	fill="trade_tab_normal.tga" />
+			<UIFrame state=hifocus	fill="trade_tab_pressed.tga" />
+			<UIFrame state=disabled	fill="trade_tab_normal.tga" />			
+		</UIButton>
+		
+		<UIButton name="SHOW_RARE" x="265" y="0" width="120" height="PARENT_HEIGHT" strref="233887" buttontype=radio groupid=1 groupmemberid=2
+			OnSelected=UIButton_Input_ShowObject("RARE_PAGE") OnUnselected=UIButton_Input_HideObject("RARE_PAGE") >
+			<UIText align=center valign=middle fontfamily="Title_Font" style="1"/>
+			<UIFrame state=up		fill="trade_tab_normal.tga" />
+			<UIFrame state=down		fill="trade_tab_pressed.tga" />
+			<UIFrame state=focused	fill="trade_tab_pressed.tga" />
+			<UIFrame state=hilited	fill="trade_tab_normal.tga" />
+			<UIFrame state=hifocus	fill="trade_tab_pressed.tga" />
+			<UIFrame state=disabled	fill="trade_tab_normal.tga" />			
+		</UIButton>
+	</UIPane>
+	<!-- Close Button -->
+	<!-- Accept and Reset Buttons -->
+	<UIButton name="CloseButton" x="376" y="464" width="38" height="38"
+	OnLeftClick0=UIButton_Input_ScreenClose()
+	OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_enc_ignore","0") >
+		<UIFrame state=up		fill="trade_b_cancel.tga" />
+		<UIFrame state=down		fill="trade_b_cancel_pressed.tga" />
+		<UIFrame state=focused	fill="trade_b_cancel_hover.tga" />
+		<UIFrame state=hilited	fill="trade_b_cancel_hover.tga" />
+		<UIFrame state=hifocus	fill="trade_b_cancel_hover.tga" />
+		<UIFrame state=disabled	fill="trade_b_cancel_disabled.tga" />
+	</UIButton>
+	
+	<UIButton name="MARKET_ACCEPT" x="438" y="464" width="38" height="38" 
+	OnLeftClick0=UIObject_Misc_ExecuteServerScript("gui_shipping_accept") 
+	OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_enc_ignore","0") >
+		<UIFrame state=up		fill="trade_b_accept.tga" />
+		<UIFrame state=down		fill="trade_b_accept_pressed.tga" />
+		<UIFrame state=focused	fill="trade_b_accept.tga" />
+		<UIFrame state=hilited	fill="trade_b_accept_hover.tga" />
+		<UIFrame state=hifocus	fill="trade_b_accept.tga" />
+		<UIFrame state=disabled	fill="trade_b_accept_disabled.tga" />
+	</UIButton>
+	
+	<UIPane name="GOODS_PAGE" x=0 y=30 width=PARENT_WIDTH height=PARENT_HEIGHT capturemouseclicks="false" capturemouseevents="false" >
+		<!-- Column Headings -->
+		<UIText name="SHIPPING_TG_HEADER_TEXT" strref="233890" x="174" y="98" width="50" height="32" fontfamily="Default" color="black" align="center" valign="middle" />
+		<UIText name="INVENTORY_TG_HEADER_TEXT" strref="233885" x="390" y="98" width="50" height="32" fontfamily="Default" color="black"  align="center" valign="middle" />
+		<UIText name="TG_EMPTY_TEXT" strref="234572" x="65" y="130" height="64" width="400" align="center" hidden="true" fontfamily="Special_Font_2" style="4" multiline="true" color="black" />
+		
+		<UIListbox name="TRADE_GOOD_LB" x=65 y=130 height=300 width=400 yPadding=0 capturemouseclicks="false" capturemouseevents="false"
+			showpartialchild=false scrollbaronright=true selectonleftclick=true update=true	hidescrollbarwhennotneeded="true">
+			
+			<UIPane name="TRADE_GOOD_PROTO" x=0 y=0 width=280 height=32 prototype=true tupple=true
+				update=true >
+				
+				<!-- Trade Good Name -->
+				<UIText name="TRADE_GOOD_NAME" text="INVALID" x="5" y="0" width="105" height="PARENT_HEIGHT" fontfamily="Special_Font_2" style="4" multiline="true" color="black" valign="middle" />
+					
+				<UIFrame x="0" y="0"  width="110" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />
+				
+				<!-- Trade Good Town Stock -->
+				<UIText name="TRADE_GOOD_SHIPPING" text="INVALID" x="109" y="0" width="50" height="PARENT_HEIGHT" fontfamily="Default" color="black" align="center" valign="middle" />
+				
+				<UIFrame x="109" y="0" width="50" height="PARENT_HEIGHT" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />
+				
+				<UIButton name="TRADE_GOOD_SHIP_10" style="STYLE_MINUS_BUTTON" x="165" y="ALIGN_CENTER"
+				OnLeftClick0=UIObject_Misc_ExtractData("selected:TRADE_GOOD_LB","string",1,local:1)
+				OnLeftClick1=UIObject_Misc_ExtractData("selected:TRADE_GOOD_LB","string",2,local:2)
+				OnLeftClick2=UIObject_Misc_ExecuteServerScript("gui_ship_good",local:1,10) >
+					<UIFrame state=up		fill="b_arrow2_L_normal.tga" />
+					<UIFrame state=down		fill="b_arrow2_L_hover_pressed.tga" />
+					<UIFrame state=focused	fill="b_arrow2_L_normal.tga" />
+					<UIFrame state=hilited	fill="b_arrow2_L_hover.tga" />
+					<UIFrame state=hifocus	fill="b_arrow2_L_hover.tga" />
+					<UIFrame state=disabled	fill="b_arrow2_L_disabled.tga" />				
+				</UIButton>
+				
+				<UIButton name="TRADE_GOOD_SHIP" style="STYLE_MINUS_BUTTON" x="195" y="ALIGN_CENTER"
+				OnLeftClick0=UIObject_Misc_ExtractData("selected:TRADE_GOOD_LB","string",1,local:1)
+				OnLeftClick1=UIObject_Misc_ExtractData("selected:TRADE_GOOD_LB","string",2,local:2)
+				OnLeftClick2=UIObject_Misc_ExecuteServerScript("gui_ship_good",local:1,1) >
+					<UIFrame state=up		fill="b_arrow_L_normal.tga" />
+					<UIFrame state=down		fill="b_arrow_L_hover_pressed.tga" />
+					<UIFrame state=focused	fill="b_arrow_L_hover.tga" />
+					<UIFrame state=hilited	fill="b_arrow_L_hover.tga" />
+					<UIFrame state=hifocus	fill="b_arrow_L_hover.tga" />
+					<UIFrame state=disabled	fill="b_arrow_L_disabled.tga" />	
+				</UIButton>
+				
+				<UIFrame x="158" y="0" width="70" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />
+				
+				
+
+				<UIFrame x="227" y="0" width="30" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />					
+
+				<UIButton name="TRADE_GOOD_SHIPCANCEL" style="STYLE_PLUS_BUTTON" x="263" y="ALIGN_CENTER"
+				OnLeftClick0=UIObject_Misc_ExtractData("selected:TRADE_GOOD_LB","string",1,local:1)
+				OnLeftClick1=UIObject_Misc_ExtractData("selected:TRADE_GOOD_LB","string",2,local:2)
+				OnLeftClick2=UIObject_Misc_ExecuteServerScript("gui_ship_good",local:1,-1) >
+					<UIFrame state=up		fill="b_arrow_R_normal.tga" />
+					<UIFrame state=down		fill="b_arrow_R_hover_pressed.tga" />
+					<UIFrame state=focused	fill="b_arrow_R_normal.tga" />
+					<UIFrame state=hilited	fill="b_arrow_R_hover.tga" />
+					<UIFrame state=hifocus	fill="b_arrow_R_hover.tga" />
+					<UIFrame state=disabled	fill="b_arrow_R_disabled.tga" />	
+				</UIButton>
+				
+				<UIButton name="TRADE_GOOD_SHIPCANCEL_10" style="STYLE_PLUS_BUTTON" x="293" y="ALIGN_CENTER"
+				OnLeftClick0=UIObject_Misc_ExtractData("selected:TRADE_GOOD_LB","string",1,local:1)
+				OnLeftClick1=UIObject_Misc_ExtractData("selected:TRADE_GOOD_LB","string",2,local:2)
+				OnLeftClick2=UIObject_Misc_ExecuteServerScript("gui_ship_good",local:1,-10) >
+					<UIFrame state=up		fill="b_arrow2_R_normal.tga" />
+					<UIFrame state=down		fill="b_arrow2_R_hover_pressed.tga" />
+					<UIFrame state=focused	fill="b_arrow2_R_normal.tga" />
+					<UIFrame state=hilited	fill="b_arrow2_R_hover.tga" />
+					<UIFrame state=hifocus	fill="b_arrow2_R_hover.tga" />
+					<UIFrame state=disabled	fill="b_arrow2_R_disabled.tga" />	
+				</UIButton>
+				
+				<UIFrame x="256" y="0" width="70" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />				
+			
+				<UIText name="TRADE_GOOD_PARTY" text="INVALID" x="325" y="0" width="50" height="32" fontfamily="Default" color="black" align="center" valign="middle" />			
+			
+				<UIFrame x="325" y="0" width="50" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />
+					
+        
+			</UIPane>
+			<UIScrollBar name="SB" style="STYLE_SB_THIN"></UIScrollBar>
+		</UIListbox>
+		<!-- Buy and Sell Buttons -->
+	</UIPane>
+	
+	<UIPane name="RARE_PAGE" x=0 y=30 width=PARENT_WIDTH height=PARENT_HEIGHT hidden=true capturemouseclicks="false" capturemouseevents="false">
+		<!-- Column Headings -->
+		<UIText name="SHIPPING_RR_HEADER_TEXT" strref="233890" x="174" y="98" width="50" height="32" fontfamily="Default" color="black" align="center" valign="middle" />
+		<UIText name="INVENTORY_RR_HEADER_TEXT" strref="233885" x="390" y="98" width="50" height="32" fontfamily="Default" color="black"  align="center" valign="middle" />
+		<UIText name="RR_EMPTY_TEXT" strref="234573" x="65" y="130" height="64" width="400" align="center" hidden="true" fontfamily="Special_Font_2" style="4" multiline="true" color="black" />
+		<UIListbox name="RARE_RES_LB" x=65 y=130 height=300 width=400 yPadding=0 showpartialchild=false scrollbaronright=true selectonleftclick=true update=true
+		hidescrollbarwhennotneeded="true" capturemouseclicks="false" capturemouseevents="false" >
+			
+			<UIPane name="RARE_RES_PROTO" x=0 y=0 width=280 height=32 prototype=true tupple=true
+				update=true >
+				
+				<!-- Trade Good Name -->
+				<UIText name="RARE_RES_NAME" text="INVALID" x="5" y="0" width="105" height="PARENT_HEIGHT" fontfamily="Special_Font_2" style="4" color="black" multiline="true" valign="middle" />
+					
+				<UIFrame x="0" y="0"  width="110" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />
+				
+				<!-- Trade Good Town Stock -->
+				<UIText name="RARE_RES_SHIPPING" text="INVALID" x="109" y="0" width="50" height="PARENT_HEIGHT" fontfamily="Default" color="black" align="center" valign="middle" />
+				
+				<UIFrame x="109" y="0" width="50" height="PARENT_HEIGHT" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />
+				
+				<UIButton name="RARE_RES_SHIP_10" style="STYLE_MINUS_BUTTON" x="165" y="ALIGN_CENTER"
+				OnLeftClick0=UIObject_Misc_ExtractData("selected:RARE_RES_LB","string",1,local:1)
+				OnLeftClick1=UIObject_Misc_ExtractData("selected:RARE_RES_LB","string",2,local:2)
+				OnLeftClick2=UIObject_Misc_ExecuteServerScript("gui_ship_res",local:1,10) >
+					<UIFrame state=up		fill="b_arrow2_L_normal.tga" />
+					<UIFrame state=down		fill="b_arrow2_L_hover_pressed.tga" />
+					<UIFrame state=focused	fill="b_arrow2_L_normal.tga" />
+					<UIFrame state=hilited	fill="b_arrow2_L_hover.tga" />
+					<UIFrame state=hifocus	fill="b_arrow2_L_hover.tga" />
+					<UIFrame state=disabled	fill="b_arrow2_L_disabled.tga" />				
+				</UIButton>
+				
+				<UIButton name="RARE_RES_SHIP" style="STYLE_MINUS_BUTTON" x="195" y="ALIGN_CENTER"
+				OnLeftClick0=UIObject_Misc_ExtractData("selected:RARE_RES_LB","string",1,local:1)
+				OnLeftClick1=UIObject_Misc_ExtractData("selected:RARE_RES_LB","string",2,local:2)
+				OnLeftClick2=UIObject_Misc_ExecuteServerScript("gui_ship_res",local:1,1) >
+					<UIFrame state=up		fill="b_arrow_L_normal.tga" />
+					<UIFrame state=down		fill="b_arrow_L_hover_pressed.tga" />
+					<UIFrame state=focused	fill="b_arrow_L_normal.tga" />
+					<UIFrame state=hilited	fill="b_arrow_L_hover.tga" />
+					<UIFrame state=hifocus	fill="b_arrow_L_hover.tga" />
+					<UIFrame state=disabled	fill="b_arrow_L_disabled.tga" />	
+				</UIButton>
+				
+				<UIFrame x="158" y="0" width="70" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />
+				
+				<UIText name="RARE_RES_PRICE" text="INVALID" x="227" y="0" width="30" height="32" fontfamily="Default" color="black"  align="center" valign="middle" />					
+
+				<UIFrame x="227" y="0" width="30" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />					
+
+				<UIButton name="RARE_RES_SHIPCANCEL" style="STYLE_PLUS_BUTTON" x="263" y="ALIGN_CENTER"
+				OnLeftClick0=UIObject_Misc_ExtractData("selected:RARE_RES_LB","string",1,local:1)
+				OnLeftClick1=UIObject_Misc_ExtractData("selected:RARE_RES_LB","string",2,local:2)
+				OnLeftClick2=UIObject_Misc_ExecuteServerScript("gui_ship_res",local:1,-1) >
+					<UIFrame state=up		fill="b_arrow_R_normal.tga" />
+					<UIFrame state=down		fill="b_arrow_R_hover_pressed.tga" />
+					<UIFrame state=focused	fill="b_arrow_R_hover.tga" />
+					<UIFrame state=hilited	fill="b_arrow_R_hover.tga" />
+					<UIFrame state=hifocus	fill="b_arrow_R_hover.tga" />
+					<UIFrame state=disabled	fill="b_arrow_R_disabled.tga" />	
+				</UIButton>
+				
+				<UIButton name="RARE_RES_SHIPCANCEL_10" style="STYLE_PLUS_BUTTON" x="293" y="ALIGN_CENTER"
+				OnLeftClick0=UIObject_Misc_ExtractData("selected:RARE_RES_LB","string",1,local:1)
+				OnLeftClick1=UIObject_Misc_ExtractData("selected:RARE_RES_LB","string",2,local:2)
+				OnLeftClick2=UIObject_Misc_ExecuteServerScript("gui_ship_res",local:1,-10) >
+					<UIFrame state=up		fill="b_arrow2_R_normal.tga" />
+					<UIFrame state=down		fill="b_arrow2_R_hover_pressed.tga" />
+					<UIFrame state=focused	fill="b_arrow2_R_normal.tga" />
+					<UIFrame state=hilited	fill="b_arrow2_R_hover.tga" />
+					<UIFrame state=hifocus	fill="b_arrow2_R_hover.tga" />
+					<UIFrame state=disabled	fill="b_arrow2_R_disabled.tga" />	
+				</UIButton>
+				
+				<UIFrame x="256" y="0" width="70" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />				
+			
+				<UIText name="RARE_RES_PARTY" text="INVALID" x="325" y="0" width="50" height="32" fontfamily="Default" color="black" align="center" valign="middle" />			
+			
+				<UIFrame x="325" y="0" width="50" height="32" topleft="trade_boxframe_tl.tga" topright="trade_boxframe_tr.tga" 
+				bottomleft="trade_boxframe_bl.tga" bottomright="trade_boxframe_br.tga" top="trade_boxframe_t.tga" bottom="trade_boxframe_b.tga"
+				left="trade_boxframe_l.tga" right="trade_boxframe_r.tga" background="trade_boxframe_bg.tga" border=10 />
+			</UIPane>
+			<UIScrollBar name="SB" style="STYLE_SB_THIN"></UIScrollBar>
+		</UIListbox>
+		<!-- Buy and Sell Buttons -->
+	</UIPane>
+
+	<!-- Cargo and Bars Text-->
+	<UIText name="PARTY_CARGO_LABEL_TEXT" strref="233888" x="282" y="420" width="120" height="32" fontfamily="Special_Font_2" style="4" color="593600" align="right" valign="middle" />
+	<UIText name="PARTY_CARGO_TEXT" text="DEFAULT" x="405" y="420" width="60" height="32" fontfamily="Special_Font_2" style="4" align="left" valign="middle" />
+	
+
+	
+	<!-- Background Image -->
+	<UIIcon name="BACKGROUND" img="trade_background.tga" x="0" y="0" width="PARENT_WIDTH" height="PARENT_HEIGHT" />
