@@ -98,3 +98,10 @@ nx2_storage.xml
 nx2_trade_inv.xml
 
 
+Neverwinter City Guard dialog fix by kevL's
+v.180417
+Fixed typo "bPassPurcahsed" to "bPassPurchased". Also added a couple of end-dialog nodes (so that even if you have the coin there's an option to back out of the dialog).
+- F_X2
+f00_nw_guard.DLG
+
+
