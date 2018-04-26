@@ -277,3 +277,14 @@ files:
 20c_soldiers_dead.NSS
 
 
+Battle of the Rod fix by NinjaSpectre and kevL
+v.180426
+In Module 3000_Neverwinter_A3, strange things can happen (including perhaps breaking the game if the Rod of Never is dropped) after the PC exits the Underneath and the reaver assassination attempt is made on Lord Nasher in the throne room. This attempts to smooth things through what is essentially a very long cutscene.
+files:
+- 3000_Neverwinter_A3
+30a_nasher.NSS
+3000_cliententer.NSS
+3000_throne_onused.NSS
+3000_nasher_pig.UTC [created]
+
+
