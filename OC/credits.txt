@@ -288,3 +288,13 @@ files:
 3000_nasher_pig.UTC [created]
 
 
+Hlam dialog fixes by NinjaSpectre
+v.180426
+When telling Khelgar to be a monk, the order on the check was wrong so you could never succeed (although not really a big problem since that is what he chooses if you let him decide). The next one is when you leave the conversation before making the final choice. The entry back into this decision didn't check if Khelgar was with you or if he had already made the choice. I moved this into the same area as the check for each of the trials, and put condition checks on it to make sure all 3 have been completed before being available. The last thing I did is set the flag for Khelgar being a monk even though you tell him to stay a warrior. This is because the Journal states that the quest is finished and I didn't notice any other variable being set for this outcome. [kL_note: That might make for some weirdness if subsequent scripts/dialogs think Khelgar actually is monk.] Without this change Khelgar could still become a monk afterwards trough the dialog, but the Journal would not be updated from before.
+files:
+- 1700_Merchant_Quarter
+10_hlam.DLG
+- 3000_Neverwinter_A3
+3063_hlam.DLG
+
+
