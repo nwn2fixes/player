@@ -34,6 +34,44 @@ int StartingConditional()
 
 	// Get party leader, force control of owned PC
 	object oPC = GetFirstEnteringPC();
+
+	// kL_add: Wipe a bunch of handlers from the throne-door ('3000_throne_onused').
+	if (!GetLocalInt(OBJECT_SELF, "kL_bThroneHandlersCleared"))
+	{
+		SetLocalInt(OBJECT_SELF, "kL_bThroneHandlersCleared", TRUE);
+
+		object oThroneDoor = GetNearestObjectByTag("3000_throne_door", oPC);
+
+//		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_OPEN, "");				// keep only this.
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_CLOSE, "");				// who cares (throne sinks into the floor and can't be targeted for closure)
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_DAMAGE, "");			// throne can't be damaged
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_DEATH, "");				// note: Throne-door is plot and can't be bashed to death.
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_DISARM, "");			// throne is not trapped
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_MELEE_ATTACKED, "");	// not good enough
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_SPELLCASTAT, "");		// not good enough
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_TRAPTRIGGERED, "");		// throne is not trapped
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_UNLOCK, "");			// throne is not locked
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_CLICKED, "");			// clicked doesn't appear to do anything.
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_DIALOGUE, "");			// has no dialog.
+		SetEventHandler(oThroneDoor, SCRIPT_DOOR_ON_FAIL_TO_OPEN, "");		// throne is not locked.
+
+		// NOTE: There doesn't appear to be a constant for ON_USED. (note: It doesn't appear to even work.)
+		//
+		// These are not set (see the door in the toolset):
+		// SCRIPT_DOOR_ON_HEARTBEAT
+		// SCRIPT_DOOR_ON_LOCK
+		// SCRIPT_DOOR_ON_USERDEFINED
+
+//		int i = 0;				// note: only 15 are defined in nwscript.nss but
+//		for (; i != 20; ++i)	// there are 16 event-slots in a door's Properties.
+//		{
+//			SendMessageToPC(GetFirstPC(FALSE), "script " + IntToString(i) + " : "
+//											  + GetEventHandler(oThroneDoor, i));
+//		}
+	}
+	// kL_end.
+
+
 	object oLeader = GetFactionLeader(oPC);
 	oPC = SetOwnersControlledCompanion(oLeader);
 
@@ -111,7 +149,9 @@ void Populate3000ForReaverBattle()
 					   FALSE, TRUE);
 	AssignCommand(oNasher, ClearAllActions(TRUE));		// kL_add.
 
-	location lLoc = GetBehindLocation(oNasher, 3.5f);	// kL_add: step Nasher back a bit ...
+//	location lLoc = GetBehindLocation(oNasher, 3.5f);	// kL_add: step Nasher back a bit ...
+	object oWpNasher = GetNearestObjectByTag("wp_3000_nasher", oNasher);
+	location lLoc = GetBehindLocation(oWpNasher, 3.f);	// kL_add: step Nasher back a bit ... but use his WP since he might be bumped when placed above.
 	AssignCommand(oNasher, JumpToLocation(lLoc));		// kL_add. Ie - his guards fight the reaver alone until PC opens the door-behind-the-throne
 
 
@@ -120,7 +160,13 @@ void Populate3000ForReaverBattle()
 	AssignCommand(oGate, ActionOpenDoor(oGate));						// yes i know they're supposed to stay shut until '30a_nasher' runs ...
 																		// but in addition to looking silly during the fight they would leave
 																		// the throne room during the PC's knighting ... which is even sillier
-	// handle the Reaver ->												// since that is what nobles love to stand around and watch.
+																		// since that is what nobles love to stand around and watch.
+
+	oGate = GetNearestObjectByTag("3000_throne_door", oNasher);			// and ensure that the throne-door is closed
+	if (GetIsOpen(oGate))												// so its OnUsed script is forced to fire when PC enters the throne room.
+		AssignCommand(oGate, ActionCloseDoor(oGate));
+
+	// handle the Reaver ->
 	object oReaver = GetTarget(TAG_REAVER_1);
 	SetScriptHidden(oReaver, FALSE);				// kL_note: is reaver currently hidden ....
 	SetPlotFlag(oReaver, FALSE);					// kL_add. Let reaver be attackable ... is still Immortal.
@@ -153,7 +199,7 @@ void Populate3000ForReaverBattle()
 						   OVERRIDE_ATTACK_RESULT_DEFAULT, 0, 0,
 						   FALSE, FALSE,
 						   FALSE, TRUE);
-		AssignCommand(oNPC, DelayCommand(1.f, DetermineCombatRound(oReaver)));	// kL_add.
+		AssignCommand(oNPC, DelayCommand(1.f, DetermineCombatRound(oReaver)));	// kL_add. NOTE: Guards are immortal until the throne-door opens.
 
 		oNPC = GetNearestObjectByTag(TAG_3000_GUARD_INTERIOR, oNasher, ++nNPCCounter);
 		oWP = GetNearestObjectByTag(TAG_3000_GUARD_WP, oNasher, ++nWPCounter);
