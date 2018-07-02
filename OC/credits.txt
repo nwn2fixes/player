@@ -298,3 +298,11 @@ files:
 3063_hlam.DLG
 
 
+Elanee City Watch dialog fix by SothisB
+v.180702
+This dialog fix makes the conversation with Elanee that becomes available to players that take the Thieves path also available to players taking the City Watch route. The conversation becomes available after letting Elanee distract the guards in the Back Alley.
+files:
+- 1900_Slums
+10_alley_cw2.dlg
+
+
