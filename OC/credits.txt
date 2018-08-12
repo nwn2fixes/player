@@ -306,3 +306,11 @@ files:
 10_alley_cw2.dlg
 
 
+Sand Shop (Fireburst scroll) fix by kevL
+v.180812
+The Fireburst scroll in Sand's store has the description of "Repulsion" and it doesn't work. This fix replaces that bogus scroll with a legitimate scroll.
+files:
+- 1000_Neverwinter_A1
+2007_cliententer.NSS
+
+
