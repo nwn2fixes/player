@@ -235,3 +235,11 @@ i_Wine_Bottle01.MDB
 baseitems.2da
 
 
+Ginc_Group #include fixes by Aqvilinus
+v.180813
+The functions GroupSetSpawnInCondition() and GroupWander() were not iterating over group-members (instead hitting only the first-in-group repeatedly). Fixed by wrapping the core-calls w/ AssignCommand().
+files:
+- scripts
+ginc_group.NSS
+
+
