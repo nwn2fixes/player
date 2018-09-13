@@ -256,5 +256,11 @@ ig_chargen_*.xml
 gfx_options.xml
 
 
+Aslyferund Elven Chain fix by kevL
+v.180913
+Change ArmorRuleStats to mithral type for Aslyferund Elven Chain since its material-type is Mithral. (Note this uses Brendan Bellina's damage-reduction fixed blueprint as its base.
+files:
+- blueprints
+nw_mcloth005.UTI
 
 
