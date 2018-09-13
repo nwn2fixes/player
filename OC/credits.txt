@@ -314,3 +314,12 @@ files:
 2007_cliententer.NSS
 
 
+Niyra Mithral Chainmail Drop fix by kevL
+v.180913
+Niyra has a suit of Elven Chainmail in her inventory that will drop but it does not have the Mithral armorrulestat (it's not regular Elven Chainmail either) although its material-type is Mithral. This fix replaces that item with one that has the Mithral armorrulestat.
+files:
+- 2200_Port_Llast
+nw_maarcl037_niyra.UTI [created]
+rivalparty_client_en.NSS
+
+
