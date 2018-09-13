@@ -80,3 +80,11 @@ files:
 b13_p_anya_sleep.NSS
 
 
+Dialog Fixes by JOG
+v.180913
+MotB: Ice-Troll-Lodge Bugfix AND MotB: Lurure Bears Bugfix. This fixes the bug where you can't join the Ice Troll Lodge when you already won the Test of Prowess a second time. This fixes a bug in with Okku's tribe at the Wells of Lurure: When you devoured Okku, were female and had Gann in your party the conversation would simply end after Gann had his line without the bears becoming hostile. [kevL lifted these 2 - http://mods.jo-ge.net/nwn2/index.htm - after a recommend by NinjaSpectre]
+- B_X1
+b12_jurak.DLG
+b10_bear_spirits.DLG
+
+
