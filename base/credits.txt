@@ -264,3 +264,11 @@ files:
 nw_mcloth005.UTI
 
 
+Mithral Chain of Greater Frost Resistance +4 fix by kevL
+v.180913
+Change ArmorRuleStats to mithral type for Mithral Chain of Greater Frost Resistance +4 since its material-type is Mithral.
+files:
+- blueprints
+nx1_chainshirt_frost.UTI
+
+
