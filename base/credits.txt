@@ -243,3 +243,18 @@ files:
 ginc_group.NSS
 
 
+UI fixes
+v.180913
+change [uppercase=truefontfamily="Default"] to [uppercase=true fontfamily="Default"] in Examine.XML
+change [ALIGN_LEFT"] to [ALIGN_LEFT] in Ig_Chargen_*.XML
+change [strref="181357""] to [strref="181357"] in Gfx_Options.XML
+Reported by rjshae, submitted by kevL
+files:
+- ui
+examine.xml
+ig_chargen_*.xml
+gfx_options.xml
+
+
+
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="NWN2UI">
+
+<UIScene name="SCREEN_EXAMINE" x=ALIGN_CENTER y=ALIGN_CENTER modal=false width=309 height=400 fadeout="0.3" fadein="0.3" draggable=true backoutkey=true
+	OnAdd=UIScene_OnAdd_AddExamineScreen("EXAMINE_NAME_TEXT","EXAMINE_DESCRIPTION_TEXT","IDENTIFY_BUTTON")
+	OnRemove=UIScene_OnRemove_RemoveExamineScreen() priority="SCENE_INGAME"/>
+
+	<UIText name="EXAMINE_SCREEN_NAME" strref="549" uppercase=true x=60 y=12 width=208 height=20 align=left valign=middle fontfamily="Title_Font" style="1" />
+	<UIIcon name="EXAMINE_DETAIL" img="ia_examine.tga" x=15 y=12 width=40 height=40 />
+
+	<!-- Close Button -->
+	<UIButton name="CloseButton" x=274 y=8 style="STYLE_CLOSE_BUTTON" 
+		OnLeftClick=UIButton_Input_ScreenClose()>
+	</UIButton>
+
+	<UIButton name="IDENTIFY_BUTTON" x=ALIGN_CENTER y=45 width=140 height=29
+	OnLeftClick=UIButton_Input_HandleIdentify() disabledcolor="white" >
+		<UIText name="IDENTIFY_TEXT" width=PARENT_WIDTH height=PARENT_HEIGHT align=center valign=middle uppercase=true fontfamily="Default" style="bold" />
+		<UIFrame state=up		fill="b_subtab_normal.tga" />
+		<UIFrame state=down		fill="b_subtab_pressed.tga" />
+		<UIFrame state=focused	fill="b_subtab_normal.tga" />
+		<UIFrame state=hilited	fill="b_subtab_normal.tga" />
+		<UIFrame state=hifocus	fill="b_subtab_pressed.tga" />
+		<UIFrame state=disabled	fill="b_subtab_disabled.tga" />
+	</UIButton>
+
+	<!-- Item Name -->	
+	<UIText name="EXAMINE_NAME_TEXT" x=ALIGN_CENTER y=87 width=274 height=55 align=center valign=middle fontfamily="Body_Font" style="bold" multiline=true maxlines=3 />
+
+	<UIIcon name="HZ_BAR" img="grid_pixel.tga" x=10 y=138 width=295 height=1 />
+	<UIListBox name="HEADER_LISTBOX" x=26 y=139 width=272 height=251 yPadding=0 xPadding=0 showpartialchild=true
+	unequalcontrols=true scrollsegmentsize=30 hidescrollbarwhennotneeded=true >
+
+		<UIText name="EXAMINE_DESCRIPTION_TEXT" width=PARENT_WIDTH height=DYNAMIC align=left valign=top color="3d3131" fontfamily="NWN1_Dialog" style="bold" />
+		
+		<UIScrollBar name="SB" style="STYLE_SB_THIN"></UIScrollBar>	
+	</UIListBox>	
+
+	<!-- Background Image -->
+	<UIIcon name="EXAMINE_BACKGROUND_TOP" img="idesc_top_bg.tga" x=10 y=8 width=290 height=80 />
+	<UIIcon name="EXAMINE_BACKGROUND" img="idesc_paper_bg.tga" x=10 y=88 width=290 height=303 />
+	<UIFrame x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT topleft="frame1_tl.tga" topright="frame1_tr.tga" bottomleft="frame1_bl.tga"
+		bottomright="frame1_BR.tga" top="frame1_t.tga" bottom="frame1_b.tga"
+		left="frame1_l.tga" right="frame1_r.tga" border=32 />	

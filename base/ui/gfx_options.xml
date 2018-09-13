@@ -1,0 +1,1898 @@
+<?xml version="1.0" encoding="NWN2UI">
+
+<UIScene name="SCREEN_GFX" x=0 y=100 width=384 height=512 draggable=true idleexpiretime="5.0" OnAdd=Debug_GFX_InitScreen() fadeout=.3 fadein=.3 priority="SCENE_INGAME_SYSTEM"/>
+
+	<!-- ***SCENE TITLE*** -->
+	<UIText name="SceneTitle" strref="181310" x=0 y=5 width=384 height=30 align=CENTER />
+
+	<!-- Close Button -->
+	<UIButton name="CloseButton" x=358 y=2 width=24 height=24 OnLeftClick=UIButton_Input_ScreenClose()>
+		<UIFrame state=up		fill="b_close_normal.tga" />
+		<UIFrame state=down		fill="b_close_pressed.tga" />
+		<UIFrame state=focused	fill="b_close_pressed.tga" />
+		<UIFrame state=hilited	fill="b_close_hover.tga" />
+		<UIFrame state=hifocus	fill="b_close_pressed.tga" />
+		<UIFrame state=disabled	fill="b_close_normal.tga" />
+	</UIButton>
+
+	<!-- ***GFX OPTIONS TABS*** -->
+	<UIButton name="WeatherTab" x=6 y=30 width=65 height=22 strref="62484" buttontype=radio groupid=1 groupmemberid=1
+		OnSelected=UIButton_Input_ShowObject("WeatherPane") OnUnselected=UIButton_Input_HideObject("WeatherPane") >
+		<UIText strref="62484" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	<UIButton name="BloomTab" x=71 y=30 width=65 height=22 strref="181320" buttontype=radio groupid=1 groupmemberid=2
+		OnSelected=UIButton_Input_ShowObject("BloomPane") OnUnselected=UIButton_Input_HideObject("BloomPane") >
+		<UIText strref="181320" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	<UIButton name="SunTab" x=136 y=30 width=65 height=22 strref="181321" buttontype=radio groupid=1 groupmemberid=3
+		OnSelected=UIButton_Input_ShowObject("SunPane") OnUnselected=UIButton_Input_HideObject("SunPane") >
+		<UIText strref="181321" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	<UIButton name="SkyTab" x=201 y=30 width=65 height=22 strref="181322" buttontype=radio groupid=1 groupmemberid=4
+		OnSelected=UIButton_Input_ShowObject("SkyPane") OnUnselected=UIButton_Input_HideObject("SkyPane") >
+		<UIText strref="181322" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	<UIButton name="ShadowsTab" x=266 y=30 width=65 height=22 strref="181323" buttontype=radio groupid=1 groupmemberid=5
+		OnSelected=UIButton_Input_ShowObject("ShadowsPane") OnUnselected=UIButton_Input_HideObject("ShadowsPane") >
+		<UIText strref="181323" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	<UIButton name="WaterTab" x=6 y=53 width=65 height=22 strref="9042" buttontype=radio groupid=1 groupmemberid=6
+		OnSelected=UIButton_Input_ShowObject("WaterPane") OnUnselected=UIButton_Input_HideObject("WaterPane") >
+		<UIText strref="9042" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	<UIButton name="NormMapTab" x=71 y=53 width=65 height=22 strref="181324" buttontype=radio groupid=1 groupmemberid=7
+		OnSelected=UIButton_Input_ShowObject("NormMapPane") OnUnselected=UIButton_Input_HideObject("NormMapPane") >
+		<UIText strref="181324" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	<UIButton name="FogCamTab" x=136 y=53 width=65 height=22 strref="181325" buttontype=radio groupid=1 groupmemberid=8
+		OnSelected=UIButton_Input_ShowObject("FogCamPane") OnUnselected=UIButton_Input_HideObject("FogCamPane") >
+		<UIText strref="181325" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	<UIButton name="HDRTab" x=201 y=53 width=65 height=22 strref="181326" buttontype=radio groupid=1 groupmemberid=9
+		OnSelected=UIButton_Input_ShowObject("HDRPane") OnUnselected=UIButton_Input_HideObject("HDRPane") >
+		<UIText strref="181326" align=center valign=middle fontfamily="Special_Font" style="1" />
+		<UIFrame state=up		fill="b_sm_normal.tga" />
+		<UIFrame state=down		fill="b_sm_pressed.tga" />
+		<UIFrame state=focused	fill="b_sm_pressed.tga" />
+		<UIFrame state=hilited	fill="b_sm_hover.tga" />
+		<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+		<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+	</UIButton>
+	
+	<!-- Weather Pane -->
+	<UIPane name="WeatherPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT capturemouseclicks=false >	
+		<UIButton name="ToggleRain" x=5 y=90 width=100 height=22 strref="181327" OnLeftClick=Debug_GFX_ToggleRain() >
+			<UIText strref="181327" align=center valign=middle fontfamily="Special_Font" style="1" />
+			<UIFrame state=up		fill="b_sm_normal.tga" />
+			<UIFrame state=down		fill="b_sm_pressed.tga" />
+			<UIFrame state=focused	fill="b_sm_pressed.tga" />
+			<UIFrame state=hilited	fill="b_sm_hover.tga" />
+			<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+			<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+		</UIButton>
+		<UIButton name="ToggleSnow" x=5 y=120 width=100 height=22 strref="181328" OnLeftClick=Debug_GFX_ToggleSnow() >
+			<UIText strref="181328" align=center valign=middle fontfamily="Special_Font" style="1" />
+			<UIFrame state=up		fill="b_sm_normal.tga" />
+			<UIFrame state=down		fill="b_sm_pressed.tga" />
+			<UIFrame state=focused	fill="b_sm_pressed.tga" />
+			<UIFrame state=hilited	fill="b_sm_hover.tga" />
+			<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+			<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+		</UIButton>
+	</UIPane>
+
+	<!-- Bloom Pane -->
+	<UIPane name="BloomPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT hidden=true capturemouseclicks=false >
+		<UIText name="BloomHighlight" strref="181329" x=5 y=90 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="BloomHLValue" text="0" x=100 y=90 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="BloomHL" x=160 y=90 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_BloomHighlight() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="BloomSceneIntensity" strref="181330" x=5 y=120 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="SceneIntensityValue" text="0" x=100 y=120 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="BloomSI" x=160 y=120 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_BloomSceneIntensity() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="BloomGlowIntensity" strref="181331" x=5 y=150 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="GlowIntensityValue" text="0" x=100 y=150 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="BloomGI" x=160 y=150 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_BloomGlowIntensity() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="BloomHighlightIntensity" strref="181332" x=5 y=180 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="HighlightIntensityValue" text="0" x=100 y=180 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="BloomHLI" x=160 y=180 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_BloomHighlightIntensity() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="BloomBlurRadius" strref="181333" x=5 y=210 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="BlurRadiusValue" text="0" x=100 y=210 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="BloomBR" x=160 y=210 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_BloomBlurRadius() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+	</UIPane>
+
+	<!-- Sun Pane -->
+	<UIPane name="SunPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT hidden=true capturemouseclicks=false >
+
+		<UIText name="PreSunX" strref="181334" x=5 y=90 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="SunXValue" text="0" x=100 y=90 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="SunX" x=160 y=90 height=16 width=200 horizontal=true minvalue=-255 maxvalue=255 OnSliderPositionChange=Debug_GFX_SunDir("SunX","SunY","SunZ") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreSunY" strref="181335" x=5 y=110 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="SunYValue" text="0" x=100 y=110 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="SunY" x=160 y=110 height=16 width=200 horizontal=true minvalue=-255 maxvalue=255 OnSliderPositionChange=Debug_GFX_SunDir("SunX","SunY","SunZ") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreSunZ" strref="181336" x=5 y=130 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="SunZValue" text="0" x=100 y=130 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="SunZ" x=160 y=130 height=16 width=200 horizontal=true minvalue=-255 maxvalue=255 OnSliderPositionChange=Debug_GFX_SunDir("SunX","SunY","SunZ") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		
+		<UIText name="PreSunR" strref="181337" x=5 y=170 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="SunRValue" text="0" x=100 y=170 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="SunR" x=160 y=170 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SunColor("SunR","SunG","SunB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreSunG" strref="181338" x=5 y=190 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="SunGValue" text="0" x=100 y=190 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="SunG" x=160 y=190 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SunColor("SunR","SunG","SunB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreSunB" strref="181339" x=5 y=210 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="SunBValue" text="0" x=100 y=210 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="SunB" x=160 y=210 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SunColor("SunR","SunG","SunB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>	
+
+		<UIText name="PreSunIntens" strref="181340" x=5 y=230 width=90 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIText name="SunIntensValue" text="0" x=100 y=230 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="SunIntens" x=160 y=230 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SunIntensity("SunIntens") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>	
+
+		<UIText name="PreSunCoronaIntens" strref="181341" x=5 y=250 width=90 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIText name="SunCoronaIntensValue" text="0" x=100 y=250 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="SunCoronaIntens" x=160 y=250 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SunCoronaIntensity("SunCoronaIntens") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>	
+
+	</UIPane>
+
+	<!-- Sky Pane -->
+	<UIPane name="SkyPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT hidden=true capturemouseclicks=false >
+		<UIButton name="ToggleDayNight" x=5 y=80 width=150 height=22 strref="181342" OnLeftClick=Debug_GFX_ToggleDayNight() >
+			<UIText strref="181342" align=center valign=middle fontfamily="Special_Font" style="1" />
+			<UIFrame state=up		fill="b_sm_normal.tga" />
+			<UIFrame state=down		fill="b_sm_pressed.tga" />
+			<UIFrame state=focused	fill="b_sm_pressed.tga" />
+			<UIFrame state=hilited	fill="b_sm_hover.tga" />
+			<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+			<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+		</UIButton>
+		<UIButton name="ToggleSky" x=175 y=80 width=150 height=22 strref="181343" OnLeftClick=Debug_GFX_ToggleSky() >
+			<UIText strref="181343" align=center valign=middle fontfamily="Special_Font" style="1" />
+			<UIFrame state=up		fill="b_sm_normal.tga" />
+			<UIFrame state=down		fill="b_sm_pressed.tga" />
+			<UIFrame state=focused	fill="b_sm_pressed.tga" />
+			<UIFrame state=hilited	fill="b_sm_hover.tga" />
+			<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+			<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+		</UIButton>
+		<UIText name="PreAmbSkyR" strref="181344" x=5 y=110 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="AmbSkyRValue" text="0" x=100 y=110 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="AmbSkyR" x=160 y=110 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_AmbSkyColor("AmbSkyR","AmbSkyG","AmbSkyB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreAmbSkyG" strref="181345" x=5 y=128 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="AmbSkyGValue" text="0" x=100 y=128 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="AmbSkyG" x=160 y=128 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_AmbSkyColor("AmbSkyR","AmbSkyG","AmbSkyB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreAmbSkyB" strref="181346" x=5 y=146 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="AmbSkyBValue" text="0" x=100 y=146 width=60 height=16 align=CENTER valign=middle fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="AmbSkyB" x=160 y=146 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_AmbSkyColor("AmbSkyR","AmbSkyG","AmbSkyB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreAmbSkyIntens" strref="181347" x=5 y=164 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="AmbSkyIntensValue" text="0" x=100 y=164 width=60 height=16 align=CENTER valign=middle fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="AmbSkyIntens" x=160 y=164 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_AmbSkyIntensity("AmbSkyIntens") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>	
+		
+		<UIText name="PreAmbGoundR" strref="181348" x=5 y=190 width=100 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="AmbGroundRValue" text="0" x=100 y=190 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="AmbGroundR" x=160 y=190 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_AmbGroundColor("AmbGroundR","AmbGroundG","AmbGroundB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreAmbGroundG" strref="181349" x=5 y=208 width=100 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="AmbGroundGValue" text="0" x=100 y=208 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="AmbGroundG" x=160 y=208 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_AmbGroundColor("AmbGroundR","AmbGroundG","AmbGroundB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreAmbGroundB" strref="181350" x=5 y=226 width=100 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="AmbGroundBValue" text="0" x=100 y=226 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="AmbGroundB" x=160 y=226 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_AmbGroundColor("AmbGroundR","AmbGroundG","AmbGroundB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		
+		<UIText name="PreAmbGroundI" strref="181351" x=5 y=244 width=100 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="AmbGroundIntensValue" text="0" x=100 y=244 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="AmbGroundIntens" x=160 y=244 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_AmbGroundIntensity("AmbGroundIntens") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		
+		<UIText name="PreZenithR" strref="181352" x=5 y=270 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="ZenithRValue" text="0" x=100 y=270 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="ZenithR" x=160 y=270 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SkyZenithColor("ZenithR","ZenithG","ZenithB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreZenithG" strref="181353" x=5 y=288 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="ZenithGValue" text="0" x=100 y=288 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="ZenithG" x=160 y=288 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SkyZenithColor("ZenithR","ZenithG","ZenithB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreZenithB" strref="181354" x=5 y=306 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="ZenithBValue" text="0" x=100 y=306 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="ZenithB" x=160 y=306 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SkyZenithColor("ZenithR","ZenithG","ZenithB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<!--
+		<UIText name="PreHorizonR" strref="181355" x=5 y=332 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="HorizonRValue" text="0" x=100 y=332 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="HorizonR" x=160 y=332 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SkyHorizonColor("HorizonR","HorizonG","HorizonB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreHorizonG" strref="181356" x=5 y=350 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="HorizonGValue" text="0" x=100 y=350 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="HorizonG" x=160 y=350 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SkyHorizonColor("HorizonR","HorizonG","HorizonB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreHorizonB" strref="181357" x=5 y=368 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="HorizonBValue" text="0" x=100 y=368 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="HorizonB" x=160 y=368 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_SkyHorizonColor("HorizonR","HorizonG","HorizonB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		-->
+		<UIText name="PreCloudX" strref="181358" x=5 y=394 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="CloudXValue" text="0" x=100 y=394 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="CloudX" x=160 y=394 height=16 width=200 horizontal=true minvalue=-255 maxvalue=255 OnSliderPositionChange=Debug_GFX_CloudRate("CloudX","CloudY") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreCloudY" strref="181359" x=5 y=412 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="CloudYValue" text="0" x=100 y=412 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="CloudY" x=160 y=412 height=16 width=200 horizontal=true minvalue=-255 maxvalue=255 OnSliderPositionChange=Debug_GFX_CloudRate("CloudX","CloudY") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreCover" strref="181360" x=5 y=430 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="CoverValue" text="0" x=100 y=430 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="Cover" x=160 y=430 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_CloudCover() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		
+		<UIText name="PreWindX" strref="181361" x=5 y=448 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="WindXValue" text="0" x=100 y=448 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="WindX" x=160 y=448 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_WindDir("WindX","WindY") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreWindY" strref="181362" x=5 y=466 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="WindYValue" text="0" x=100 y=466 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="WindY" x=160 y=466 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_WindDir("WindX","WindY") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+	</UIPane>
+
+	<!-- Shadows Pane -->
+	<UIPane name="ShadowsPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT hidden=true capturemouseclicks=false >
+		<UIButton name="ToggleShadows" x=5 y=90 width=150 height=22 strref="181363" OnLeftClick=Debug_GFX_ToggleShadows() >
+			<UIText strref="181363" align=center valign=middle fontfamily="Special_Font" style="1" />
+			<UIFrame state=up		fill="b_sm_normal.tga" />
+			<UIFrame state=down		fill="b_sm_pressed.tga" />
+			<UIFrame state=focused	fill="b_sm_pressed.tga" />
+			<UIFrame state=hilited	fill="b_sm_hover.tga" />
+			<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+			<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+		</UIButton>
+		<UIText name="PreShadInten" strref="181364" x=5 y=130 width=90 height=16 valign=middle align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="ShadIntenValue" text="0" x=100 y=130 width=60 height=16 valign=middle align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="ShadInten" x=160 y=130 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_ShadowIntensity() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+	</UIPane>
+
+	<!-- Water Pane -->
+	<UIPane name="WaterPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT hidden=true capturemouseclicks=false >
+		<UIText name="PreWaterR" strref="181365" x=5 y=140 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="WaterRValue" text="0" x=100 y=140 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="WaterR" x=160 y=140 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_WaterColor("WaterR","WaterG","WaterB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreWaterG" strref="181366" x=5 y=160 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="WaterGValue" text="0" x=100 y=160 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="WaterG" x=160 y=160 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_WaterColor("WaterR","WaterG","WaterB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreWaterB" strref="181367" x=5 y=180 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />
+		<UIText name="WaterBValue" text="0" x=100 y=180 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />
+		<UIScrollBar name="WaterB" x=160 y=180 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_WaterColor("WaterR","WaterG","WaterB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreWaveAmp" strref="181368" x=5 y=290 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="WaveAmpValue" text="0" x=100 y=290 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="WaveAmp" x=160 y=290 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_WaveAmplitude() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreWaveFreq" strref="181369" x=5 y=320 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="WaveFreqValue" text="0" x=100 y=320 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="WaveFreq" x=160 y=320 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_WaveFrequency() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreRipAmp" strref="181370" x=5 y=350 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="RipAmpValue" text="0" x=100 y=350 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="RipAmp" x=160 y=350 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_RipAmplitude() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreRipFreq" strref="181371" x=5 y=380 width=90 height=30 align=LEFT fontfamily="Special_Font" style="1" />	
+		<UIText name="RipFreqValue" text="0" x=100 y=380 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="RipFreq" x=160 y=380 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_RipFrequency() >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+	</UIPane>
+
+	<!-- Normal Map Pane -->
+	<UIPane name="NormMapPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT capturemouseclicks=false hidden=true >	
+		<UIButton name="ToggleGroundNormals" x=5 y=90 width=200 height=22 strref="181372" OnLeftClick=Debug_GFX_ToggleGroundNormals() >
+			<UIText strref="181372" align=center valign=middle fontfamily="Special_Font" style="1" />
+			<UIFrame state=up		fill="b_sm_normal.tga" />
+			<UIFrame state=down		fill="b_sm_pressed.tga" />
+			<UIFrame state=focused	fill="b_sm_pressed.tga" />
+			<UIFrame state=hilited	fill="b_sm_hover.tga" />
+			<UIFrame state=hifocus	fill="b_sm_pressed.tga" />
+			<UIFrame state=disabled	fill="b_sm_disabled.tga" />
+		</UIButton>
+	</UIPane>
+
+	<!-- Fog and Camera Pane -->
+	<UIPane name="FogCamPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT capturemouseclicks=false hidden=true >	
+
+		<UIText name="PreFarPlane" strref="181373" x=5 y=90 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="FarPlaneValue" text="0" x=100 y=90 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="FarPlane" x=160 y=90 height=16 width=200 horizontal=true minvalue=0 maxvalue=5000 OnSliderPositionChange=Debug_GFX_FarPlane("FarPlane") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreFogStart" strref="181374" x=5 y=130 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="FogStartValue" text="0" x=100 y=130 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="FogStart" x=160 y=130 height=16 width=200 horizontal=true minvalue=0 maxvalue=5000 OnSliderPositionChange=Debug_GFX_FogStart("FogStart") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+
+		<UIText name="PreFogEnd" strref="181375" x=5 y=150 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="FogEndValue" text="0" x=100 y=150 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="FogEnd" x=160 y=150 height=16 width=200 horizontal=true minvalue=0 maxvalue=5000 OnSliderPositionChange=Debug_GFX_FogEnd("FogEnd") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		
+		<UIText name="PreFogR" strref="181376" x=5 y=200 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="FogRValue" text="0" x=100 y=200 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="FogR" x=160 y=200 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_FogColor("FogR","FogG","FogB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>		
+		<UIText name="PreFogG" strref="181377" x=5 y=220 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="FogGValue" text="0" x=100 y=220 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="FogG" x=160 y=220 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_FogColor("FogR","FogG","FogB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>
+		<UIText name="PreFogB" strref="181378" x=5 y=240 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="FogBValue" text="0" x=100 y=240 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="FogB" x=160 y=240 height=16 width=200 horizontal=true minvalue=0 maxvalue=255 OnSliderPositionChange=Debug_GFX_FogColor("FogR","FogG","FogB") >
+			<UIButton name=up x=0 y=0 height=28 width=24 >
+				<UIFrame state=up		fill="b_minus_normal.tga" />
+				<UIFrame state=down		fill="b_minus_pressed.tga" />
+				<UIFrame state=focused	fill="b_minus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_minus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_minus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_minus_disabled.tga" />
+			</UIButton>
+			<UIButton name=down x=0 y=290 height=28 width=24 >
+				<UIFrame state=up		fill="b_plus_normal.tga" />
+				<UIFrame state=down		fill="b_plus_pressed.tga" />
+				<UIFrame state=focused	fill="b_plus_pressed.tga" />
+				<UIFrame state=hilited	fill="b_plus_hover.tga" />
+				<UIFrame state=hifocus	fill="b_plus_hover_pressed.tga" />
+				<UIFrame state=disabled	fill="b_plus_disabled.tga" />
+			</UIButton>
+			<UIButton name=slider x=1 y=150 height=14 width=10 >
+				<UIFrame state=up		fill="slider_handle_normal.tga" />
+				<UIFrame state=down		fill="slider_handle_pressed.tga" />
+				<UIFrame state=focused	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hilited	fill="slider_handle_pressed.tga" />
+				<UIFrame state=hifocus	fill="slider_handle_pressed.tga" />
+				<UIFrame state=disabled	fill="slider_handle_normal.tga" />
+			</UIButton>
+			<UIButton name=back x=0 y=0 height=PARENT_HEIGHT width=PARENT_WIDTH OnLeftClick=UIScrollBar_Input_JumpSlider()>
+				<UIFrame state=up		fill="slider_background.tga" />
+				<UIFrame state=down		fill="slider_background.tga" />
+				<UIFrame state=focused	fill="slider_background.tga" />
+				<UIFrame state=hilited	fill="slider_background.tga" />
+				<UIFrame state=hifocus	fill="slider_background.tga" />
+				<UIFrame state=disabled	fill="slider_background.tga" />
+			</UIButton>
+		</UIScrollBar>	
+	</UIPane>
+
+
+
+	<!-- HDR Pane -->
+	<UIPane name="HDRPane" x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT capturemouseclicks=false hidden=true >	
+
+		<UIText name="PreHLThresh" strref="181379" x=5 y=90 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="HLThreshValue" text="0" x=100 y=90 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="HL_THRESHHOLD" style="STYLE_SLIDER" x=160 y=90 minvalue=0 maxvalue=1000 
+		OnSliderPositionChange=Debug_GFX_HL_Thresh("HL_THRESHHOLD") ></UIScrollBar>	
+
+		<UIText name="PreMaxLum" strref="181380" x=5 y=110 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="MaxLumValue" text="0" x=100 y=110 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="MAX_LUM" style="STYLE_SLIDER" x=160 y=110 minvalue=0 maxvalue=1000 
+		OnSliderPositionChange=Debug_GFX_MaxLum("MAX_LUM") ></UIScrollBar>	
+
+		<UIText name="PreAvgLum" strref="181381" x=5 y=130 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="AvgLumValue" text="0" x=100 y=130 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="AVG_LUM" style="STYLE_SLIDER" x=160 y=130 minvalue=0 maxvalue=1000 
+		OnSliderPositionChange=Debug_GFX_AvgLum("AVG_LUM") ></UIScrollBar>	
+
+		<UIText name="PreExposure" strref="181382" x=5 y=150 width=90 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIText name="ExposureValue" text="0" x=100 y=150 width=60 height=30 align=CENTER fontfamily="Special_Font" style="1" />	
+		<UIScrollBar name="EXPOSURE" style="STYLE_SLIDER" x=160 y=150 minsize=0 maxsize=100 minvalue=0 maxvalue=100 
+		OnSliderPositionChange=Debug_GFX_Exposure("EXPOSURE") ></UIScrollBar>	
+
+	</UIPane>
+
+	<!-- Background Image -->
+	<UIFrame x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT topleft="tp_frame_tl.tga" topright="tp_frame_tr.tga" bottomleft="tp_frame_bl.tga"
+	bottomright="tp_frame_BR.tga" top="tp_frame_t.tga" bottom="tp_frame_b.tga"
+	left="tp_frame_l.tga" right="tp_frame_r.tga" fillstyle="stretch" fill="tp_frame_bg.tga"
+	border=5 />
+
