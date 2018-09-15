@@ -82,6 +82,7 @@ m11_daerred.DLG
 Trip fix by kevL's
 v.180406
 Worgs and Mastiffs (tag-based creature-weapon scripts) were disallowing knockdown on higher difficulty levels. The fix is to invert the operation and disallow knockdown on lower difficulties.
+files:
 - M_X2
 i_m_bite_mastiff_hc.NSS
 i_m_bite_worg_hc.NSS
@@ -90,6 +91,7 @@ i_m_bite_worg_hc.NSS
 Trade UI backout fix by kevL's
 v.180408
 In the UIScene of these XML files, closing them by pressing the Escape key would try to fire a script 'ga_enc_ignore' but it doesn't exist. The proper script to fire is 'gui_enc_ignore' when these Trade UI screens close. That is, nearby encounters on the OL Map should ignore the PC when a Trade UI screen is open, and then stop ignoring the PC when the screen is closed.
+files:
 - Campaign
 nx2_caravan.xml
 nx2_market.xml
@@ -101,7 +103,16 @@ nx2_trade_inv.xml
 Neverwinter City Guard dialog fix by kevL's
 v.180417
 Fixed typo "bPassPurcahsed" to "bPassPurchased". Also added a couple of end-dialog nodes (so that even if you have the coin there's an option to back out of the dialog).
+files:
 - F_X2
 f00_nw_guard.DLG
+
+
+Strange Druid dialog fix by kevL's
+v.180914
+The Strange Druid fight would not start if he was intimidated. Fixed by adding ga_initiate_encounter() to the Attack node. Reported by Question2.
+files:
+- G_X2
+g00_en_s_jungle_druid.DLG
 
 
