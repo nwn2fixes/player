@@ -116,3 +116,12 @@ files:
 g00_en_s_jungle_druid.DLG
 
 
+SnakeTongue Assassins fix by kevL
+v.180917
+The Plot encounter assassins were neutral instead of evil. Reported by Question2.
+files:
+- F_X2
+f_snakeassassin.UTC
+f_snakeassassinbow.UTC
+
+
