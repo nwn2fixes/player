@@ -223,12 +223,10 @@ files:
 
 dialog fixes by kamal
 v.170210
-20_cain: Fixed Sleight of Hand check during the Battle of Bards with Caine (was checking player's Perform skill rank instead). "[Sleight of Hand] [Cut one of the strings on Cain's lute.]" Fixed several influence checks with Grobnar.
 20_cs_kyli: Fixed Kyli's convo getting abruptly cut off (only if player is female and Elanee is in party. "Elanee's right. Lisbet will listen to us." only had a continuation if the pc was male.
 20_painter: Fixed Shandra influence gain and loss during the convo with the painter (conversation says there is influence change but no influence change was happening; fixed painter's convo getting cut off if you are female and say it's the work of an amateur
 files:
 - 2000_Neverwinter
-20_cain.DLG
 20_cs_kyli.DLG
 20_painter.DLG
 
