@@ -329,3 +329,11 @@ files:
 10_cormick.DLG
 
 
+Cain dialog fix not by Obsidian
+v.180918
+In the lute duel with Cain, fixes a Sleight of Hand check (was Perform) and fixes an influence check with Grobnar when asking for help to play the fourth riff.
+files:
+- 2000_Neverwinter
+20_cain.DLG
+
+
