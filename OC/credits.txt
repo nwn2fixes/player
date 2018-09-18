@@ -323,3 +323,11 @@ nw_maarcl037_niyra.UTI [created]
 rivalparty_client_en.NSS
 
 
+Trent Vendall double spawn fix by travus
+v.180918
+Trent would incorrectly spawn right next to Cormick after speaking with Cormick about the docks sweep. Removed the create object script from end of the docks sweep branch as Trent is already correctly spawned through 10a_faulk_state script. Added a faction check to the Shadow Thief node.
+files:
+- 1000_Neverwinter_A1
+10_cormick.DLG
+
+
