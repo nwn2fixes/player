@@ -223,12 +223,10 @@ files:
 
 dialog fixes by kamal
 v.170210
-20_cain: Fixed Sleight of Hand check during the Battle of Bards with Caine (was checking player's Perform skill rank instead). "[Sleight of Hand] [Cut one of the strings on Cain's lute.]" Fixed several influence checks with Grobnar.
 20_cs_kyli: Fixed Kyli's convo getting abruptly cut off (only if player is female and Elanee is in party. "Elanee's right. Lisbet will listen to us." only had a continuation if the pc was male.
 20_painter: Fixed Shandra influence gain and loss during the convo with the painter (conversation says there is influence change but no influence change was happening; fixed painter's convo getting cut off if you are female and say it's the work of an amateur
 files:
 - 2000_Neverwinter
-20_cain.DLG
 20_cs_kyli.DLG
 20_painter.DLG
 
@@ -321,5 +319,21 @@ files:
 - 2200_Port_Llast
 nw_maarcl037_niyra.UTI [created]
 rivalparty_client_en.NSS
+
+
+Trent Vendall double spawn fix by travus
+v.180918
+Trent would incorrectly spawn right next to Cormick after speaking with Cormick about the docks sweep. Removed the create object script from end of the docks sweep branch as Trent is already correctly spawned through 10a_faulk_state script. Added a faction check to the Shadow Thief node.
+files:
+- 1000_Neverwinter_A1
+10_cormick.DLG
+
+
+Cain dialog fix not by Obsidian
+v.180918
+In the lute duel with Cain, fixes a Sleight of Hand check (was Perform) and fixes an influence check with Grobnar when asking for help to play the fourth riff.
+files:
+- 2000_Neverwinter
+20_cain.DLG
 
 
