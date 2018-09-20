@@ -338,10 +338,18 @@ files:
 
 
 Neverneath end quest workaround by kevL
-v.180919
+v.180920
 The Defend Castle Never quest might not complete by the stock mechanic. This workaround ought check that and force it to complete when the throne-door is opened to rescue Lord Nasher in the throneroom. Reported by zzc.
 files:
 - 3000_Neverwinter_A3
 3000_throne_onused.NSS
+
+
+Temple of Seasons tweak by kevL
+v.180920
+Update to the previous fixes for Temple of Seasons. Put the fixes into their own codeblock since player may have entered the Temple area before installing the patch.
+files:
+- 2400_Illefarn_Ruins
+2430_area_ce.NSS
 
 
