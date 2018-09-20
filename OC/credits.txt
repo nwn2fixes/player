@@ -353,3 +353,9 @@ files:
 2430_area_ce.NSS
 
 
+Nevalle dialog fix by kevL
+v.180920
+Nevalle could assign the PC to the Disturbing Connections quest at any time, but the dialog itself refers to the PC as a Squire. This fix ensures that the PC is a Squire in good standing with Neverwinter, cleared of all allegations, before the quest will be assigned. Reported by zzc.
+20_nevalle.DLG
+
+
