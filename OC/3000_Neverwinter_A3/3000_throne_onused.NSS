@@ -34,7 +34,7 @@ void main()
 		object oFirstPc = GetFirstPC();
 
 		int iJournal = GetJournalQuestEntry(DEFEND_CASTLE_NEVER_TAG, oFirstPc);
-		if (GetJournalQuestEntry(DEFEND_CASTLE_NEVER_TAG, oFirstPc) >= TRAVEL_NEVERNEATH_QUEST_ID) // <- is set when PC enters 3001 the Underneath '3001_cliententer'
+		if (iJournal >= TRAVEL_NEVERNEATH_QUEST_ID) // <- is set when PC enters 3001 the Underneath '3001_cliententer'
 		{
 			if (iJournal < CASTLE_NEVER_DEFENDED_ID)
 			{
