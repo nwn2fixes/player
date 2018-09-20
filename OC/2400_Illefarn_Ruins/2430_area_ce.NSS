@@ -4,6 +4,10 @@
 // kevL 160907
 // - changed the OnEnter script for the final statue-dialog.
 // - raised the unlock DC for the return door from 18 to 99.
+// kevL 180920
+// - moved Fixes block outside the !FiredFromPartyTransition() and
+//   IsMarkedAsDone() blocks and gave it its own check. Player may
+//   have entered the area before installing this patch.
 
 #include "ginc_misc"
 
@@ -34,14 +38,23 @@ void TwoFixes()
 
 int StartingConditional()
 {
-	if(!FiredFromPartyTransition())
+	// kL_Fixes ->
+	// NOTE: keep these fixes outside of both !FiredFromPartyTransition()
+	// and IsMarkedAsDone() blocks ... player may have entered the area
+	// already or be loading a Save into the area
+	if (!GetLocalInt(OBJECT_SELF, "kL_bFixesDone"))
+	{
+		SetLocalInt(OBJECT_SELF, "kL_bFixesDone", TRUE);
+		TwoFixes();
+	}
+	// END kL_Fixes.
+
+	if (!FiredFromPartyTransition())
 		return FALSE;
-	// First time entering
+
 	if (IsMarkedAsDone() == FALSE)
 	{
 		MarkAsDone();
-
-		TwoFixes(); // kL
 
 		// Play Zhjaeve cutscene
 		object oPC = GetFirstEnteringPC();
