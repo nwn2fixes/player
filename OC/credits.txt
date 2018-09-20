@@ -337,3 +337,11 @@ files:
 20_cain.DLG
 
 
+Neverneath end quest workaround by kevL
+v.180919
+The Defend Castle Never quest might not complete by the stock mechanic. This workaround ought check that and force it to complete when the throne-door is opened to rescue Lord Nasher in the throneroom. Reported by zzc.
+files:
+- 3000_Neverwinter_A3
+3000_throne_onused.NSS
+
+

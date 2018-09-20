@@ -31,14 +31,30 @@ void main()
 {
 	if (!IsMarkedAsDone())
 	{
-		object oLeaderPc = GetOwnedCharacter(GetFactionLeader(GetFirstPC()));						// GetFirstPC() is likely sufficient.
-		if (GetJournalQuestEntry(DEFEND_CASTLE_NEVER_TAG, oLeaderPc) >= TRAVEL_NEVERNEATH_QUEST_ID)	// <- is set when PC enters 3001 the Underneath.
+		object oFirstPc = GetFirstPC();
+
+		int iJournal = GetJournalQuestEntry(DEFEND_CASTLE_NEVER_TAG, oFirstPc);
+		if (GetJournalQuestEntry(DEFEND_CASTLE_NEVER_TAG, oFirstPc) >= TRAVEL_NEVERNEATH_QUEST_ID) // <- is set when PC enters 3001 the Underneath '3001_cliententer'
 		{
-			// kL_notes: Don't use GetLastOpenedBy() above; this has to run even if a guard or another
-			// NPC opens the door. This door will close itself (if it was open) when the PC emerges
-			// from the Underneath; only then should the JournalQuest therefore be found TRUE and the
-			// Battle of the Rod will then necessarily happen. At that point it no longer matters
-			// what opens the door and causes the body of this script to run - as long as it does.
+			if (iJournal < CASTLE_NEVER_DEFENDED_ID)
+			{
+				// kL_Add: complete Underneath quest. This is a safety and should
+				// be (have been) set by dialog '30_nasher' in '3000_cliententer'
+				// But that happens w/ OC-style Cutscene code and can't be trusted.
+				// And its dialog uses the curmudgeonly OncePerModule flag(s).
+				// And the PC is probably nowhere near Nasher when (or if) it actually fires ...
+				// So update the journal and grant the XP reward here if it hasn't been done yet
+
+				AddJournalQuestEntry(DEFEND_CASTLE_NEVER_TAG, CASTLE_NEVER_DEFENDED_ID, oFirstPc);
+				AwardXP(oFirstPc, 54);
+			}
+
+			// kL_notes: Don't use GetLastOpenedBy() to determine who opened the throne-door; this
+			// has to run even if a guard or another NPC opens the door. This door will close itself
+			// (if it was open) when the PC emerges from the Underneath; only then should the
+			// JournalQuest therefore be found TRUE and the Battle of the Rod will then necessarily
+			// happen. At that point it no longer matters what opens the door and causes the body of
+			// this script to run - as long as it does.
 
 			MarkAsDone();
 
