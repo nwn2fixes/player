@@ -356,6 +356,18 @@ files:
 Nevalle dialog fix by kevL
 v.180920
 Nevalle could assign the PC to the Disturbing Connections quest at any time, but the dialog itself refers to the PC as a Squire. This fix ensures that the PC is a Squire in good standing with Neverwinter, cleared of all allegations, before the quest will be assigned. Reported by zzc.
+files:
+- 2000_Neverwinter
 20_nevalle.DLG
+
+
+Hlam dialog fix + Another Hlam dialog fix by sanpats
+v.180921
+Modified the fix by NinjaSpectre, but change nkhelgarismonk=1 to nkhelgardecided=1 when he decided to stay as a fighter, to ensure compatibility with later dialogs that may think Khelgar is a monk when he stay as a fighter. In case that Khelgar decided to be a monk, I set both nkhelgarismonk and nkhelgardecide to 1. All condition checks in this dialog that check nkhelgarismonk was changed to check nkhelgardecided instead.
+files:
+- 1700_Merchant_Quarter
+10_hlam.DLG
+- 3000_Neverwinter_A3
+3063_hlam.DLG
 
 
