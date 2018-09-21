@@ -371,3 +371,10 @@ files:
 3063_hlam.DLG
 
 
+Khelgar dialog fix by sanpats
+v180921
+Prevent the dialog node, where PC tries to convince Khelgar to give up the quest to become a monk, from firing when Khelgar's already decided to stay a fighter when talked to Hlam.
+files:
+gl_khelgar.DLG
+
+
