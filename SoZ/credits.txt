@@ -125,3 +125,11 @@ f_snakeassassin.UTC
 f_snakeassassinbow.UTC
 
 
+logistical fixes for nx2_crafting.2da by kevL
+v.181008
+Nx2_Crafting.2da has numerous formatting errors. This fix corrects those but does not attempt to address any gameplay mechanics.
+files:
+- Campaign
+nx2_crafting.2da
+
+
