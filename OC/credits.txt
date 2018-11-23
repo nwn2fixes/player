@@ -378,3 +378,14 @@ files:
 gl_khelgar.DLG
 
 
+Wizard's Arsenal quest/dialog fix by Aqvilinus (impl. kevL)
+v.181122
+Don't let Tarmas assign the Wizard's Arsenal quest if player has already looted
+his house. Sets a local variable on the module when his house is entered that is
+checked in Tarmas' dialog.
+files:
+- 1100_West_Harbor
+11_tarmas.DLG
+11_a_tarmas_center.NSS
+
+
