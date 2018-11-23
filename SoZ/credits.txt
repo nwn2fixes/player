@@ -133,3 +133,11 @@ files:
 nx2_crafting.2da
 
 
+Fix prototype vs definition default value mismatch in GetCaravanIncome() by kevL
+v.181122
+The default value for 'nLevel' in the prototype was 1 while that in the definition is 0. This fix sets them both to 0 (rather arbitrarily - I mean it might be better as "1" but you'd have to poke through SoZ for a couple hours to figure that out with any degree of certainty).
+files:
+- Campaign
+kinc_trade.NSS
+
+
