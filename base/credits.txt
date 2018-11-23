@@ -272,3 +272,16 @@ files:
 nx1_chainshirt_frost.UTI
 
 
+Remember/Restore Equipped Items fix by Aqvilinus (impl. kevL)
+v.181122
+Handle head-slot properly. Avoid TMI error in RestoreEquippedItems().
+files:
+- scripts
+ga_reequip_all_items.NSS
+ga_remember_equipped.NSS
+ga_restore_equipped.NSS
+ga_unequip_hands.NSS
+ga_unequip_slot.NSS
+ginc_item.NSS
+
+
