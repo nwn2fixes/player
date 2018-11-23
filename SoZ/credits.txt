@@ -141,3 +141,11 @@ files:
 kinc_trade.NSS
 
 
+Nevalle dialog fix by Travus (impl. kevL)
+v.181122
+Nevalle asks for 800 tradebars for the trading post in Neverwinter but didn't take them. This fix takes them.
+files:
+- N_X2
+n00_nevalle.DLG
+
+
