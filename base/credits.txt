@@ -285,3 +285,19 @@ ga_unequip_slot.NSS
 ginc_item.NSS
 
 
+Name-Value Pair script fix by Aqvilinus
+v.181211
+Use the return from RemoveNVP() when adding an NVP with AppendUniqueToNVP().
+files:
+- scripts
+ginc_param_const.nss
+
+
+Name-Value Pair script fixes by kevL
+v.181211
+Refactor the Name-Value Pair functs to use a consistent NVP-delimiter.
+files:
+- scripts
+ginc_param_const.nss
+
+
