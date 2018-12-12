@@ -301,3 +301,11 @@ files:
 ginc_param_const.nss
 
 
+ginc_object fix by kevL
+v.181212
+Fix loop iteration in SpawnObjectsAtWPs(), DestroyAllWithTag(), GetNumberOfObjects(). Spotted by Aqvilinus.
+files:
+- scripts
+ginc_object.NSS
+
+
