@@ -309,3 +309,11 @@ files:
 ginc_object.NSS
 
 
+Half-orc Female Cloth fix by rjshae
+v.181215
+A texturing issue with the half-orc female cloth #10. The texture around the waist has overlapping faces, resulting in a flickering appearance. I [rj] just reversed the normals on one layer of the waist mesh faces, then exported via the nwn2mdk tool.
+files:
+- models
+P_OOF_CL_Body11.MDB
+
+
