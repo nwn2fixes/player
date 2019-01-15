@@ -317,3 +317,11 @@ files:
 P_OOF_CL_Body11.MDB
 
 
+script fix by Aqvilinus
+v.190115
+The dialog-script 'gc_check_race_pc' was not checking civ-types against subraces properly. (impl/ kevL)
+files:
+- scripts
+gc_check_race_pc.NSS
+
+
