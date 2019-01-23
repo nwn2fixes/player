@@ -325,3 +325,13 @@ files:
 gc_check_race_pc.NSS
 
 
+Adamantine shields fix by Vandervecken
+v.190123
+Adamantine shields were not handling damage-reduction properly. Fixed.
+files:
+- blueprints
+mwa_shhv_ada_4.UTI
+mwa_shlt_ada_4.UTI
+mwa_shtw_ada_4.UTI
+
+
