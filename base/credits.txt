@@ -343,3 +343,15 @@ files:
 ginc_effect.NSS
 
 
+GetScaledEffect() fix by Aqvilinus
+v.190214
+GetScaledEffect() was using a negative value for an effect-decrease arg. Fixed
+by changing it to a positive value and recompiled all stock scripts that call
+GetScaledEffect(). (impl/ kevL)
+files:
+- scripts
+nw_i0_spells.NSS
+/scaledeffect (subdir)
+/scaledeffect/mindflayer (subdir)
+
+
