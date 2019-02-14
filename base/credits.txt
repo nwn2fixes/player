@@ -345,13 +345,24 @@ ginc_effect.NSS
 
 GetScaledEffect() fix by Aqvilinus
 v.190214
-GetScaledEffect() was using a negative value for an effect-decrease arg. Fixed
-by changing it to a positive value and recompiled all stock scripts that call
-GetScaledEffect(). (impl/ kevL)
+GetScaledEffect() was using a negative value for an effect-decrease arg. Fixed by changing it to a positive value and recompiled all stock scripts that call GetScaledEffect(). (impl/ kevL)
 files:
 - scripts
 nw_i0_spells.NSS
 /scaledeffect (subdir)
 /scaledeffect/mindflayer (subdir)
+
+
+OverlandMap ApplyDialogSkillEffect() fix by Aqvilinus
+v.190214
+EffectShaken() and EffectOffGuard() were using negative args for effect-decreases. Fixed by changing them to positive args. (impl/ kevL)
+files:
+- scripts
+ginc_overland.NSS
+ginc_restsys.NSS
+ga_initiate_encounter.NSS
+ga_mated_encounter.NSS
+gui_rest.NSS
+k_mod_player_rest.NSS
 
 
