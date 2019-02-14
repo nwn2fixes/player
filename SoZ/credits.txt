@@ -149,3 +149,11 @@ files:
 n00_nevalle.DLG
 
 
+SoZ: Accusation in Nimbre and the Inquisitive Pig by HS_Tri
+v.190214
+An attempt at restoring the Nimbre situation in Obsidian's expansion Storm of Zehir. Now you can convince the captain to let the villagers go if you find evidence that there is a traitor living in their village. Additionally this restores the Inquisitive Pig. Spoilers: Spot 8 will let you notice the loremaster's snake tattoo. He then proceeds to attack you. Two cultists will join the battle (not terribly difficult). On the loremaster's body you will find a certain scroll which you can show to the captain outside. The villagers won't be terribly thankful, though... As far as the pig is concerned, just speak to it.
+files:
+- G_X2
+/nimbre (subfolder)
+
+
