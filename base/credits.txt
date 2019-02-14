@@ -335,3 +335,11 @@ mwa_shlt_ada_4.UTI
 mwa_shtw_ada_4.UTI
 
 
+CreateBeam() fix by Aqvilinus
+v.190214
+Pass 'bMissEffect' into EffectBeam(). (impl/ kevL)
+files:
+- scripts
+ginc_effect.NSS
+
+
