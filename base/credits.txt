@@ -366,3 +366,11 @@ gui_rest.NSS
 k_mod_player_rest.NSS
 
 
+OnInventoryDisturbed event-handler fix
+v.190216
+Many creatures in the stock blueprints have a nonexistent script slotted in their OnInventoryDisturbed events. This workaround forwards the event to the proper handler. Identified and fix suggested by Aqvilinus.
+files:
+- scripts
+nw_e0_default8.nss [add]
+
+
