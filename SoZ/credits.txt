@@ -157,3 +157,12 @@ files:
 /nimbre (subfolder)
 
 
+Port Llast Undead Army Fix (SoZ)
+v.190216
+This is a simple fix for (some) of the problems with the Port Llast quests that have to do with Septimund, Nya, and Lord Adreum. I [Joshauwa] have only fixed errors where it is obvious what the developers have meant to do, so I have not assumed that the developers meant to allow you to lead the undead army into Port Llast AND keep Septimund, since there is no evidence in the scripting that this was an original plan. Also, while it is feasible that there was supposed to be an option to put Adreum to rest without leading the army or killing him, I found no evidence for it and so did not create it. It also seems reasonable that the developers originally meant Adreum to only show up when Nya mentioned him, but there's also no real evidence in the scripting for that, so I didn't change it. Finally, I didn't bother fixing the sloppy coding that doesn't actually affect gameplay: the music doesn't change back in the graveyard after the undead army leaves, for example. If anyone feels inclined to changed these things, they are welcome to use the files in my fix as a starting point (you shouldn't need any other files, except that you will have to create scripts and journal entries that don't yet exist).
+https://neverwintervault.org/project/nwn2/other/port-llast-undead-army-fix-soz
+files:
+- S_X2
+/portllast (subfolder)
+
+
