@@ -374,3 +374,16 @@ files:
 nw_e0_default8.nss [add]
 
 
+Solipsism scroll fix by kevL
+v.190221
+Adds the Solipsism spellscroll and enables the ScribeScroll feat to work with the Solipsism spell. The icon for the scroll already existed but had to be added to the icons table.
+files:
+- 2da
+des_crft_scroll.2da
+des_crft_spells.2da
+iprp_spells.2da
+nwn2_icons.2DA
+- blueprints
+x2_it_sparscr702.UTI [add]
+
+
