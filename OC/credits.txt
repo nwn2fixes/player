@@ -88,7 +88,7 @@ files:
 
 dialog fix by kamal
 v.170205
-13_bugbear_dwarf: Chaotic response chaos adjustment fixed when talking to Khelgar after freeing the dwarf prisoner from bugbears (would adjust alignment towards law instead of chaos)
+13_bugbear_dwarf: Chaotic response chaos adjustment fixed when talking to Khelgar after freeing the dwarf prisoner from bugbears (would adjust alignment towards law instead of chaos).
 files:
 - 1300_Old_Owl_Well
 13_bugbear_dwarf.DLG
@@ -96,7 +96,7 @@ files:
 
 dialog fix by kamal
 v.170205
-previously you didn't gain influence with Khelgar though the conversation said you did
+Previously you didn't gain influence with Khelgar though the conversation said you did.
 files:
 - 1300_Old_Owl_Well
 13_deaddwarf.DLG
@@ -104,8 +104,8 @@ files:
 
 dialog fixes by kamal
 v.170205
-11_georg: Georg will now comment on shandra/casavir/Bishop being your spouse correctly, was previously not possible
-11_daegun: PC response for successful wisdom check now checks wisdom instead of intelligence
+11_georg: Georg will now comment on Shandra/Casavir/Bishop being your spouse correctly, was previously not possible.
+11_daegun: PC response for successful wisdom check now checks wisdom instead of intelligence.
 files:
 - 1100_West_Harbor
 11_daeghun.DLG
@@ -380,12 +380,22 @@ gl_khelgar.DLG
 
 Wizard's Arsenal quest/dialog fix by Aqvilinus (impl. kevL)
 v.181122
-Don't let Tarmas assign the Wizard's Arsenal quest if player has already looted
-his house. Sets a local variable on the module when his house is entered that is
-checked in Tarmas' dialog.
+Don't let Tarmas assign the Wizard's Arsenal quest if player has already looted his house. Sets a local variable on the module when his house is entered that is checked in Tarmas' dialog.
 files:
 - 1100_West_Harbor
 11_tarmas.DLG
 11_a_tarmas_center.NSS
+
+
+Ward Mossfeld fix by kevL
+v.190413
+11_wounded_ward.DLG - leave Ward destroyable when telling him you're going to get help from Brother Merring (as is done in '11_wounded_wyl.DLG')
+11_wounded_wyl.DLG - set "11_bWylState" = 2 correctly so that Ward's dialog will know you've found Wyl (as is done in '11_wounded_ward.DLG')
+11_wound_heal.NSS - do not re-assign an identical series of actions to NPCs (discovered by fleenots); switch Wyl's one-liner dialog w/ Pitney's
+files:
+- 1100_West_Harbor
+11_wounded_ward.DLG
+11_wounded_wyl.DLG
+11_wound_heal.NSS
 
 
