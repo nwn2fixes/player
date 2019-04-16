@@ -399,3 +399,22 @@ files:
 11_wound_heal.NSS
 
 
+Georg and Tarmas fix by kevL
+v.190416
+Fixes stuff in the opening battle in West Harbor after the tutorial finishes.
+11_a_georg_lv.NSS - better redundancy check that ensures Georg gets to the gathering point before the wheatfield battle; refactored and optimized because it's just too difficult/frustrating to figure out what's going on otherwise.
+11_cs_tarmas.NSS - move Tarmas to a gather-point instead of directly to the wheatfield; do not assign Tarmas a custom heartbeat script (ForceRest) since it just gets in the way of his actions/combat/behaviors.
+11_dcr_tarmaswheat.NSS - get the nearest hostile creature to a friendly who is below half health for Tarmas to target. ie, Rewrite script.
+11_wound_heal.NSS - don't AssignCommand to OBJECT_SELF; check the entire PC party for moss, not just the true PCs; don't make recruits wait so long before moving to destination; refactored and optimized overall.
+1100_client_en.NSS - destroy pre-placed Tarmas and spawn Tarmas w/ spells; this instantiates the 'tarmasbattle.UTC' file.
+tarmasbattle.UTC - this is not a copy of the stock 'tarmasbattle.UTC' but a copy of the pre-placed Tarmas as he appears in West Harbor. It is identical to the pre-placed Tarmas except it has Ray of Frost (x4), Magic Missile (x4), Melf's Acid Arrow (x4), Flame Arrow (x3), and uses the standard heartbeat script instead of the ForceRest script.
+files:
+- 1100_West_Harbor
+11_a_georg_lv.NSS
+11_cs_tarmas.NSS
+11_dcr_tarmaswheat.NSS
+11_wound_heal.NSS
+1100_client_en.NSS
+tarmasbattle.UTC
+
+
