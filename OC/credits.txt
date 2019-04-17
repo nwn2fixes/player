@@ -390,7 +390,7 @@ files:
 Ward Mossfeld fix by kevL
 v.190413
 11_wounded_ward.DLG - leave Ward destroyable when telling him you're going to get help from Brother Merring (as is done in '11_wounded_wyl.DLG')
-11_wounded_wyl.DLG - set "11_bWylState" = 2 correctly so that Ward's dialog will know you've found Wyl (as is done in '11_wounded_ward.DLG')
+11_wounded_wyl.DLG - set "11_bWylState" = 1 correctly so that Ward's dialog will know you've found Wyl (as is done in '11_wounded_ward.DLG')
 11_wound_heal.NSS - do not re-assign an identical series of actions to NPCs (discovered by fleenots); switch Wyl's one-liner dialog w/ Pitney's
 files:
 - 1100_West_Harbor
