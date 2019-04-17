@@ -14,29 +14,22 @@
 const string sWP_FIELD_PRE = "11_wp_whrecruit";
 
 
-// kL. The dialogs check if the party has moss before showing the node.
-// So don't recheck that here; just decrement the stack.
+// kL. The dialogs check if the PC has received Moss from Brother Merring (via a
+// global_int "11_bHealMoss") before showing the node. So don't recheck that
+// here; just decrement the stack. Note that the Moss can be but doesn't have to
+// be in party inventory. Eg, Amie could have died with it so it's lying on the
+// ground under her corpse. Also note that decrementing the Moss - or even
+// giving it a stacksize to begin with - is utterly pointless since it's not a
+// usable item ... but that was their decision. As is using a global_int instead
+// of checking party inventory for the item itself.
 void UseMoss()
 {
-	object oMoss;
-
-	object oPcSpeaker = GetPCSpeaker();
-	object oParty = GetFirstFactionMember(oPcSpeaker, FALSE);
-	while (GetIsObjectValid(oParty))
-	{
-		oMoss = GetItemPossessedBy(oParty, "11_swamp_moss");
-		if (GetIsObjectValid(oMoss))
-		{
-			int iSize = GetItemStackSize(oMoss) - 1;
-			if (iSize != 0)
-				SetItemStackSize(oMoss, iSize);
-			else
-				DestroyObject(oMoss);
-
-			break;
-		}
-		oParty = GetNextFactionMember(oPcSpeaker, FALSE);
-	}
+	object oMoss = GetObjectByTag("11_swamp_moss");
+	int iSize = GetItemStackSize(oMoss) - 1;
+	if (iSize != 0)
+		SetItemStackSize(oMoss, iSize);
+	else
+		DestroyObject(oMoss);
 }
 
 
@@ -53,7 +46,7 @@ void main(int iDialogNode)
 			ApplySEFToLocation("sp_cure_light", GetLocation(oSelf));
 
 			effect eHeal = EffectHeal(GetMaxHitPoints(oSelf) - GetCurrentHitPoints(oSelf));
-			ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, OBJECT_SELF);
+			ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oSelf);
 
 			ClearAllActions(TRUE);
 			ActionWait(1.5f);
@@ -62,7 +55,7 @@ void main(int iDialogNode)
 			object oNote;
 
 			object oPC = GetNearestCreature(CREATURE_TYPE_PLAYER_CHAR, PLAYER_CHAR_IS_PC,
-											OBJECT_SELF, 1,
+											oSelf, 1,
 											CREATURE_TYPE_IS_ALIVE, CREATURE_ALIVE_TRUE);
 
 			if (GetTag(oSelf) == "11_wounded1") // Wyl Mossfeld

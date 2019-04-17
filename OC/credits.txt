@@ -418,3 +418,13 @@ files:
 tarmasbattle.UTC
 
 
+Brother Merring's Moss fix by Aqvilinus (impl. kevL)
+v.190417
+11_a_journal_wound.NSS - don't finish quest if simply talking to a 2nd wounded villager; a villager must be healed before quest completes.
+11_wound_heal.NSS - account for the fact that Amie could have had the healing moss and dropped it when she died.
+files:
+- 1100_West_Harbor
+11_a_journal_wound.NSS
+11_wound_heal.NSS
+
+
