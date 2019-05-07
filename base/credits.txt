@@ -387,3 +387,11 @@ nwn2_icons.2DA
 x2_it_sparscr702.UTI [add]
 
 
+Icon fix for Mysteries of Westgate
+v.190507
+Add a couple of icon refs for MoW. Reported by Chofranc.
+files:
+- 2da
+nwn2_icons.2DA
+
+
