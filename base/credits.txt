@@ -395,3 +395,11 @@ files:
 nwn2_icons.2DA
 
 
+Werewolf/Wererat weapon orientation fix by ArtEChoke
+v.190604
+This is a simple orientation fix for the attachment points on the Obsidian Werewolf skeleton. This fix applies to the Ossian Wererat, as it shares the same skeleton. Previously the werewolf held weapons at a bizarre angle that clipped with its body and arms. This new skeleton will point the weapons in the proper direction. What this fix does *NOT* do is add proper weapon grasping animations, or proper weapon wielding animations. The creature will still attack with one left claw swipe (or whatever weapon you put in its left hand) and one bite.
+files:
+- skeletons
+c_werewolf_skel.GR2
+
+
