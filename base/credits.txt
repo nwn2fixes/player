@@ -416,3 +416,11 @@ files:
 nw_i0_plot.NSS
 
 
+recompile 'ga_take_item' due to changed TakeNumItems() in 'nw_i0_plot'
+v.190611
+Recompiled script.
+files:
+- scripts
+ga_take_item.nss
+
+

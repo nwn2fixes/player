@@ -428,3 +428,11 @@ files:
 11_wound_heal.NSS
 
 
+recompile '12_a_bty_pay' due to changed TakeNumItems() in 'nw_i0_plot'
+v.190611
+Recompiled script.
+files:
+- 1200_Highcliff
+12_a_bty_pay.NSS
+
+
