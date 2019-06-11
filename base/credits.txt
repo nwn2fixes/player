@@ -403,3 +403,12 @@ files:
 c_werewolf_skel.GR2
 
 
+TakeNumItems() fix by Shadooow (impl/ kevL)
+v.190611
+The function TakeNumItems() in 'nw_i0_plot' did not consider stacked items. Note
+that this change does NOT fix scripts that have already been compiled.
+files:
+- scripts\inc
+nw_i0_plot.NSS
+
+
