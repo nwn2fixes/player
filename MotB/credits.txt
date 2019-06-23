@@ -83,8 +83,17 @@ b13_p_anya_sleep.NSS
 Dialog Fixes by JOG
 v.180913
 MotB: Ice-Troll-Lodge Bugfix AND MotB: Lurure Bears Bugfix. This fixes the bug where you can't join the Ice Troll Lodge when you already won the Test of Prowess a second time. This fixes a bug in with Okku's tribe at the Wells of Lurure: When you devoured Okku, were female and had Gann in your party the conversation would simply end after Gann had his line without the bears becoming hostile. [kevL lifted these 2 - http://mods.jo-ge.net/nwn2/index.htm - after a recommend by NinjaSpectre]
+files:
 - B_X1
 b12_jurak.DLG
 b10_bear_spirits.DLG
+
+
+Fentomy dialog fix
+v.190623
+Fentomy on the Lakeshore could potentially ramp up companion influences infinitely. This fix checks for a local_int on Fentomy "Revealed" and, if found, disallows each of the four dialog-nodes that lead to revealing Fentomy's disguise, hence should stop infinite influence gains. (And potentially infinite losses on some of the other subnodes, it seems.) Spotted by rsw0x.
+files:
+- D_X1
+d00_fentomy.DLG
 
 
