@@ -424,3 +424,12 @@ files:
 ga_take_item.nss
 
 
+Staff of Balpheron fix by Clangeddin
+v.191226
+The problem is the OnEquip tag-based item script, that script applies a bunch of properties whenever it fires, the OnUnequip related script removes those properties. Here's the problem though, when you load the game, the OnEquip script fires, but the OnUnequip one does not, so if you equip, save, load, save, load, save, load, save, etc you will keep on stacking those properties until you get a staff with more than 255 item properties, which causes the engine to not load the character properly when the game is loaded; in fact, all other items are not displayed either in the inventory. What I did with the fix was simply add a local var check that would not apply the properties again if the item was already equipped, then I added the delete local var to the OnUnequip script to make sure it works properly later. [bug report by Myskully]
+files:
+- scripts
+i_n2_wmgst001_eq.nss
+i_n2_wmgst001_ue.nss
+
+
