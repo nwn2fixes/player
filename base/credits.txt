@@ -433,3 +433,20 @@ i_n2_wmgst001_eq.nss
 i_n2_wmgst001_ue.nss
 
 
+Changes to spell scripts involving 100% immunity by Clangeddin
+v.200103
+The following spells had their 100% damage immunity changed to 9999 damage resistance, this is done to prevent the damage immunity overflow bug that turns them into vulnerabilities once they go past 100%. This operates under the same principle of the energy immunity spells (level 6 cleric, druid, bard spell and level 7 for Wiz/Sorc). The affected spells are:
+1. Shadow Shield
+2. Death Ward
+3. Mass Death Ward
+4. Iron Body (electric immunity only)
+5. Stone Body (same as above)
+files:
+- scripts/spells
+nw_s0_deaward.nss
+nw_s0_ironbody.nss
+nw_s0_shadshld.nss
+nw_s0_stonebody.nss
+nx_s0_massdeaward.nss
+
+
