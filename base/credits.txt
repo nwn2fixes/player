@@ -450,3 +450,13 @@ nw_s0_stonebody.nss
 nx_s0_massdeaward.nss
 
 
+Stormlord and RDD 100% damage immunity bugfix by Clangeddin
+v.200105
+Scripts to change their 100% immunity to a 9999 DR.
+Additional info about the bug found at: https://forum.neverwintervault.org/t/nwn2fixes/595/248
+files:
+- scripts/spells
+nx_s2_immunityelectricity.nss
+nx_s2_immunityfire.nss
+
+
