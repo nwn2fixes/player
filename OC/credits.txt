@@ -444,3 +444,11 @@ files:
 2330_cli_enter.NSS
 
 
+Alteration Powder fix by kevL
+v.200203
+The baseitem type of the Alteration Powder in Port Llast is a large box container. Fixed by changing baseitem type to #24 Miscellaneous small. The .UTI file also had a bunch of entries that should only be for creatures; these were automatically removed during item-export.
+files:
+- 2200_Port_Llast
+22_it_powder.UTI
+
+
