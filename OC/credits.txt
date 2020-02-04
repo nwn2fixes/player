@@ -460,3 +460,10 @@ files:
 12_elanee_stalk.DLG
 
 
+Khelgar dialog fix by kevL
+v.200204
+Khelgar tells his story of getting beaten up by monks to the PC only if the PC's influence is high enough. However, the check for failure is "5" instead of "<5". fixed.
+files:
+gl_khelgar.DLG
+
+
