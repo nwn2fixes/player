@@ -452,3 +452,11 @@ files:
 22_it_powder.UTI
 
 
+12_elanee_stalk dialog fix by kevL
+v.200203
+When deciding which exit the party should use after the Elanee (stalker) cutscenes, they tried to set a variable with a gc_ script. But a gc_ script doesn't work too well as a dialog action script. fix: Changed the script-call from 'gc_local_int' to 'ga_local_int'.
+files:
+- 1200_Highcliff
+12_elanee_stalk.DLG
+
+
