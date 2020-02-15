@@ -436,3 +436,34 @@ files:
 12_a_bty_pay.NSS
 
 
+Many Starred Cloaks fix (Vale, Sevann, Nathe) by kevL
+v.200118
+flag Vale,Sevann,Nathe as immortal and Vale as plot for the Crossroad Keep basement battle with BlackGarius. The problem is that if Vale dies the game breaks since his dialog is required to exit the basement. When the PC first meets the MSC they are spawned from blueprints that have the flags set properly; but a change was made to preplace them in the basement before the battle, but those flags were not set. This fix changes the flags of the preplaced instances to match those of the blueprints, in the OnEnter script of the Crossroad Keep basement. (Note: I left Vale as non-plot but immortal, since there is code in the AI that can prevent plot-characters from becoming engaged in combat.)
+files:
+- 2300_Crossroad_Keep_Adv
+2330_cli_enter.NSS
+
+
+Alteration Powder fix by kevL
+v.200203
+The baseitem type of the Alteration Powder in Port Llast is a large box container. Fixed by changing baseitem type to #24 Miscellaneous small. The .UTI file also had a bunch of entries that should only be for creatures; these were automatically removed during item-export.
+files:
+- 2200_Port_Llast
+22_it_powder.UTI
+
+
+12_elanee_stalk dialog fix by kevL
+v.200203
+When deciding which exit the party should use after the Elanee (stalker) cutscenes, they tried to set a variable with a gc_ script. But a gc_ script doesn't work too well as a dialog action script. fix: Changed the script-call from 'gc_local_int' to 'ga_local_int'.
+files:
+- 1200_Highcliff
+12_elanee_stalk.DLG
+
+
+Khelgar dialog fix by kevL
+v.200205
+Khelgar tells his story of getting beaten up by monks to the PC only if the PC's influence is high enough. However, the check for failure is "5" instead of "<6". fixed.
+files:
+gl_khelgar.DLG
+
+
