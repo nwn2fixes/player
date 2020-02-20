@@ -460,3 +460,11 @@ nx_s2_immunityelectricity.nss
 nx_s2_immunityfire.nss
 
 
+gc_check_race fix by kevL
+v.200220
+Add a missing check for RACIAL_TYPE_DWARF.
+files:
+- scripts
+gc_check_race.NSS
+
+
