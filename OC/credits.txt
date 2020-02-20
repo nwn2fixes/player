@@ -467,3 +467,11 @@ files:
 gl_khelgar.DLG
 
 
+Lyssa bluffed fix by kevL
+v.200220
+If the PC bluffs the dryad Lyssa into handing over the Alteration Powder, in Duskwood before retrieving the Glowstone, the text indicates that the PC has received the powder. This fix actually gives the Alteration Powder item to the PC.
+files:
+- 2200_Port_Llast
+22_cs_lyssa.DLG
+
+
