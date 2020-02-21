@@ -475,3 +475,11 @@ files:
 22_cs_lyssa.DLG
 
 
+Consolidate 2330_cli_enter.NSS by kevL
+v.200220
+The OnClientEnter (area) script '2330_cli_enter' exists in two versions: one for 2300_Crossroad_Keep_Adv (module) and another for 2000_Neverwinter (module). They are different but the same filename is slotted for specific areas' OnClientEnter events of both modules. This creates a conflict when a script of that filename is in the Override folder; the engine is going to use the script in Override regardless of which area is entered. So this tweak merges the two stock scripts of both areas together into one script, separated into two distinct codeblocks that are conditioned according to whether or not Torio is present. Both are the basement areas of Crossroad Keep - 2330_ck_base (area in 2300_Crossroad_Keep_Adv) is used for the Torio cutscene after the Trial By Combat, and 2330_ck_base (area in 2000_Neverwinter) is used for the battle against Black Garius with the Many Starred Cloaks. The merged script shall be kept in the 2300_Crossroad_Keep_Adv folder, however, since that's where the prefix of its filename implies it should be.
+files:
+- 2300_Crossroad_Keep_Adv
+2330_cli_enter.NSS
+
+
