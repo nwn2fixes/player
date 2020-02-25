@@ -468,3 +468,11 @@ files:
 gc_check_race.NSS
 
 
+Jagged Tooth spellfix by kevL and Clangeddin
+v.200225
+Fix Jagged Tooth. See script for details.
+files:
+- scripts/spells
+nw_s0_jagtooth.nss
+
+
