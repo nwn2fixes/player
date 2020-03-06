@@ -166,3 +166,11 @@ files:
 /portllast (subfolder)
 
 
+Sheydann dialog (swamp cult) fix by kevL
+v.200305
+If the PC is male with less than 10 Diplomacy the dialog has no where to go. Fix: link the dangling node to the same nodes that would appear if the PC were female.
+files:
+- T_X2
+t02_sheydann.DLG
+
+
