@@ -484,3 +484,11 @@ files:
 nw_s1_bltdomn.NSS
 
 
+Refactor rest script by kevL
+v.200305
+A slight refactor and recompile of the module-level resting script.
+files:
+- scripts
+k_mod_player_rest.NSS
+
+

@@ -18,24 +18,22 @@
 #include "ginc_time"
 #include "ginc_transition"
 
-// prototypes
-void DoSinglePartyRest(object oPC);
-
-// funcitons
 void DoSinglePartyRest(object oPC)
 {
 	//WMRestEncounterInit(oPC);
-	PrettyDebug("Using Single Party Rest System (switch set)!");	
+	PrettyDebug("Using Single Party Rest System (switch set)!");
+
 	// if you press the rest button, an interface pops up alerting you to the danger level,
 	// and asking how long you want to rest.
-	if (GetLocalInt(oPC, VAR_REST_NOW) == FALSE)
+	if (!GetLocalInt(oPC, VAR_REST_NOW))
 	{
 		AssignCommand(oPC, ClearAllActions());
-		if (!IsPartyGathered(oPC, 20.0f))
+
+		if (!IsPartyGathered(oPC, 20.f))
 		{
 			//AssignCommand(oPC, ActionSpeakString("Hey, Let's all gather together so we can rest!"));
 			FloatingTextStrRefOnCreature(STR_REF_MUST_GATHER_FOR_REST, oPC);
-		}			
+		}
 		else
 		{
 			//AssignCommand(oPC, ActionStartConversation(oPC, "gr_rest_convo", TRUE, FALSE));
@@ -43,12 +41,9 @@ void DoSinglePartyRest(object oPC)
 			DelayCommand(0.01f, DisplayRestGUI(oPC));
 		}
 	}
-	else
-	{
-		// Rest away!
-	}			
 }
 
+//
 void main()
 {
 	object oPC = GetLastPCRested();
@@ -57,49 +52,50 @@ void main()
 		AssignCommand(oPC, ClearAllActions());
 
 	PrettyDebug(GetName(oPC) + " is Resting!");
-	int iRestEventType = GetLastRestEventType();
+
 	int bSinglePartyRestSystem = GetModuleSwitchValue(MODULE_SWITCH_USE_NX1_SINGLE_PARTY_RESTSYSTEM);
-	
-	switch (iRestEventType)
+
+	switch (GetLastRestEventType())
 	{
 		case REST_EVENTTYPE_REST_STARTED:
 		{
 			//RestSendMessage(oPC, STR_REF_REST_STARTED);
 			PrettyDebug("this is REST_EVENTTYPE_REST_STARTED - so checking for wandering monsters...");
-		    if (bSinglePartyRestSystem == TRUE)
+
+		    if (bSinglePartyRestSystem)
 			{
 				DoSinglePartyRest(oPC);
-			}				
-		    else if (GetModuleSwitchValue(MODULE_SWITCH_USE_XP2_RESTSYSTEM) == TRUE)
+			}
+		    else if (GetModuleSwitchValue(MODULE_SWITCH_USE_XP2_RESTSYSTEM))
 			{
 				RestSendMessage(oPC, STR_REF_REST_STARTED);
 				WMRestEncounterInit(oPC);
 				WMRestEncounterCheck(oPC);
 			}
 			else
-			{
 				RestSendMessage(oPC, STR_REF_REST_STARTED);
-			}
+
+			break;
 		}
-		break;
 
 		case REST_EVENTTYPE_REST_CANCELLED:
 		{
-			int bReportCancel = GetLocalInt(oPC, VAR_REST_REPORT_CANCEL);
-			if ((!bSinglePartyRestSystem) || bReportCancel)
+			if (!bSinglePartyRestSystem || GetLocalInt(oPC, VAR_REST_REPORT_CANCEL))
 				RestSendMessage(oPC, STR_REF_REST_CANCELLED);
-		 // No longer used but left in for the community
-		 // WMFinishPlayerRest(oPC,TRUE); // removes sleep effect, etc
+
+			// No longer used but left in for the community
+//			WMFinishPlayerRest(oPC,TRUE); // removes sleep effect, etc
+			break;
 		}
-		break;
-		
+
 		case REST_EVENTTYPE_REST_FINISHED:
 		{
 			// always indicate rest finished
 			RestSendMessage(oPC, STR_REF_REST_FINISHED);
-		 // No longer used but left in for the community
-		 //   WMFinishPlayerRest(oPC); // removes sleep effect, etc
-		}
-	}	
 
+			// No longer used but left in for the community
+//			WMFinishPlayerRest(oPC); // removes sleep effect, etc
+			break;
+		}
+	}
 }
