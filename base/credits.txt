@@ -492,3 +492,11 @@ files:
 k_mod_player_rest.NSS
 
 
+Refactor 'gui_rest' by kevL
+v.200307
+A major refactor and recompile of the gui resting script.
+files:
+- scripts
+gui_rest.NSS
+
+
