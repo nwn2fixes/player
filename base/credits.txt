@@ -500,3 +500,11 @@ files:
 gui_rest.NSS
 
 
+'ga_cast_fake_spell_at_object' fix by kevL
+v.200307
+Change ActionCastSpellAtObject() to ActionCastFakeSpellAtObject(). Reported by Travus.
+files:
+- scripts
+ga_cast_fake_spell_at_object.NSS
+
+
