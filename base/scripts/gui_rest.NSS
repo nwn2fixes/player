@@ -20,6 +20,13 @@
 // NLC 10/10/08 - Modified for NX2.
 // kevL's 2019.02.14 - merge this with the SoZ Campaign 'gui_rest' so it's suitable for /Override.
 // kevL's 2020.03.07 - refactor this mess so I can read it.
+// kevL's 2020.03.08 - refactor harder
+//                   - pass AmbushType from PartyForceRest() to PartyRest()
+//                   - pass AmbushType from PartyRest() to PlayerRest()
+//                   - delete redundant reset of "se_has_used_devour_ability" from PartyForceRest()
+//                     and add relevant check for no Ambush in PartyRest()
+//                   - define PC as OwnedCharacter of OBJECT_SELF
+//                   - send messages to the controlled character(s)
 
 
 /*******************************************************************************
@@ -65,12 +72,6 @@ const float DIST_ABORT_HOSTILE_SOZ =  5.0f;
  */
 
 //
-void SetGlobalIntVoid(string sVar, int iVal)
-{
-	SetGlobalInt(sVar, iVal);
-}
-
-//
 void RestKillBleedingOut(object oPc)
 {
 	effect eDeath = EffectDeath(FALSE, FALSE, TRUE, TRUE);
@@ -110,60 +111,64 @@ int GetIsFactionMemberInConversation(object oMemberOfFaction, int bPCOnly = TRUE
 
 
 /**
- * MotB Party RestSystem functions
+ * Player RestSystem functions
  */
 
 // This will flip the var on for doing a rest, do a rest, and then flip it back off.
-void Rest(int bReportStart, int bReportCancel)
+// - OBJECT_SELF is a player-controlled-character
+void Rest()
 {
-	SetLocalInt(OBJECT_SELF, VAR_REST_NOW, TRUE); // OnPlayerRest event will allow rest and then reset back to FALSE
+	object oPcc = OBJECT_SELF;
 
-	if (bReportStart)
-		RestSendMessage(OBJECT_SELF, STR_REF_REST_STARTED);
+	RestSendMessage(oPcc, STR_REF_REST_STARTED);
 
-	if (bReportCancel)
-		SetLocalInt(OBJECT_SELF, VAR_REST_REPORT_CANCEL, TRUE); // OnPlayerRest event will report a cancel if this is true
+	SetLocalInt(oPcc, VAR_REST_NOW,           TRUE); // OnPlayerRest event will allow rest and then reset back to FALSE
+	SetLocalInt(oPcc, VAR_REST_REPORT_CANCEL, TRUE); // OnPlayerRest event will report a cancel if this is true
 
 	// This will actually cause resting since the global is cleared for the moment.
 	// - delayed for a split second to prevent the event from firing while paused
-	DelayCommand(0.1f, ActionRest());
+	DelayCommand(0.1f, ActionRest()); // <-- HERE IT IS
 
 	// Setting this back immediately doesn't give the rest enough time to occur so delay it.
 	// - this needs to finish before doing the time set so it needs to be < TIME_CHANGE_DELAY
-//	SetLocalInt(OBJECT_SELF, VAR_REST_NOW, FALSE); // OnPlayerRest event will allow rest and then reset back to FALSE
-	DelayCommand(0.5f, SetLocalInt(OBJECT_SELF, VAR_REST_NOW, FALSE)); // reset Flag for next time player hits the rest-button
+	DelayCommand(0.5f, SetLocalInt(oPcc, VAR_REST_NOW, FALSE)); // reset Flag for next time player hits the rest-button
 
 	// allow reporting of cancel for duration of rest
-	if (bReportCancel)
-		DelayCommand(5.5f, SetLocalInt(OBJECT_SELF, VAR_REST_REPORT_CANCEL, FALSE));
-
+	DelayCommand(5.5f, SetLocalInt(oPcc, VAR_REST_REPORT_CANCEL, FALSE));
 }
 
 // This function is set to run when the time change occurs - thus these delays
 // are all relative to the new time.
-void PlayerRestFinish(int iHours, int bWaitOnly = FALSE, int iAmbushType = WM_CHECK_NO_AMBUSH)
+// - OBJECT_SELF is a player-controlled-character
+void PlayerRestFinish(int iHours, int bWaitOnly, int iAmbushType)
 {
-	FadeToBlack(OBJECT_SELF, FADE_SPEED_INSTANT); // try to go to black immediately
+	object oPcc = OBJECT_SELF;
+
+	FadeToBlack(oPcc, FADE_SPEED_INSTANT); // try to go to black immediately
 
 	if (!bWaitOnly)
 	{
 		ClearAllActions();
-		Rest(TRUE, TRUE); // <-- HERE IT IS
+		Rest();
 
-		if (iAmbushType == WM_CHECK_AMBUSH) // wake early
+		switch (iAmbushType)
 		{
-			float fDur = IntToFloat(iHours) / IntToFloat(RS_STANDARD_REST_HOURS) * RS_REST_BAR_SECONDS;
-			DelayCommand(fDur, ClearAllActions());
-		}
-		else
-		{
-			// Players might start moving their characters before they finish
-			// resting. Since there was no ambush ensure they get a full rest.
-			ActionDoCommand(ForceRest(OBJECT_SELF));
+			case WM_CHECK_NO_AMBUSH:
+				// Players might start moving their characters before they finish
+				// resting. Since there was no ambush ensure they get a full rest.
+				ActionDoCommand(ForceRest(oPcc)); // <-- HERE IT IS
+				break;
+
+			case WM_CHECK_AMBUSH: // wake early
+			{
+				float fDelay = IntToFloat(iHours) / IntToFloat(RS_STANDARD_REST_HOURS) * RS_REST_BAR_SECONDS;
+				DelayCommand(fDelay, ClearAllActions());
+				break;
+			}
 		}
 	}
 
-	DelayCommand(1.0f, FadeFromBlack(OBJECT_SELF, FADE_SPEED_SLOWEST)); // 3 sec fade-in
+	DelayCommand(1.0f, FadeFromBlack(oPcc, FADE_SPEED_SLOWEST)); // 3 sec fade-in
 
 	string sText;
 	if (iHours == 1)
@@ -171,11 +176,11 @@ void PlayerRestFinish(int iHours, int bWaitOnly = FALSE, int iAmbushType = WM_CH
 	else
 		sText = IntToString(iHours) + GetStringByStrRef(STR_REF_HOURS_PASSED);
 
-	DelayCommand(4.0f, FloatingTextStringOnCreature(sText, OBJECT_SELF, FALSE));
+	DelayCommand(4.0f, FloatingTextStringOnCreature(sText, oPcc, FALSE));
 }
 
-// This is run on the PC.
-void PlayerRest(int iHours, int bWaitOnly = FALSE, int iAmbushType = WM_CHECK_NO_AMBUSH)
+// - OBJECT_SELF is a player-controlled-character
+void PlayerRest(int iHours, int bWaitOnly, int iAmbushType)
 {
 	if (!bWaitOnly)
 	{
@@ -184,11 +189,23 @@ void PlayerRest(int iHours, int bWaitOnly = FALSE, int iAmbushType = WM_CHECK_NO
 		ActionPlayAnimation(ANIMATION_LOOPING_KNEELIDLE, 1.0f, RS_TIME_CHANGE_DELAY);
 	}
 
-	// delay by a tiny amount so that if paused when rest button hit we wait till unpause for fade.
+	// delay by a tiny amount so that if paused when the rest-button is pressed
+	// it waits until unpaused before the fade-out
 	DelayCommand(0.01f, FadeToBlack(OBJECT_SELF, RS_TIME_CHANGE_DELAY));
 
-	// this will fire just as soon as we do the time change (currently in 1 second).
+	// this will fire just as soon after the time change (currently in 1 second).
 	DelayCommand(RS_AFTER_TIME_CHANGE, PlayerRestFinish(iHours, bWaitOnly, iAmbushType));
+}
+
+
+/**
+ * Party RestSystem functions
+ */
+
+//
+void SetGlobalIntVoid(string sVar, int iVal)
+{
+	SetGlobalInt(sVar, iVal);
 }
 
 // This will cause the whole party to rest using ActionRest(). Standard resting
@@ -196,106 +213,86 @@ void PlayerRest(int iHours, int bWaitOnly = FALSE, int iAmbushType = WM_CHECK_NO
 // timer, the kneel animation, and it also fires off the module rest event for
 // the player on start and on end.
 // Params:
-//  oPc         - players whose party is to rest
+//  oTruePc     - players whose party is to rest
 //  iHours      - used only for reporting to player
 //  bWaitOnly   - FALSE = rest, TRUE = wait
 //  iAmbushType - a partial resting benefit is gained even if there's an ambush
-void WholePartyRest(object oPc, int iHours, int bWaitOnly = FALSE, int iAmbushType = WM_CHECK_NO_AMBUSH)
+void PartyRest(object oTruePc, int iHours, int bWaitOnly, int iAmbushType)
 {
 	// kL_note: should be && GetIsMotB() but for some some reason they
 	// wanted to reset "se_has_used_devour_ability" in the OC (etc) too.
-	if (!bWaitOnly && !GetIsSoZ())
+	if (!bWaitOnly && iAmbushType == WM_CHECK_NO_AMBUSH && !GetIsSoZ())
 	{
 		DelayCommand(RS_AFTER_TIME_CHANGE, SetGlobalIntVoid("se_has_used_devour_ability", FALSE));
 	}
 
-
 	// only need to tell the TruePcs to rest - other party will follow suit
 	// NOTE: GetFirstFactionMember() gets the Owned PC - need to make the controlled characters rest.
+	// kL_note: Those are contradictory.
 	object oPcc;
-	object oTruePc = GetFirstFactionMember(oPc);
-	while (GetIsObjectValid(oTruePc))
+	object oPc = GetFirstFactionMember(oTruePc);
+	while (GetIsObjectValid(oPc))
 	{
-		oPcc = GetControlledCharacter(oTruePc);
-		AssignCommand(oPcc, PlayerRest(iHours, bWaitOnly)); // iHours passed for reporting only
+		oPcc = GetControlledCharacter(oPc);
+		AssignCommand(oPcc, PlayerRest(iHours, bWaitOnly, iAmbushType)); // iHours passed for reporting only
 
-		oTruePc = GetNextFactionMember(oPc, TRUE);
+		oPc = GetNextFactionMember(oTruePc);
 	}
 }
 
 // This will cause the whole party to rest using ForceRest(). It is otherwise
-// similar to WholePartyRest().
+// similar to PartyRest().
 // Params:
-//  oPc         - players whose party is to rest
+//  oTruePc     - players whose party is to rest
 //  iHours      - used only for reporting to player
 //  bWaitOnly   - FALSE = rest, TRUE = wait
 //  iAmbushType - there's no resting benefit if there's an ambush
-void WholePartyForceRest(object oPc, int iHours, int bWaitOnly = FALSE, int iAmbushType = WM_CHECK_NO_AMBUSH)
+void PartyForceRest(object oTruePc, int iHours, int bWaitOnly, int iAmbushType)
 {
 	// get all the player clients to do the fade, message report, etc.
-	WholePartyRest(oPc, iHours, TRUE); // pass in bWaitOnly flag - the actual rest is handled below
+	PartyRest(oTruePc, iHours, TRUE, iAmbushType); // pass in bWaitOnly flag - the actual rest is handled below
 
 	// Need to tell all party members to ForceRest - ForceResting a PC doesn't affect his followers.
 	// - only do this if resting and not getting ambushed (no partial rests if ambushed)
 	if (!bWaitOnly && iAmbushType == WM_CHECK_NO_AMBUSH)
 	{
-		// kL_note: should be && GetIsMotB() but for some some reason they
-		// wanted to reset "se_has_used_devour_ability" in the OC (etc) too.
-		if (!GetIsSoZ())
-		{
-			DelayCommand(RS_AFTER_TIME_CHANGE, SetGlobalIntVoid("se_has_used_devour_ability", FALSE));
-		}
-
-		object oParty = GetFirstFactionMember(oPc, FALSE);
+		object oParty = GetFirstFactionMember(oTruePc, FALSE);
 		while (GetIsObjectValid(oParty))
 		{
-			DelayCommand(RS_AFTER_TIME_CHANGE, ForceRest(oParty));
-			oParty = GetNextFactionMember(oPc, FALSE);
+			DelayCommand(RS_AFTER_TIME_CHANGE, ForceRest(oParty)); // <-- HERE IT IS
+			oParty = GetNextFactionMember(oTruePc, FALSE);
 		}
 	}
 }
 
-
-// Party waits until iToHour.
-void DoWholePartyWait(object oPc, int iToHour)
+// Checks for an encounter and does a PartyRest.
+//   oTruePc - player whose party is to rest
+void StartPartyRest(object oTruePc)
 {
-	int iHours = iToHour - GetTimeHour();
-	if (iHours < 0)
-		iHours += 24;
+	// if true the party will not use the regular rest-action and instead uses
+	// ForceRest (this prevents the rest bar from appearing)
+	int bForceRest = GetGlobalInt(CAMPAIGN_SWITCH_REST_SYS_USE_FORCE_REST);
 
-	if (GetIsSoZ())
-		AssignCommand(oPc, ClearAllActions());
+	location lTruePc = GetLocation(oTruePc);
 
-	DelayCommand(RS_TIME_CHANGE_DELAY, SetTime(iToHour, 0, 0, 0));
-	WholePartyRest(oPc, iHours, TRUE); // just wait. you'll see ...
-}
-
-
-// Checks for an encounter and does a WholePartyRest.
-// Params:
-//  oPc        - player whose party is to rest
-//  bForceRest - if true the party will not use the regular rest-action and instead uses ForceRest
-//               (this prevents the rest bar from appearing)
-void DoWholePartyRest(object oPc, int bForceRest)
-{
 	if (!GetIsSoZ())
 	{
-		location lSelf = GetLocation(OBJECT_SELF);
-		object oObject = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lSelf);
+		object oObject = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lTruePc);
 		while (GetIsObjectValid(oObject))
 		{
 			if (GetObjectType(oObject) == OBJECT_TYPE_CREATURE
 				&& !GetIsDead(oObject)
+				&& !GetScriptHidden(oObject)
 				&& GetIsReactionTypeHostile(oObject)) // kL_note: That's not the best function to use here.
 			{
-				SendMessageToPCByStrRef(OBJECT_SELF, STR_REF_MONSTER_INTERRUPT);
+				SendMessageToPCByStrRef(GetControlledCharacter(oTruePc), STR_REF_MONSTER_INTERRUPT);
 				return;
 			}
-			oObject = GetNextObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lSelf);
+			oObject = GetNextObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lTruePc);
 		}
 
 		// do Wandering Monster check
-		int iAmbushType = SinglePartyWMRestEncounterCheck(oPc);
+		int iAmbushType = SinglePartyWMRestEncounterCheck(oTruePc);
 
 		int iHours;
 		switch (iAmbushType)
@@ -317,29 +314,28 @@ void DoWholePartyRest(object oPc, int bForceRest)
 
 
 		if (bForceRest)
-			WholePartyForceRest(oPc, iHours, FALSE, iAmbushType);
+			PartyForceRest(oTruePc, iHours, FALSE, iAmbushType);
 		else
-			WholePartyRest(oPc, iHours, FALSE, iAmbushType);
+			PartyRest(oTruePc, iHours, FALSE, iAmbushType);
 	}
 	else // is SoZ ->
 	{
-		location lSelf = GetLocation(OBJECT_SELF);
-		object oObject = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE_SOZ, lSelf);
+		object oObject = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE_SOZ, lTruePc);
 		while (GetIsObjectValid(oObject))
 		{
 			if (GetLocalInt(oObject, "bHostile"))
 			{
-				SendMessageToPCByStrRef(GetControlledCharacter(OBJECT_SELF), STR_REF_MONSTER_INTERRUPT);
+				SendMessageToPCByStrRef(GetControlledCharacter(oTruePc), STR_REF_MONSTER_INTERRUPT);
 				return;
 			}
-			oObject = GetNextObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE_SOZ, lSelf);
+			oObject = GetNextObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE_SOZ, lTruePc);
 		}
 
 
-		oPc = GetFactionLeader(GetFirstPC());
+		oTruePc = GetFactionLeader(GetFirstPC());
 
 		// do Wandering Monster check
-		int iAmbushType = SinglePartyWMRestEncounterCheck(oPc);
+		int iAmbushType = SinglePartyWMRestEncounterCheck(oTruePc);
 
 		int iHours;
 		switch (iAmbushType)
@@ -353,23 +349,38 @@ void DoWholePartyRest(object oPc, int bForceRest)
 				break;
 		}
 
-		if (GetHasFeat(FEAT_TW_GROUP_TRANCE, oPc, TRUE)) // Group Trance halves the amount of time required for the party to rest.
+		if (GetHasFeat(FEAT_TW_GROUP_TRANCE, oTruePc, TRUE)) // Group Trance halves the amount of time required for the party to rest.
 			iHours /= 2;
 
 		// Move time forward!
 		// NOTE: When time changes it affects many things:
 		// * sleep will have ended so it will essentially be interrupted
 		// * delayed commands set to occur prior to the time change will all go off
-		DelayCommand(RS_TIME_CHANGE_DELAY, RestKillBleedingOut(oPc));
+		DelayCommand(RS_TIME_CHANGE_DELAY, RestKillBleedingOut(oTruePc));
 		DelayCommand(RS_TIME_CHANGE_DELAY, SetCTimeDate(GetCurrentCTimeDate(0, 0, 0, iHours))); // Rest needs to occur after this
 
 
 		if (bForceRest)
-			WholePartyForceRest(oPc, iHours, FALSE, iAmbushType);
+			PartyForceRest(oTruePc, iHours, FALSE, iAmbushType);
 		else
-			WholePartyRest(oPc, iHours, FALSE, iAmbushType);
+			PartyRest(oTruePc, iHours, FALSE, iAmbushType);
 	}
 }
+
+// Party waits until iToHour.
+void StartPartyWait(object oTruePc, int iToHour)
+{
+	int iHours = iToHour - GetTimeHour();
+	if (iHours < 0)
+		iHours += 24;
+
+	if (GetIsSoZ())
+		AssignCommand(oTruePc, ClearAllActions());
+
+	DelayCommand(RS_TIME_CHANGE_DELAY, SetTime(iToHour, 0, 0, 0));
+	PartyRest(oTruePc, iHours, TRUE, WM_CHECK_NO_AMBUSH); // just wait. you'll see ...
+}
+
 
 // Clears the rest-system-in-progress flag.
 void ResetRestsys()
@@ -383,19 +394,21 @@ void ResetRestsys()
 // *
 void main()
 {
+	//SendMessageToPC(GetFirstPC(FALSE), "do GUI_REST ( " + GetName(OBJECT_SELF) + " )");
+
 	if (!GetGlobalInt(VAR_N2_RESTSYS_IN_PROGRESS)) // disallow rest while resting
 	{
 		SetGlobalInt(VAR_N2_RESTSYS_IN_PROGRESS, TRUE);
 		DelayCommand(RS_TIME_CHANGE_DELAY, ResetRestsys());
 
 
-		object oPc = GetPCSpeaker();
-		if (!GetIsObjectValid(oPc))
-			oPc = OBJECT_SELF;
+		object oTruePc = GetOwnedCharacter(GetPCSpeaker());
+		if (!GetIsObjectValid(oTruePc))
+			oTruePc = OBJECT_SELF;
 
-		if (GetIsFactionMemberInConversation(oPc))
+		if (GetIsFactionMemberInConversation(oTruePc))
 		{
-			SendMessageToPCByStrRef(OBJECT_SELF, STR_REF_MEMBER_IN_CONVERSATION);
+			SendMessageToPCByStrRef(GetControlledCharacter(oTruePc), STR_REF_MEMBER_IN_CONVERSATION);
 			return;
 		}
 
@@ -404,31 +417,29 @@ void main()
 			// in MotB exit spiritbar-paused mode before moving time forward
 			// - without doing this time passed shortly after a conversation
 			//   would have no effect on Spirit Energy
-			SpiritEaterConversationPauseCheck(oPc);
+			SpiritEaterConversationPauseCheck(oTruePc);
 		}
 
 
-		switch (GetLocalInt(oPc, VAR_REST_CHOICE))
+		switch (GetLocalInt(oTruePc, VAR_REST_CHOICE))
 		{
 			case 0: // Rest
 			{
-				DoWholePartyRest(oPc, GetGlobalInt(CAMPAIGN_SWITCH_REST_SYS_USE_FORCE_REST));
+				StartPartyRest(oTruePc);
 				break;
 			}
 
 			case 1: // Wait
 			{
 				int iToHour;
-				if (GetIsNight() || GetIsDusk()) // wait until dawn
+				if (GetIsNight() || GetIsDusk())
 				{
 					iToHour = GetDawnHour();
 				}
-				else // wait until dusk
-				{
+				else
 					iToHour = GetDuskHour();
-				}
 
-				DoWholePartyWait(oPc, iToHour);
+				StartPartyWait(oTruePc, iToHour);
 				break;
 			}
 		}

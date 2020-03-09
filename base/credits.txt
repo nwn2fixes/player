@@ -508,3 +508,11 @@ files:
 ga_cast_fake_spell_at_object.NSS
 
 
+Refactor 'gui_rest' harder by kevL
+v.200308
+A major refactor and recompile of the gui resting script.
+files:
+- scripts
+gui_rest.NSS
+
+
