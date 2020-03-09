@@ -516,3 +516,11 @@ files:
 gui_rest.NSS
 
 
+'gui_rest' edit by kevL
+v.200309
+Remove redundant condition for OBJECT_TYPE_CREATURE when checking for nearby hostiles.
+files:
+- scripts
+gui_rest.NSS
+
+

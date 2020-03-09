@@ -278,11 +278,10 @@ void StartPartyRest(object oTruePc)
 
 	if (!GetIsSoZ())
 	{
-		object oObject = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lTruePc);
+		object oObject = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lTruePc); // default is Creature
 		while (GetIsObjectValid(oObject))
 		{
-			if (GetObjectType(oObject) == OBJECT_TYPE_CREATURE
-				&& !GetIsDead(oObject)
+			if (!GetIsDead(oObject)
 				&& !GetScriptHidden(oObject)
 				&& GetIsReactionTypeHostile(oObject)) // kL_note: That's not the best function to use here.
 			{
