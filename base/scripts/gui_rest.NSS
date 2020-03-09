@@ -27,6 +27,7 @@
 //                     and add relevant check for no Ambush in PartyRest()
 //                   - define PC as OwnedCharacter of OBJECT_SELF
 //                   - send messages to the controlled character(s)
+//                   - do not prevent rest if a nearby hostile is scripthidden
 
 
 /*******************************************************************************
