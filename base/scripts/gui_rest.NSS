@@ -278,17 +278,17 @@ void StartPartyRest(object oTruePc)
 
 	if (!GetIsSoZ())
 	{
-		object oObject = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lTruePc); // default is Creature
-		while (GetIsObjectValid(oObject))
+		object oCreature = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lTruePc); // default is Creature
+		while (GetIsObjectValid(oCreature))
 		{
-			if (!GetIsDead(oObject)
-				&& !GetScriptHidden(oObject)
-				&& GetIsReactionTypeHostile(oObject)) // kL_note: That's not the best function to use here.
+			if (!GetIsDead(oCreature)
+				&& !GetScriptHidden(oCreature)
+				&& GetIsReactionTypeHostile(oCreature)) // kL_note: Perhaps that's not the best function to use here.
 			{
 				SendMessageToPCByStrRef(GetControlledCharacter(oTruePc), STR_REF_MONSTER_INTERRUPT);
 				return;
 			}
-			oObject = GetNextObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lTruePc);
+			oCreature = GetNextObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE, lTruePc);
 		}
 
 		// do Wandering Monster check
@@ -320,15 +320,15 @@ void StartPartyRest(object oTruePc)
 	}
 	else // is SoZ ->
 	{
-		object oObject = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE_SOZ, lTruePc);
-		while (GetIsObjectValid(oObject))
+		object oCreature = GetFirstObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE_SOZ, lTruePc); // default is Creature
+		while (GetIsObjectValid(oCreature))
 		{
-			if (GetLocalInt(oObject, "bHostile"))
+			if (GetLocalInt(oCreature, "bHostile"))
 			{
 				SendMessageToPCByStrRef(GetControlledCharacter(oTruePc), STR_REF_MONSTER_INTERRUPT);
 				return;
 			}
-			oObject = GetNextObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE_SOZ, lTruePc);
+			oCreature = GetNextObjectInShape(SHAPE_SPHERE, DIST_ABORT_HOSTILE_SOZ, lTruePc);
 		}
 
 
