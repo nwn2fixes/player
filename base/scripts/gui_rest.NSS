@@ -158,6 +158,8 @@ void PlayerRestFinish(int iHours, int bWaitOnly, int iAmbushType)
 				// Players might start moving their characters before they finish
 				// resting. Since there was no ambush ensure they get a full rest.
 				ActionDoCommand(ForceRest(oPcc)); // <-- HERE IT IS
+				// kL_note: if the player moves his PC a second time before the
+				// first move finishes that gets cancelled ...
 				break;
 
 			case WM_CHECK_AMBUSH: // wake early
