@@ -174,3 +174,16 @@ files:
 t02_sheydann.DLG
 
 
+Skullcrusher dialog fix by kevL
+v.200310
+"Huh. Well, you look like know how to handle yourself ..."
+- remove check for all players >= level 5 to prevent dangling node in multiplayer
+"Well said. I'm sure there's something out there that could knock you down ..."
+- remove check for all players >= level 10 to prevent dangling node in multiplayer
+"Like you?"
+- fix arguments for gc_skill_rank so it checks for Diplomacy >= 4 instead of CraftArmor >= 6
+files:
+- F_X2
+f36_skullcrusher.DLG
+
+
