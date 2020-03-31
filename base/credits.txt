@@ -524,3 +524,20 @@ files:
 gui_rest.NSS
 
 
+MotB rest problems fix (reverts some of Nwn2Fixes OverlandMap ApplyDialogSkillEffect() fix)
+v.200331
+The underlying bug is that, in SoZ on the overlandmap, the player can choose a dialog option to Intimidate an encounter before going into battle but EffectShaken() and EffectOffGuard() use negative values when constructing the effects. Positive values should be used in 'ginc_overland' instead (the constructors for the effects will subtract the positive values).
+
+Tracing those functions back through several layers, they could be called by 'gui_rest'. HOWEVER the only place i *know* of them being used is on the SoZ OL. And those are handled by just two scripts: 'ga_initiate_encounter' and 'ga_mated_encounter'.
+
+So basically i'm going to delete 'gui_rest.NSS/.NCS' and 'k_mod_player_rest.NSS/.NCS' and 'ginc_restsys.NSS'. But keep 'ginc_overland' because it has the core fix, as well as 'ga_initiate_encounter' and 'ga_mated_encounter' because they (definitely) use it. Note that 'x2_inc_restsys' fixes a prototype/definition mismatch for WMSetAreaTable() so it should stay (unless it's still an issue).
+
+Additionally, it's nice to get the module-level script 'k_mod_player_rest' out of the Fixes package.
+files deleted:
+- scripts
+gui_rest.NSS/.NCS
+k_mod_player_rest.NSS/.NCS
+- scripts\inc
+ginc_restsys.NSS
+
+
