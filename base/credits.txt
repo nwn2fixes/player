@@ -541,3 +541,10 @@ k_mod_player_rest.NSS/.NCS
 ginc_restsys.NSS
 
 
+Panther LoD Fix by rjshae
+v.200815
+The panther model does not include L01 and L02 parts so you get the full 2,660 mesh faces at every scale. This is an override model that adds in the LoD parts, with 956 faces at LoD.
+- models
+c_panther_cl_body01.MDB
+
+
