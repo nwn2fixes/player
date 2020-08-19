@@ -548,3 +548,18 @@ The panther model does not include L01 and L02 parts so you get the full 2,660 m
 c_panther_cl_body01.MDB
 
 
+More Creature LoD Fixes by rjshae
+v.200818
+Added LoD parts for the stock clockroach, Imaskari golem, jinn, siege tower, snow leopard, giant spider, and treant creatures.
+- models
+c_clockroach_cl_body01.MDB
+c_imaskarigolem_cl_body01.MDB
+c_imaskarigolem_head01.MDB
+c_jinn_CL_Body01.MDB
+c_jinn_Head01.MDB
+c_siegetower_CL_Body01.MDB
+c_snowleopard_CL_body01.MDB
+C_Spidgiant_CL_Body01.MDB
+c_treant_CL_body01.MDB
+
+
