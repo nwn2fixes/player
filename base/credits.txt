@@ -563,3 +563,17 @@ C_Spidgiant_CL_Body01.MDB
 c_treant_CL_body01.MDB
 
 
+Shadow Simulacrum/Glass Doppelganger scrolls fix by kevL
+v.210304
+Adds the Shadow Simulacrum and Glass Doppelganger spellscrolls and enables the ScribeScroll feat to work with the Shadow Simulacrum and Glass Doppelganger spells. The icon for the Shadow Simulacrum scroll already existed but had to be added to the icons table. No scroll icon was found for Glass Doppelganger so the Shadow Simulacrum icon gets reused for it.
+files:
+- 2da
+des_crft_scroll.2da
+des_crft_spells.2da
+iprp_spells.2da
+nwn2_icons.2DA
+- blueprints
+x2_it_sparscr501.UTI [add]
+x2_it_sparscr901.UTI [add]
+
+

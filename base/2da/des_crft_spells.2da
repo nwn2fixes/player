@@ -1133,8 +1133,8 @@
 1129 Solipsism 475 1 1 0 7 0
 1130 Hindering_Blast **** 1 1 1 **** 0
 1131 Binding_Blast **** 1 1 1 **** 0
-1132 Shadow_Simulacrum **** 1 1 1 **** 0
-1133 Glass_Doppelganger **** 1 1 1 **** 0
+1132 Shadow_Simulacrum 487 1 1 0 9 0
+1133 Glass_Doppelganger 488 1 1 0 5 0
 1134 Abyssal_Blast **** 1 1 1 **** 0
 1135 SPELLABILITY_WORD_OF_FAITH **** 1 1 1 **** 0
 1136 SPELLABILITY_MASS_CHARM_MONSTER **** 1 1 1 **** 0

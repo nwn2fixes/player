@@ -488,8 +488,8 @@
 484 Glyph_of_Warding 40486 5 3 11758 549 0 0 1 it_s_glyphwarding
 485 **** **** **** **** **** **** **** **** **** ****
 486 Cloud_of_Bewilderment 40488 3 2 5025 569 0 1 1 it_s_cloudbewilder
-487 **** **** **** **** **** **** **** **** **** ****
-488 **** **** **** **** **** **** **** **** **** ****
+487 Shadow_Simulacrum 200897 17 9 110533 1132 0 0 1 it_s_simulacrum
+488 Glass_Doppelganger 200898 9 5 52538 1133 0 0 1 it_s_simulacrum
 489 **** **** **** **** **** **** **** **** **** ****
 490 Dye_Armor_Cloth1 83336 1 1 10 648 1 1 1 isk_X2CArm
 491 Dye_Armor_Cloth2 83338 1 1 10 649 1 1 1 isk_X2CArm
