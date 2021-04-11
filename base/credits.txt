@@ -577,3 +577,15 @@ x2_it_sparscr501.UTI [add]
 x2_it_sparscr901.UTI [add]
 
 
+Chandelier fix by RjShae
+v.210411
+This set of files provides fixes for the stock PLC_MC_CHANDL01 and PLC_MC_CHANDL02 chandelier models. For both chandeliers it increases the swing amplitude to half a degree, so it is still subtle but at least visible to the player’s eye. For the second chandelier it corrects the height setting so that the top of the chain lines up with the static component.
+files:
+- models
+PLC_MC_CHANDL02_01.MDB
+- skeletons
+PLC_MC_CHANDL01_IDLE.GR2
+PLC_MC_CHANDL02.GR2
+PLC_MC_CHANDL02_idle.GR2
+
+
