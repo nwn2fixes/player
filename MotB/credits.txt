@@ -98,7 +98,7 @@ d00_fentomy.DLG
 
 
 Okku levelup fix
-v.210411
+v.210412
 Nak'kai in the Ice Troll Lodge can levelup Okku. But he didn't ...
 files:
 - B_X1

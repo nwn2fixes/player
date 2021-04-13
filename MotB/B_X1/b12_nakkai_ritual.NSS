@@ -37,9 +37,8 @@ void main( int bHelpPlayer )
 			int iXp = (iLevel * (iLevel - 1) / 2) * 1000;
 			SetXP(oOkku, iXp);
 		}
+//		SignalEvent(oOkku, EventUserDefined(2053)); // this line is stock but the event fires auto.
 		// end levelup Okku fix
-
-		SignalEvent(oOkku, EventUserDefined(2053));
 
 		AssignCommand( oNakkai, ActionCastFakeSpellAtObject( SPELL_WORD_OF_FAITH, oOkku, PROJECTILE_PATH_TYPE_DEFAULT ) );
 	}
