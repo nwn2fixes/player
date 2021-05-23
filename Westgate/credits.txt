@@ -1,5 +1,0 @@
-Fixes in this folder affect the Mysteries of Westgage campaign specifically, for instance scripts and dialogs.
-
-MANIFEST
---------
-
