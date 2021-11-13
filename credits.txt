@@ -591,6 +591,14 @@ PLC_MC_CHANDL02.GR2
 PLC_MC_CHANDL02_idle.GR2
 
 
+chest_01 sound fix by RjShae
+v.211113
+There’s an error on row 62 of the placeableobjsnds.2da file. The ‘Opened’ column entry is ‘as_sw_chestv1cl’ (cl == close) when it should be ‘as_sw_chestv1op’ (op == open).
+files:
+- 2da
+placeableobjsnds.2da
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
