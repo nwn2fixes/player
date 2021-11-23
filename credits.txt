@@ -8,7 +8,9 @@ BASE Folder
 Plate Mail 01 Fix by Drew Rechner
 [version!]
 http://www.nexusmods.com/neverwinter2/mods/1061/?
-This fixes the matte material appearance for most male characters' Plate Mail 01 appearance and makes it appear much more similar to the female/other races' version.
+This fixes the matte material appearance for most male characters' Plate Mail
+01 appearance and makes it appear much more similar to the female/other races'
+version.
 files:
 - models
 P_EEM_PF_Body01.MDB
@@ -23,7 +25,10 @@ P_HHM_PF_Body01_T.dds
 Skeleton Cloth Armor Tint Fix by rjshae
 [version!]
 http://neverwintervault.org/project/nwn2/images/texture/skeleton-cloth-armor-tint-fix
-The file name was assigned to the tint map slot of the skeleton model but is missing from the final release of the game. As a result, the unpatched skeleton model does not tint properly and it shows the missing tint map error texture on the model. 
+The file name was assigned to the tint map slot of the skeleton model but is
+missing from the final release of the game. As a result, the unpatched skeleton
+model does not tint properly and it shows the missing tint map error texture on
+the model.
 files:
 - textures
 C_Skel_CL_Body02_t.dds
@@ -32,7 +37,9 @@ C_Skel_CL_Body02_t.dds
 OC Doors Fix by crystal violet
 [version!]
 http://neverwintervault.org/project/nwn2/hakpak/original-hakpak/oc-doors-repair-override
-These are replacements for some of the original door models and one normalmap. I've tried to repair some minor texturing errors, odd shading issues and logical errors (doors that have a window on one side but not on the other).
+These are replacements for some of the original door models and one normalmap.
+I've tried to repair some minor texturing errors, odd shading issues and
+logical errors (doors that have a window on one side but not on the other).
 files:
 - models
 PLC_DC_CKDoor_01.MDB
@@ -97,7 +104,8 @@ gc_alignment.nss
 
 Tiefling Feat fix by Pain of Dungeon Eternal
 v.160824 (implemented by kevL's)
-Switches Feat.2da rows #1088 and #1089 (tiefling darkness and resistance) to conform to nwscript.nss constants.
+Switches Feat.2da rows #1088 and #1089 (tiefling darkness and resistance) to
+conform to nwscript.nss constants.
 files:
 - 2da
 feat.2da
@@ -105,7 +113,8 @@ feat.2da
 
 Weapon Proficiency Feat fix by kevL's
 v.160825
-Switches Iprp_feats.2da rows #22 and #23 (weapon prof. martial and simple) to conform to nwscript.nss constants.
+Switches Iprp_feats.2da rows #22 and #23 (weapon prof. martial and simple) to
+conform to nwscript.nss constants.
 files
 - 2da
 iprp_feats.2da
@@ -150,7 +159,9 @@ x2_inc_switches.nss
 
 Book of Waves fix by kevL's
 v.160903
-The stock .Uti for the Book of Waves says that it must be equipped for its ArcaneSpellFailure bonus to be active. But since the Book is not equippable, this fix allows it to work as an inventory item. w/ Thanks to Heppad.
+The stock .Uti for the Book of Waves says that it must be equipped for its
+ArcaneSpellFailure bonus to be active. But since the Book is not equippable,
+this fix allows it to work as an inventory item. w/ Thanks to Heppad.
 files
 - blueprints
 nx1_book_of_waves.UTI
@@ -167,10 +178,32 @@ ginc_group.NSS
 Imbue Item Indexing Bug Fix by Lord Grave
 v.150122
 https://neverwintervault.org/project/nwn2/script/imbue-item-indexing-bug-fix
-This is most commonly known as "Power Essence Bug" when using Warlock's Imbue Item feat to add basic enchantments to weapons and armor with Power Essences in MotB crafting system. Although you put correct item and correct essences in the satchel, when you use Imbue Item on it you get a message saying that it is not a valid recipe.
-NWN2 has a recipe index used to make searching for valid recipes faster and it is located in crafting_index.2da file. Function GetRowIndexes() is used to fetch a short list of valid recipes for the spell the player cast on the crafting container. MotB developers used this function to fool the containers into thinking that Imbue Item feat is the correct spell. Basically, their piece of code for Imbue Item feat fetches all recipes that require spells by checking if category column contains a numerical string with StringToInt() function, which will return 0 if you try to convert a non-numerical string into an integer. However, they forgot that this function will also return 0 for a '0' string, and there is a group of recipes, starting at ID 40, that requires the spell ID 0 (Acid Fog). The function will simply return a list of recipes starting form the beginning and ending just before the recipes that require Acid Fog spell, leaving slightly more than half of the list unusable for a Warlock. Instead of rewriting their code, I just altered it slightly so that it skips row 40 from the index file when checking whether StringToInt of the category row returns 0.
-NOTE: These scripts were implemented/compiled by kevL: I added a few scripts that can be traced back to the changed function, although this might not be strictly required.
-NOTE: Lord Grave also fixed a mismatched prototype/definition for GetIsItemPropertyAnUpgrade() in 'ginc_crafting'.
+This is most commonly known as "Power Essence Bug" when using Warlock's Imbue
+Item feat to add basic enchantments to weapons and armor with Power Essences in
+MotB crafting system. Although you put correct item and correct essences in the
+satchel, when you use Imbue Item on it you get a message saying that it is not
+a valid recipe.
+NWN2 has a recipe index used to make searching for valid recipes faster and it
+is located in crafting_index.2da file. Function GetRowIndexes() is used to
+fetch a short list of valid recipes for the spell the player cast on the
+crafting container. MotB developers used this function to fool the containers
+into thinking that Imbue Item feat is the correct spell. Basically, their piece
+of code for Imbue Item feat fetches all recipes that require spells by checking
+if category column contains a numerical string with StringToInt() function,
+which will return 0 if you try to convert a non-numerical string into an
+integer. However, they forgot that this function will also return 0 for a '0'
+string, and there is a group of recipes, starting at ID 40, that requires the
+spell ID 0 (Acid Fog). The function will simply return a list of recipes
+starting form the beginning and ending just before the recipes that require
+Acid Fog spell, leaving slightly more than half of the list unusable for a
+Warlock. Instead of rewriting their code, I just altered it slightly so that it
+skips row 40 from the index file when checking whether StringToInt of the
+category row returns 0.
+NOTE: These scripts were implemented/compiled by kevL: I added a few scripts
+that can be traced back to the changed function, although this might not be
+strictly required.
+NOTE: Lord Grave also fixed a mismatched prototype/definition for
+GetIsItemPropertyAnUpgrade() in 'ginc_crafting'.
 files:
 - scripts\crafting
 ginc_crafting.NSS
@@ -184,7 +217,15 @@ nx_s2_shapers_alembic.NSS [kL]
 
 Greatclub description fix by Lance Botelle (implemented by kevL)
 v.160912
-Greatclubs were set to use a description that has 1d6 piercing damage and small weapon size. The actual statistics are 1d10 bludgeoning damage and large weapon size. So the baseitems.2da column "BaseItemStatRef" has been changed to reflect something similar. The new description, however, says the Greatclub needs proficiency with Martial weapons while the actual reference is to either Martial or Rogue, and the Critical threat says 19-20 while the actual reference is 20 (stock values were Martial and Rogue, and 19-20). To achieve maximal conformity, the Dialog.Tlk file would need to be changed also (and that's beyond the purview of this partial fix).
+Greatclubs were set to use a description that has 1d6 piercing damage and small
+weapon size. The actual statistics are 1d10 bludgeoning damage and large weapon
+size. So the baseitems.2da column "BaseItemStatRef" has been changed to reflect
+something similar. The new description, however, says the Greatclub needs
+proficiency with Martial weapons while the actual reference is to either
+Martial or Rogue, and the Critical threat says 19-20 while the actual reference
+is 20 (stock values were Martial and Rogue, and 19-20). To achieve maximal
+conformity, the Dialog.Tlk file would need to be changed also (and that's
+beyond the purview of this partial fix).
 files:
 - 2da
 baseitems.2da
@@ -201,7 +242,10 @@ ginc_death.NSS
 
 GUI improvement by kevL
 v.161008
-The area for an intro-message in the default UI's stringinputmessagebox.xml has so little vertical height that only one line is displayed at a time and the up/down scroll-buttons almost completely overlap, making them difficult to use. This improvement adds 50 pixels to the height for the intro-message.
+The area for an intro-message in the default UI's stringinputmessagebox.xml has
+so little vertical height that only one line is displayed at a time and the
+up/down scroll-buttons almost completely overlap, making them difficult to use.
+This improvement adds 50 pixels to the height for the intro-message.
 files:
 - ui
 stringinputmessagebox.xml
@@ -217,7 +261,11 @@ x2_inc_restsys.nss
 
 Preference AI fix, by kevL
 v.171118
-In 'gai_preference_dcr', type ATTACK_PREFERENCE_TANK, an NPC-tank may try to heal itself by calling TalentHealingSelf() from 'x0_i0_talent'. The return was checked against a value of 99, but the function will return 0 or 1 only. The condition has been changed to check against TRUE, to properly bypass regular DCR when the NPC-tank performs a heal action on itself.
+In 'gai_preference_dcr', type ATTACK_PREFERENCE_TANK, an NPC-tank may try to
+heal itself by calling TalentHealingSelf() from 'x0_i0_talent'. The return was
+checked against a value of 99, but the function will return 0 or 1 only. The
+condition has been changed to check against TRUE, to properly bypass regular
+DCR when the NPC-tank performs a heal action on itself.
 files:
 - scripts
 gai_preference_dcr.NSS
@@ -225,7 +273,10 @@ gai_preference_dcr.NSS
 
 Tool Items model fixes by rjshae
 v.180211
-Here's a small contribution to "correct" the pan, rake, shovel, smithy hammer, and wine bottle items so that they can be equipped and carried in game. It includes a modified baseitems.2da file, revised models, and an itemized list of the changes. [See ToolItemsModelFixes.txt in the base directory.]
+Here's a small contribution to "correct" the pan, rake, shovel, smithy hammer,
+and wine bottle items so that they can be equipped and carried in game. It
+includes a modified baseitems.2da file, revised models, and an itemized list of
+the changes. [See ToolItemsModelFixes.txt in the base directory.]
 files:
 - models
 i_Pan01.MDB
@@ -239,7 +290,9 @@ baseitems.2da
 
 Ginc_Group #include fixes by Aqvilinus
 v.180813
-The functions GroupSetSpawnInCondition() and GroupWander() were not iterating over group-members (instead hitting only the first-in-group repeatedly). Fixed by wrapping the core-calls w/ AssignCommand().
+The functions GroupSetSpawnInCondition() and GroupWander() were not iterating
+over group-members (instead hitting only the first-in-group repeatedly). Fixed
+by wrapping the core-calls w/ AssignCommand().
 files:
 - scripts\inc
 ginc_group.NSS
@@ -247,9 +300,10 @@ ginc_group.NSS
 
 UI fixes
 v.180913
-change [uppercase=truefontfamily="Default"] to [uppercase=true fontfamily="Default"] in Examine.XML
-change [ALIGN_LEFT"] to [ALIGN_LEFT] in Ig_Chargen_*.XML
-change [strref="181357""] to [strref="181357"] in Gfx_Options.XML
+Examine.XML: change [uppercase=truefontfamily="Default"] to
+[uppercase=true fontfamily="Default"]
+Ig_Chargen_*.XML: change [ALIGN_LEFT"] to [ALIGN_LEFT]
+Gfx_Options.XML: Change [strref="181357""] to [strref="181357"]
 Reported by rjshae, submitted by kevL
 files:
 - ui
@@ -260,7 +314,9 @@ gfx_options.xml
 
 Aslyferund Elven Chain fix by kevL
 v.180913
-Change ArmorRuleStats to mithral type for Aslyferund Elven Chain since its material-type is Mithral. (Note this uses Brendan Bellina's damage-reduction fixed blueprint as its base.
+Change ArmorRuleStats to mithral type for Aslyferund Elven Chain since its
+material-type is Mithral. (Note this uses Brendan Bellina's damage-reduction
+fixed blueprint as its base.
 files:
 - blueprints
 nw_mcloth005.UTI
@@ -268,7 +324,8 @@ nw_mcloth005.UTI
 
 Mithral Chain of Greater Frost Resistance +4 fix by kevL
 v.180913
-Change ArmorRuleStats to mithral type for Mithral Chain of Greater Frost Resistance +4 since its material-type is Mithral.
+Change ArmorRuleStats to mithral type for Mithral Chain of Greater Frost
+Resistance +4 since its material-type is Mithral.
 files:
 - blueprints
 nx1_chainshirt_frost.UTI
@@ -306,7 +363,8 @@ ginc_param_const.nss
 
 ginc_object fix by kevL
 v.181212
-Fix loop iteration in SpawnObjectsAtWPs(), DestroyAllWithTag(), GetNumberOfObjects(). Spotted by Aqvilinus.
+Fix loop iteration in SpawnObjectsAtWPs(), DestroyAllWithTag(),
+GetNumberOfObjects(). Spotted by Aqvilinus.
 files:
 - scripts\inc
 ginc_object.NSS
@@ -314,7 +372,10 @@ ginc_object.NSS
 
 Half-orc Female Cloth fix by rjshae
 v.181215
-A texturing issue with the half-orc female cloth #10. The texture around the waist has overlapping faces, resulting in a flickering appearance. I [rj] just reversed the normals on one layer of the waist mesh faces, then exported via the nwn2mdk tool.
+A texturing issue with the half-orc female cloth #10. The texture around the
+waist has overlapping faces, resulting in a flickering appearance. I [rj] just
+reversed the normals on one layer of the waist mesh faces, then exported via
+the nwn2mdk tool.
 files:
 - models
 P_OOF_CL_Body11.MDB
@@ -322,7 +383,8 @@ P_OOF_CL_Body11.MDB
 
 script fix by Aqvilinus
 v.190115
-The dialog-script 'gc_check_race_pc' was not checking civ-types against subraces properly. (impl/ kevL)
+The dialog-script 'gc_check_race_pc' was not checking civ-types against
+subraces properly. (impl/ kevL)
 files:
 - scripts
 gc_check_race_pc.NSS
@@ -348,7 +410,9 @@ ginc_effect.NSS
 
 GetScaledEffect() fix by Aqvilinus
 v.190214
-GetScaledEffect() was using a negative value for an effect-decrease arg. Fixed by changing it to a positive value and recompiled all stock scripts that call GetScaledEffect(). (impl/ kevL)
+GetScaledEffect() was using a negative value for an effect-decrease arg. Fixed
+by changing it to a positive value and recompiled all stock scripts that call
+GetScaledEffect(). (impl/ kevL)
 files:
 - scripts\inc
 nw_i0_spells.NSS
@@ -360,7 +424,8 @@ all files
 
 OverlandMap ApplyDialogSkillEffect() fix by Aqvilinus
 v.190214
-EffectShaken() and EffectOffGuard() were using negative args for effect-decreases. Fixed by changing them to positive args. (impl/ kevL)
+EffectShaken() and EffectOffGuard() were using negative args for
+effect-decreases. Fixed by changing them to positive args. (impl/ kevL)
 files:
 - scripts
 ga_initiate_encounter.NSS
@@ -374,7 +439,9 @@ ginc_restsys.NSS
 
 OnInventoryDisturbed event-handler fix
 v.190216
-Many creatures in the stock blueprints have a nonexistent script slotted in their OnInventoryDisturbed events. This workaround forwards the event to the proper handler. Identified and fix suggested by Aqvilinus.
+Many creatures in the stock blueprints have a nonexistent script slotted in
+their OnInventoryDisturbed events. This workaround forwards the event to the
+proper handler. Identified and fix suggested by Aqvilinus.
 files:
 - scripts
 nw_e0_default8.nss [add]
@@ -382,7 +449,9 @@ nw_e0_default8.nss [add]
 
 Solipsism scroll fix by kevL
 v.190221
-Adds the Solipsism spellscroll and enables the ScribeScroll feat to work with the Solipsism spell. The icon for the scroll already existed but had to be added to the icons table.
+Adds the Solipsism spellscroll and enables the ScribeScroll feat to work with
+the Solipsism spell. The icon for the scroll already existed but had to be
+added to the icons table.
 files:
 - 2da
 des_crft_scroll.2da
@@ -403,7 +472,14 @@ nwn2_icons.2DA
 
 Werewolf/Wererat weapon orientation fix by ArtEChoke
 v.190604
-This is a simple orientation fix for the attachment points on the Obsidian Werewolf skeleton. This fix applies to the Ossian Wererat, as it shares the same skeleton. Previously the werewolf held weapons at a bizarre angle that clipped with its body and arms. This new skeleton will point the weapons in the proper direction. What this fix does *NOT* do is add proper weapon grasping animations, or proper weapon wielding animations. The creature will still attack with one left claw swipe (or whatever weapon you put in its left hand) and one bite.
+This is a simple orientation fix for the attachment points on the Obsidian
+Werewolf skeleton. This fix applies to the Ossian Wererat, as it shares the
+same skeleton. Previously the werewolf held weapons at a bizarre angle that
+clipped with its body and arms. This new skeleton will point the weapons in the
+proper direction. What this fix does *NOT* do is add proper weapon grasping
+animations, or proper weapon wielding animations. The creature will still
+attack with one left claw swipe (or whatever weapon you put in its left hand)
+and one bite.
 files:
 - skeletons
 c_werewolf_skel.GR2
@@ -428,7 +504,17 @@ ga_take_item.nss
 
 Staff of Balpheron fix by Clangeddin
 v.191226
-The problem is the OnEquip tag-based item script, that script applies a bunch of properties whenever it fires, the OnUnequip related script removes those properties. Here's the problem though, when you load the game, the OnEquip script fires, but the OnUnequip one does not, so if you equip, save, load, save, load, save, load, save, etc you will keep on stacking those properties until you get a staff with more than 255 item properties, which causes the engine to not load the character properly when the game is loaded; in fact, all other items are not displayed either in the inventory. What I did with the fix was simply add a local var check that would not apply the properties again if the item was already equipped, then I added the delete local var to the OnUnequip script to make sure it works properly later. [bug report by Myskully]
+The problem is the OnEquip tag-based item script, that script applies a bunch
+of properties whenever it fires, the OnUnequip related script removes those
+properties. Here's the problem though, when you load the game, the OnEquip
+script fires, but the OnUnequip one does not, so if you equip, save, load,
+save, load, save, load, save, etc you will keep on stacking those properties
+until you get a staff with more than 255 item properties, which causes the
+engine to not load the character properly when the game is loaded; in fact, all
+other items are not displayed either in the inventory. What I did with the fix
+was simply add a local var check that would not apply the properties again if
+the item was already equipped, then I added the delete local var to the
+OnUnequip script to make sure it works properly later. [bug report by Myskully]
 files:
 - scripts
 i_n2_wmgst001_eq.nss
@@ -437,7 +523,11 @@ i_n2_wmgst001_ue.nss
 
 Changes to spell scripts involving 100% immunity by Clangeddin
 v.200103
-The following spells had their 100% damage immunity changed to 9999 damage resistance, this is done to prevent the damage immunity overflow bug that turns them into vulnerabilities once they go past 100%. This operates under the same principle of the energy immunity spells (level 6 cleric, druid, bard spell and level 7 for Wiz/Sorc). The affected spells are:
+The following spells had their 100% damage immunity changed to 9999 damage
+resistance, this is done to prevent the damage immunity overflow bug that turns
+them into vulnerabilities once they go past 100%. This operates under the same
+principle of the energy immunity spells (level 6 cleric, druid, bard spell and
+level 7 for Wiz/Sorc). The affected spells are:
 1. Shadow Shield
 2. Death Ward
 3. Mass Death Ward
@@ -455,7 +545,8 @@ nx_s0_massdeaward.nss
 Stormlord and RDD 100% damage immunity bugfix by Clangeddin
 v.200105
 Scripts to change their 100% immunity to a 9999 DR.
-Additional info about the bug found at: https://forum.neverwintervault.org/t/nwn2fixes/595/248
+Additional info about the bug found at:
+https://forum.neverwintervault.org/t/nwn2fixes/595/248
 files:
 - scripts/spells
 nx_s2_immunityelectricity.nss
@@ -504,7 +595,8 @@ gui_rest.NSS
 
 'ga_cast_fake_spell_at_object' fix by kevL
 v.200307
-Change ActionCastSpellAtObject() to ActionCastFakeSpellAtObject(). Reported by Travus.
+Change ActionCastSpellAtObject() to ActionCastFakeSpellAtObject(). Reported by
+Travus.
 files:
 - scripts
 ga_cast_fake_spell_at_object.NSS
@@ -520,21 +612,36 @@ gui_rest.NSS
 
 'gui_rest' edit by kevL
 v.200309
-Remove redundant condition for OBJECT_TYPE_CREATURE when checking for nearby hostiles.
+Remove redundant condition for OBJECT_TYPE_CREATURE when checking for nearby
+hostiles.
 files:
 - scripts
 gui_rest.NSS
 
 
-MotB rest problems fix (reverts some of Nwn2Fixes OverlandMap ApplyDialogSkillEffect() fix)
+MotB rest problems fix (reverts some of Nwn2Fixes OverlandMap
+ApplyDialogSkillEffect() fix)
 v.200331
-The underlying bug is that, in SoZ on the overlandmap, the player can choose a dialog option to Intimidate an encounter before going into battle but EffectShaken() and EffectOffGuard() use negative values when constructing the effects. Positive values should be used in 'ginc_overland' instead (the constructors for the effects will subtract the positive values).
+The underlying bug is that, in SoZ on the overlandmap, the player can choose a
+dialog option to Intimidate an encounter before going into battle but
+EffectShaken() and EffectOffGuard() use negative values when constructing the
+effects. Positive values should be used in 'ginc_overland' instead (the
+constructors for the effects will subtract the positive values).
 
-Tracing those functions back through several layers, they could be called by 'gui_rest'. HOWEVER the only place i *know* of them being used is on the SoZ OL. And those are handled by just two scripts: 'ga_initiate_encounter' and 'ga_mated_encounter'.
+Tracing those functions back through several layers, they could be called by
+'gui_rest'. HOWEVER the only place i *know* of them being used is on the SoZ
+OL. And those are handled by just two scripts: 'ga_initiate_encounter' and
+'ga_mated_encounter'.
 
-So basically i'm going to delete 'gui_rest.NSS/.NCS' and 'k_mod_player_rest.NSS/.NCS' and 'ginc_restsys.NSS'. But keep 'ginc_overland' because it has the core fix, as well as 'ga_initiate_encounter' and 'ga_mated_encounter' because they (definitely) use it. Note that 'x2_inc_restsys' fixes a prototype/definition mismatch for WMSetAreaTable() so it should stay (unless it's still an issue).
+So basically i'm going to delete 'gui_rest.NSS/.NCS' and
+'k_mod_player_rest.NSS/.NCS' and 'ginc_restsys.NSS'. But keep 'ginc_overland'
+because it has the core fix, as well as 'ga_initiate_encounter' and
+'ga_mated_encounter' because they (definitely) use it. Note that
+'x2_inc_restsys' fixes a prototype/definition mismatch for WMSetAreaTable() so
+it should stay (unless it's still an issue).
 
-Additionally, it's nice to get the module-level script 'k_mod_player_rest' out of the Fixes package.
+Additionally, it's nice to get the module-level script 'k_mod_player_rest' out
+of the Fixes package.
 files deleted:
 - scripts
 gui_rest.NSS/.NCS
@@ -545,14 +652,17 @@ ginc_restsys.NSS
 
 Panther LoD Fix by rjshae
 v.200815
-The panther model does not include L01 and L02 parts so you get the full 2,660 mesh faces at every scale. This is an override model that adds in the LoD parts, with 956 faces at LoD.
+The panther model does not include L01 and L02 parts so you get the full 2,660
+mesh faces at every scale. This is an override model that adds in the LoD
+parts, with 956 faces at LoD.
 - models
 c_panther_cl_body01.MDB
 
 
 More Creature LoD Fixes by rjshae
 v.200818
-Added LoD parts for the stock clockroach, Imaskari golem, jinn, siege tower, snow leopard, giant spider, and treant creatures.
+Added LoD parts for the stock clockroach, Imaskari golem, jinn, siege tower,
+snow leopard, giant spider, and treant creatures.
 - models
 c_clockroach_cl_body01.MDB
 c_imaskarigolem_cl_body01.MDB
@@ -567,7 +677,11 @@ c_treant_CL_body01.MDB
 
 Shadow Simulacrum/Glass Doppelganger scrolls fix by kevL
 v.210304
-Adds the Shadow Simulacrum and Glass Doppelganger spellscrolls and enables the ScribeScroll feat to work with the Shadow Simulacrum and Glass Doppelganger spells. The icon for the Shadow Simulacrum scroll already existed but had to be added to the icons table. No scroll icon was found for Glass Doppelganger so the Shadow Simulacrum icon gets reused for it.
+Adds the Shadow Simulacrum and Glass Doppelganger spellscrolls and enables the
+ScribeScroll feat to work with the Shadow Simulacrum and Glass Doppelganger
+spells. The icon for the Shadow Simulacrum scroll already existed but had to be
+added to the icons table. No scroll icon was found for Glass Doppelganger so
+the Shadow Simulacrum icon gets reused for it.
 files:
 - 2da
 des_crft_scroll.2da
@@ -581,7 +695,11 @@ x2_it_sparscr901.UTI [add]
 
 Chandelier fix by RjShae
 v.210411
-This set of files provides fixes for the stock PLC_MC_CHANDL01 and PLC_MC_CHANDL02 chandelier models. For both chandeliers it increases the swing amplitude to half a degree, so it is still subtle but at least visible to the player’s eye. For the second chandelier it corrects the height setting so that the top of the chain lines up with the static component.
+This set of files provides fixes for the stock PLC_MC_CHANDL01 and
+PLC_MC_CHANDL02 chandelier models. For both chandeliers it increases the swing
+amplitude to half a degree, so it is still subtle but at least visible to the
+player’s eye. For the second chandelier it corrects the height setting so that
+the top of the chain lines up with the static component.
 files:
 - models
 PLC_MC_CHANDL02_01.MDB
@@ -593,7 +711,9 @@ PLC_MC_CHANDL02_idle.GR2
 
 chest_01 sound fix by RjShae
 v.211113
-There’s an error on row 62 of the placeableobjsnds.2da file. The ‘Opened’ column entry is ‘as_sw_chestv1cl’ (cl == close) when it should be ‘as_sw_chestv1op’ (op == open).
+There's an error on row 62 of the placeableobjsnds.2da file. The 'Opened'
+column entry is 'as_sw_chestv1cl' (cl == close) when it should be
+'as_sw_chestv1op' (op == open).
 files:
 - 2da
 placeableobjsnds.2da
@@ -607,55 +727,66 @@ MOTB Folder
 Enhanced Dream Weapon by Kaldor Silverwand
 [version!]
 https://neverwintervault.org/project/nwn2/prefab/placeable/enhanced-dream-weapon
-The longsword version is corrected, so that it no longer prevents future shape changes.The ability of the weapon to change is dependent on the feats of the wielder, rather than the main PC. The weapon now has a form for each weapon type.
+The longsword version is corrected, so that it no longer prevents future shape
+changes.The ability of the weapon to change is dependent on the feats of the
+wielder, rather than the main PC. The weapon now has a form for each weapon
+type.
 files:
 - Campaign
 gl_dream_weapon.DLG
-ga_bb_transform_specitem.NSS		[created]
-gc_bb_has_feat_specitem.NSS			[created]
-gc_bb_local_string_specitem.NSS		[created]
-i_nx1_dream_bastardsword_ac.NSS		[created]
+ga_bb_transform_specitem.NSS     [created]
+gc_bb_has_feat_specitem.NSS      [created]
+gc_bb_local_string_specitem.NSS  [created]
+i_nx1_dream_bastardsword_ac.NSS  [created]
 i_nx1_dream_battleaxe_ac.NSS
-i_nx1_dream_club_ac.NSS				[created]
+i_nx1_dream_club_ac.NSS          [created]
 i_nx1_dream_dagger_ac.NSS
-i_nx1_dream_falchion_ac.NSS			[created]
+i_nx1_dream_falchion_ac.NSS      [created]
 i_nx1_dream_greatsword_ac.NSS
-i_nx1_dream_handaxe_ac.NSS			[created]
-i_nx1_dream_katana_ac.NSS			[created]
-i_nx1_dream_kukri_ac.NSS			[created]
-i_nx1_dream_lightcrossbow_ac.NSS	[created]
+i_nx1_dream_handaxe_ac.NSS       [created]
+i_nx1_dream_katana_ac.NSS        [created]
+i_nx1_dream_kukri_ac.NSS         [created]
+i_nx1_dream_lightcrossbow_ac.NSS [created]
 i_nx1_dream_longbow_ac.NSS
 i_nx1_dream_longsword_ac.NSS
 i_nx1_dream_mace_ac.NSS
-i_nx1_dream_morningstar_ac.NSS		[created]
+i_nx1_dream_morningstar_ac.NSS   [created]
 i_nx1_dream_quarterstaff_ac.NSS
-i_nx1_dream_rapier_ac.NSS			[created]
+i_nx1_dream_rapier_ac.NSS        [created]
 i_nx1_dream_scimitar_ac.NSS
-i_nx1_dream_scythe_ac.NSS			[created]
-i_nx1_dream_shortsword_ac.NSS		[created]
-i_nx1_dream_spear_ac.NSS			[created]
-i_nx1_dream_warhammer_ac.NSS		[created]
+i_nx1_dream_scythe_ac.NSS        [created]
+i_nx1_dream_shortsword_ac.NSS    [created]
+i_nx1_dream_spear_ac.NSS         [created]
+i_nx1_dream_warhammer_ac.NSS     [created]
 - base/blueprints
-nx1_dream_bastardsword.UTI	[created]
-nx1_dream_club.UTI			[created]
-nx1_dream_falchion.UTI		[created]
-nx1_dream_handaxe.UTI		[created]
-nx1_dream_katana.UTI		[created]
-nx1_dream_kukri.UTI			[created]
-nx1_dream_lightcrossbow.UTI	[created]
+nx1_dream_bastardsword.UTI  [created]
+nx1_dream_club.UTI          [created]
+nx1_dream_falchion.UTI      [created]
+nx1_dream_handaxe.UTI       [created]
+nx1_dream_katana.UTI        [created]
+nx1_dream_kukri.UTI         [created]
+nx1_dream_lightcrossbow.UTI [created]
 nx1_dream_longsword.UTI
-nx1_dream_morningstar.UTI	[created]
-nx1_dream_rapier.UTI		[created]
-nx1_dream_scythe.UTI		[created]
-nx1_dream_shortsword.UTI	[created]
-nx1_dream_spear.UTI			[created]
-nx1_dream_warhammer.UTI		[created]
+nx1_dream_morningstar.UTI   [created]
+nx1_dream_rapier.UTI        [created]
+nx1_dream_scythe.UTI        [created]
+nx1_dream_shortsword.UTI    [created]
+nx1_dream_spear.UTI         [created]
+nx1_dream_warhammer.UTI     [created]
 
 
 Golem Fighting Bugfix by Vandervecken
 v.160820
 http://neverwintervault.org/project/nwn2/prefab/item/golem-fighting-bugfix-red-wizard-academy-motb
-At the Academy of Shapers and Binders in Act II of Mask of the Betrayer, you can participate in a Golem fighting ring. You can construct you Golem out of a number of different Golem pieces you have acquired during your travels. Part of the purpose of this minigame is to construct and disassemble your Golem until you hit upon winning combinations against the various combinations your golem faces. Unfortunately, if you install the Galvanized Golem Torso or the Weather-resistant Golem Torso, disassembling your Golem will return you only a generic Golem Torso. Those advanced torso pieces are gone for good. You don't even get their benefits on the golem.
+At the Academy of Shapers and Binders in Act II of Mask of the Betrayer, you
+can participate in a Golem fighting ring. You can construct you Golem out of a
+number of different Golem pieces you have acquired during your travels. Part of
+the purpose of this minigame is to construct and disassemble your Golem until
+you hit upon winning combinations against the various combinations your golem
+faces. Unfortunately, if you install the Galvanized Golem Torso or the
+Weather-resistant Golem Torso, disassembling your Golem will return you only a
+generic Golem Torso. Those advanced torso pieces are gone for good. You don't
+even get their benefits on the golem.
 The cause of this is some mis-set variables on the objects themselves.
 files:
 - Campaign
@@ -665,7 +796,10 @@ nx1_e_golem_torso2.UTI
 
 Open Gawatha's Door by kevL
 v.171019
-In Coveya Kurg'annis, if Kepob is ransomed, Gawatha's party exits through the north door. But the door is closed and they won't open it themselves. This fix inserts 'ga_door_open_gawatha' on the dialog-node that forces Gawatha's party to exit.
+In Coveya Kurg'annis, if Kepob is ransomed, Gawatha's party exits through the
+north door. But the door is closed and they won't open it themselves. This fix
+inserts 'ga_door_open_gawatha' on the dialog-node that forces Gawatha's party
+to exit.
 files:
 - D_X1
 d03_gawatha.DLG
@@ -674,7 +808,10 @@ ga_door_open_gawatha.nss [created]
 
 Anya Sleep fix by kevL
 v.171019
-In Janiik's Farmhouse, Anya doesn't want to sleep sometimes. The fix is to use GetNearestObjectByTag() instead of GetObjectByTag() since it seems more robust at getting the Anya-object. Also (cosmetic) Anya tries to face the fireplace when she sleeps.
+In Janiik's Farmhouse, Anya doesn't want to sleep sometimes. The fix is to use
+GetNearestObjectByTag() instead of GetObjectByTag() since it seems more robust
+at getting the Anya-object. Also (cosmetic) Anya tries to face the fireplace
+when she sleeps.
 files:
 - B_X1
 b13_p_anya_sleep.NSS
@@ -682,7 +819,13 @@ b13_p_anya_sleep.NSS
 
 Dialog Fixes by JOG
 v.180913
-MotB: Ice-Troll-Lodge Bugfix AND MotB: Lurure Bears Bugfix. This fixes the bug where you can't join the Ice Troll Lodge when you already won the Test of Prowess a second time. This fixes a bug in with Okku's tribe at the Wells of Lurure: When you devoured Okku, were female and had Gann in your party the conversation would simply end after Gann had his line without the bears becoming hostile. [kevL lifted these 2 - http://mods.jo-ge.net/nwn2/index.htm - after a recommend by NinjaSpectre]
+MotB: Ice-Troll-Lodge Bugfix AND MotB: Lurure Bears Bugfix. This fixes the bug
+where you can't join the Ice Troll Lodge when you already won the Test of
+Prowess a second time. This fixes a bug in with Okku's tribe at the Wells of
+Lurure: When you devoured Okku, were female and had Gann in your party the
+conversation would simply end after Gann had his line without the bears
+becoming hostile. [kevL lifted these 2 - http://mods.jo-ge.net/nwn2/index.htm -
+after a recommend by NinjaSpectre]
 files:
 - B_X1
 b12_jurak.DLG
@@ -691,7 +834,11 @@ b10_bear_spirits.DLG
 
 Fentomy dialog fix
 v.190623
-Fentomy on the Lakeshore could potentially ramp up companion influences infinitely. This fix checks for a local_int on Fentomy "Revealed" and, if found, disallows each of the four dialog-nodes that lead to revealing Fentomy's disguise, hence should stop infinite influence gains. (And potentially infinite losses on some of the other subnodes, it seems.) Spotted by rsw0x.
+Fentomy on the Lakeshore could potentially ramp up companion influences
+infinitely. This fix checks for a local_int on Fentomy "Revealed" and, if
+found, disallows each of the four dialog-nodes that lead to revealing Fentomy's
+disguise, hence should stop infinite influence gains. (And potentially infinite
+losses on some of the other subnodes, it seems.) Spotted by rsw0x.
 files:
 - D_X1
 d00_fentomy.DLG
@@ -721,7 +868,9 @@ ai_reddragon_spawnscript.nss
 Nasher Set Fix by Kaldor Silverwand
 [version!]
 https://neverwintervault.org/project/nwn2/script/nwn2-oc-nasher-set-fix
-Makes the Nasher item set available, it was not available ingame (and the unique ring appeared in two places). Adds cloak and gloves to OC and gives a set bonus.
+Makes the Nasher item set available, it was not available ingame (and the
+unique ring appeared in two places). Adds cloak and gloves to OC and gives a
+set bonus.
 files:
 - 2100_Crossroad_Keep_A2
 21_a_specmission.NSS
@@ -741,7 +890,10 @@ i_x2_nash_ring_ue.NSS
 
 Logram and Yaisog fix by kevL
 v.160904
-In module 1300_Old_Owl_Well, area 1319_eyegougerl2, Logram can't equip his arms and armor because he doesn't have the necessary proficiences and the items are not identified. Yaisog needs his arms and armor identified before he can equip them. This fix brings both NPCs to combat readiness.
+In module 1300_Old_Owl_Well, area 1319_eyegougerl2, Logram can't equip his arms
+and armor because he doesn't have the necessary proficiences and the items are
+not identified. Yaisog needs his arms and armor identified before he can equip
+them. This fix brings both NPCs to combat readiness.
 files:
 - 1300_Old_Owl_Well
 13a_logram_atk.NSS
@@ -749,7 +901,11 @@ files:
 
 Temple of Seasons fix by kevL
 v.160907
-The final dialog can be borked if an uncontrolled companion crosses its trigger. This fix changes the OnEnter script of the trigger, and ensures that only a controlled character can start the Purification Ritual. A second change is for the door to the final statue room, raising its DC from 18 to 99 so it's no longer an egregious exploit.
+The final dialog can be borked if an uncontrolled companion crosses its
+trigger. This fix changes the OnEnter script of the trigger, and ensures that
+only a controlled character can start the Purification Ritual. A second change
+is for the door to the final statue room, raising its DC from 18 to 99 so it's
+no longer an egregious exploit.
 files:
 - 2400_Illefarn_Ruins
 2430_area_ce.NSS
@@ -758,7 +914,8 @@ files:
 
 Blast Globe Barrel fix by kamal
 v.160910
-Fixes the setting of local_int "collected_blastbarrels" and several dialogs relating to the Collector, etc.
+Fixes the setting of local_int "collected_blastbarrels" and several dialogs
+relating to the Collector, etc.
 files:
 - 2000_Neverwinter
 20_blast_globe_barrel.DLG
@@ -779,7 +936,9 @@ files:
 
 Blast Globe fix addition by kevL
 v.160912
-Recompiled '20p_blastglobe_da' to use the fixed '20_inc_cyran' ExplodeBarrel() function. Also added some documentation to '20_inc_cyran' and '20_blast_globe_barrel'.
+Recompiled '20p_blastglobe_da' to use the fixed '20_inc_cyran' ExplodeBarrel()
+function. Also added some documentation to '20_inc_cyran' and
+'20_blast_globe_barrel'.
 files:
 - 2000_Neverwinter
 20p_blastglobe_da.NSS
@@ -787,7 +946,16 @@ files:
 
 Black Garius + nightwalker fix by kevL
 v.161003
-At the defense of Crossroad Keep, when Black Garius is about to summon his nightwalker, he gets distracted and often doesn't complete his dialog successfully due to all the fighting going on in the courtyard. If the nightwalker does not summon, the plot breaks because it needs to be defeated for the plot to continue. This fix temporarily removes several of Black Garius' AI scripts related to combat, so that he does not react to being hit by arrows and so is no longer tempted to retaliate against the greycloaks that surround the barricade. This allows his dialog to complete and the nightwalker to be summoned correctly. His AI then returns to normal and the Battle of Crossroad Keep commences.
+At the defense of Crossroad Keep, when Black Garius is about to summon his
+nightwalker, he gets distracted and often doesn't complete his dialog
+successfully due to all the fighting going on in the courtyard. If the
+nightwalker does not summon, the plot breaks because it needs to be defeated
+for the plot to continue. This fix temporarily removes several of Black Garius'
+AI scripts related to combat, so that he does not react to being hit by arrows
+and so is no longer tempted to retaliate against the greycloaks that surround
+the barricade. This allows his dialog to complete and the nightwalker to be
+summoned correctly. His AI then returns to normal and the Battle of Crossroad
+Keep commences.
 files:
 - 3500_Crossroad_Keep_Siege
 3541a_cut_garius.NSS
@@ -795,7 +963,9 @@ files:
 
 dialog fix by kamal
 v.170205
-13_bugbear_dwarf: Chaotic response chaos adjustment fixed when talking to Khelgar after freeing the dwarf prisoner from bugbears (would adjust alignment towards law instead of chaos).
+13_bugbear_dwarf: Chaotic response chaos adjustment fixed when talking to
+Khelgar after freeing the dwarf prisoner from bugbears (would adjust alignment
+towards law instead of chaos).
 files:
 - 1300_Old_Owl_Well
 13_bugbear_dwarf.DLG
@@ -803,7 +973,8 @@ files:
 
 dialog fix by kamal
 v.170205
-Previously you didn't gain influence with Khelgar though the conversation said you did.
+Previously you didn't gain influence with Khelgar though the conversation said
+you did.
 files:
 - 1300_Old_Owl_Well
 13_deaddwarf.DLG
@@ -811,8 +982,10 @@ files:
 
 dialog fixes by kamal
 v.170205
-11_georg: Georg will now comment on Shandra/Casavir/Bishop being your spouse correctly, was previously not possible.
-11_daegun: PC response for successful wisdom check now checks wisdom instead of intelligence.
+11_georg: Georg will now comment on Shandra/Casavir/Bishop being your spouse
+correctly, was previously not possible.
+11_daegun: PC response for successful wisdom check now checks wisdom instead of
+intelligence.
 files:
 - 1100_West_Harbor
 11_daeghun.DLG
@@ -821,8 +994,10 @@ files:
 
 dialog fixes by kamal
 v.170205
-10_axle: Axle now correctly recognizes the classes (was an and check), and restored a line regarding the gith that could never happen
-10_moire: previously a bluff check with Moire was not implemented when the dialog says there is one, so the bluff was always successful
+10_axle: Axle now correctly recognizes the classes (was an and check), and
+restored a line regarding the gith that could never happen
+10_moire: previously a bluff check with Moire was not implemented when the
+dialog says there is one, so the bluff was always successful
 files:
 - 1000_Neverwinter_A1
 10_axle.DLG
@@ -832,7 +1007,8 @@ files:
 dialog fixes by kamal
 v.170205
 12_mozah: fixed broken skill check, was using non-existent script
-12_cx_sp_garius: shadow priest will not only tell Garius the other priest was killed if the priest actually was
+12_cx_sp_garius: shadow priest will not only tell Garius the other priest was
+killed if the priest actually was
 files:
 - 1200_Highcliff
 12_cs_sp_garius.DLG
@@ -841,7 +1017,8 @@ files:
 
 script fix by kamal
 v.170205
-This is the deathscript for Fenthick, but it was in the wrong module, so it never fired. (This script does not seem to have any game effect)
+This is the deathscript for Fenthick, but it was in the wrong module, so it
+never fired. (This script does not seem to have any game effect)
 files:
 - 1700_Merchant_Quarter
 10n_fen_dead.NSS
@@ -849,7 +1026,8 @@ files:
 
 Construct upgrade fix by player1
 v.150717
-This mod fixes issues with upgrading Construct companion from official Neverwinter Nights 2 campaign.
+This mod fixes issues with upgrading Construct companion from official
+Neverwinter Nights 2 campaign.
 - https://neverwintervault.org/project/nwn2/other/construct-upgrade-fix
 files:
 - Campaign
@@ -858,7 +1036,11 @@ gl_construct.DLG
 
 Deekin Keep Dialog fix by kevL
 v.170207
-Allows Deekin to upgrade his store (twice), allows any/all of his various greetings to show, and increases what he's willing to pay for items (instead of decreasing). WARNING: I arbitrarily decreased the increase from 10% to 5% on his initial store, then on Upgrade 1 it resets to 0% (stock), and on Upgrade 2 it jumps to its full 10% MarkUp/MarkDown (always in favor of the player).
+Allows Deekin to upgrade his store (twice), allows any/all of his various
+greetings to show, and increases what he's willing to pay for items (instead of
+decreasing). WARNING: I arbitrarily decreased the increase from 10% to 5% on
+his initial store, then on Upgrade 1 it resets to 0% (stock), and on Upgrade 2
+it jumps to its full 10% MarkUp/MarkDown (always in favor of the player).
 - https://neverwintervault.org/project/nwn2/other/patch/deekin-keep-dialog
 files:
 - 2100_Crossroad_Keep_A2
@@ -875,7 +1057,10 @@ i_nwn2_it_shard4_aq.NSS
 
 dialog fix by kamal
 v.170210
-16_ar_puzzle: characters with high lore skills no longer require the books to answer the questions, and fixes cases where the pc previously not use the lore skill if they had aquired the book. Also fixes an influence increase with grobnar
+16_ar_puzzle: characters with high lore skills no longer require the books to
+answer the questions, and fixes cases where the pc previously not use the lore
+skill if they had aquired the book. Also fixes an influence increase with
+grobnar
 files:
 - 1600_Githyanki_Caves
 16_ar_puzzle.DLG
@@ -883,7 +1068,8 @@ files:
 
 dialog fix by kamal
 v.170210
-16_bishop_emb: two checks that were listed as intelligence by the dialog were actually checking charisma.
+16_bishop_emb: two checks that were listed as intelligence by the dialog were
+actually checking charisma.
 files:
 - 1600_Githyanki_Caves
 16_bishop_emb.DLG
@@ -891,7 +1077,10 @@ files:
 
 dialog fix by kamal
 v.170210
-16_marcus: it was possible that giving Marcus Bishop's knife would not set the variable that you did so, preventing you from being able to ask Bishop about it later. Also there was no influence gain with Bishop for some choices though the conversation said there was.
+16_marcus: it was possible that giving Marcus Bishop's knife would not set the
+variable that you did so, preventing you from being able to ask Bishop about it
+later. Also there was no influence gain with Bishop for some choices though the
+conversation said there was.
 files:
 - 1600_Githyanki_Caves
 16_marcus.DLG
@@ -899,7 +1088,10 @@ files:
 
 dialog fix by kamal
 v.170210
-16_zaxis: Fixed Influence gain with Neeshka, fixed 2 Bluff checks (were checking Diplomacy instead), fixed Taunt skill check (was checked on player node, so it would only appear if you had already passed the check, so if you got the option to taunt it was automatically a success)
+16_zaxis: Fixed Influence gain with Neeshka, fixed 2 Bluff checks (were
+checking Diplomacy instead), fixed Taunt skill check (was checked on player
+node, so it would only appear if you had already passed the check, so if you
+got the option to taunt it was automatically a success)
 files:
 - 1600_Githyanki_Caves
 16_zaxis.DLG
@@ -907,7 +1099,10 @@ files:
 
 dialog fix by kamal
 v.170210
-16_zeeaire: 1st first Diplomacy/Bluff/Taunt check is supposed to be one time only, now it is. 2nd bluff check ("So it was as I suspected, this blade is more important to you than anyone knows.") could not be passed unless Neeshka is in the party since the conditions were in the wrong order
+16_zeeaire: 1st first Diplomacy/Bluff/Taunt check is supposed to be one time
+only, now it is. 2nd bluff check ("So it was as I suspected, this blade is more
+important to you than anyone knows.") could not be passed unless Neeshka is in
+the party since the conditions were in the wrong order
 files:
 - 1600_Githyanki_Caves
 16_zeeaire.DLG
@@ -915,7 +1110,8 @@ files:
 
 dialog fix by kamal
 v.170210
-10_informant_st: there was no intimidate check though the conversation says there is, causing automatic success in intimidation
+10_informant_st: there was no intimidate check though the conversation says
+there is, causing automatic success in intimidation
 files:
 - 1700_Merchant_Quarter
 10_informant_st.DLG
@@ -931,8 +1127,13 @@ files:
 
 dialog fixes by kamal
 v.170210
-20_cs_kyli: Fixed Kyli's convo getting abruptly cut off (only if player is female and Elanee is in party. "Elanee's right. Lisbet will listen to us." only had a continuation if the pc was male.
-20_painter: Fixed Shandra influence gain and loss during the convo with the painter (conversation says there is influence change but no influence change was happening; fixed painter's convo getting cut off if you are female and say it's the work of an amateur
+20_cs_kyli: Fixed Kyli's convo getting abruptly cut off (only if player is
+female and Elanee is in party. "Elanee's right. Lisbet will listen to us." only
+had a continuation if the pc was male.
+20_painter: Fixed Shandra influence gain and loss during the convo with the
+painter (conversation says there is influence change but no influence change
+was happening; fixed painter's convo getting cut off if you are female and say
+it's the work of an amateur
 files:
 - 2000_Neverwinter
 20_cs_kyli.DLG
@@ -941,8 +1142,10 @@ files:
 
 dialog fixes by kamal
 v.170210
-22_cs_kistrel: party is now checked for having the insect collection, not just player.
-22_nya: spellcraft check in her convo was set to DC1, set to a more reasonable 15.
+22_cs_kistrel: party is now checked for having the insect collection, not just
+player.
+22_nya: spellcraft check in her convo was set to DC1, set to a more reasonable
+15.
 files:
 - 2200_Port_Llast
 22_cs_kistrel.DLG
@@ -951,8 +1154,11 @@ files:
 
 dialog fixes by kamal
 v.170210
-gl_bishop: Fixed Diplomacy check in Bishop convo. Convo wasn't checking any skill, resulting in auto-success.
-gl_guyven: guyven's join variable now correctly set on "You are welcome to stay at my home." previously it was only on "You will always have a place at my fire.", which is no different
+gl_bishop: Fixed Diplomacy check in Bishop convo. Convo wasn't checking any
+skill, resulting in auto-success.
+gl_guyven: guyven's join variable now correctly set on "You are welcome to stay
+at my home." previously it was only on "You will always have a place at my
+fire.", which is no different
 files:
 - Campaign
 gl_bishop.DLG
@@ -961,7 +1167,8 @@ gl_guyven.DLG
 
 Harvest Festival brawl fix by kevL
 v.170312
-The mock brawlers weren't brawling in the ring. This fix keeps up their mock battle until the player starts his/her match.
+The mock brawlers weren't brawling in the ring. This fix keeps up their mock
+battle until the player starts his/her match.
 files:
 - 0_Tutorial
 0_brawler_generic_sp.NSS
@@ -970,7 +1177,9 @@ files:
 
 Hlam dialog fix by kevL
 v.170314
-One of the influence-checks on Khelgar (declining to become a Monk) wasn't quite right. This fix allows Khelgar to say his response and close his Quest if the PC's influence is high enough.
+One of the influence-checks on Khelgar (declining to become a Monk) wasn't
+quite right. This fix allows Khelgar to say his response and close his Quest if
+the PC's influence is high enough.
 files:
 - 1700_Merchant_Quarter
 10_hlam.DLG
@@ -978,7 +1187,15 @@ files:
 
 Get Soldiers Dead fix by kevL
 v.171117
-In Module 2000_Neverwinter, dialog '20_deorwin', Deorwin gives one response if he's the only soldier left alive and a different one if he's not. Bug: The script that checks this condition returns FALSE only if no soldiers died (which is redundant since Doerwin is a soldier and the PC is talking to him); so, the condition is always TRUE, causing Doeorwin to state that he has to bury "four sons" - instead of falling through to the next dialog-node, in which he gives the PC thanks for bringing "us" through. This fix modifies the script to check that all other four soldiers have died in the battle with Qaggoth, while protecting Cyran, and indeed Deorwin is the only soldier left alive.
+In Module 2000_Neverwinter, dialog '20_deorwin', Deorwin gives one response if
+he's the only soldier left alive and a different one if he's not. Bug: The
+script that checks this condition returns FALSE only if no soldiers died (which
+is redundant since Doerwin is a soldier and the PC is talking to him); so, the
+condition is always TRUE, causing Doeorwin to state that he has to bury "four
+sons" - instead of falling through to the next dialog-node, in which he gives
+the PC thanks for bringing "us" through. This fix modifies the script to check
+that all other four soldiers have died in the battle with Qaggoth, while
+protecting Cyran, and indeed Deorwin is the only soldier left alive.
 files:
 - 2000_Neverwinter
 20c_soldiers_dead.NSS
@@ -986,7 +1203,11 @@ files:
 
 Battle of the Rod fix by NinjaSpectre and kevL
 v.180426
-In Module 3000_Neverwinter_A3, strange things can happen (including perhaps breaking the game if the Rod of Never is dropped) after the PC exits the Underneath and the reaver assassination attempt is made on Lord Nasher in the throne room. This attempts to smooth things through what is essentially a very long cutscene.
+In Module 3000_Neverwinter_A3, strange things can happen (including perhaps
+breaking the game if the Rod of Never is dropped) after the PC exits the
+Underneath and the reaver assassination attempt is made on Lord Nasher in the
+throne room. This attempts to smooth things through what is essentially a very
+long cutscene.
 files:
 - 3000_Neverwinter_A3
 30a_nasher.NSS
@@ -997,7 +1218,20 @@ files:
 
 Hlam dialog fixes by NinjaSpectre
 v.180426
-When telling Khelgar to be a monk, the order on the check was wrong so you could never succeed (although not really a big problem since that is what he chooses if you let him decide). The next one is when you leave the conversation before making the final choice. The entry back into this decision didn't check if Khelgar was with you or if he had already made the choice. I moved this into the same area as the check for each of the trials, and put condition checks on it to make sure all 3 have been completed before being available. The last thing I did is set the flag for Khelgar being a monk even though you tell him to stay a warrior. This is because the Journal states that the quest is finished and I didn't notice any other variable being set for this outcome. [kL_note: That might make for some weirdness if subsequent scripts/dialogs think Khelgar actually is monk.] Without this change Khelgar could still become a monk afterwards trough the dialog, but the Journal would not be updated from before.
+When telling Khelgar to be a monk, the order on the check was wrong so you
+could never succeed (although not really a big problem since that is what he
+chooses if you let him decide). The next one is when you leave the conversation
+before making the final choice. The entry back into this decision didn't check
+if Khelgar was with you or if he had already made the choice. I moved this into
+the same area as the check for each of the trials, and put condition checks on
+it to make sure all 3 have been completed before being available. The last
+thing I did is set the flag for Khelgar being a monk even though you tell him
+to stay a warrior. This is because the Journal states that the quest is
+finished and I didn't notice any other variable being set for this outcome.
+[kL_note: That might make for some weirdness if subsequent scripts/dialogs
+think Khelgar actually is monk.] Without this change Khelgar could still become
+a monk afterwards trough the dialog, but the Journal would not be updated from
+before.
 files:
 - 1700_Merchant_Quarter
 10_hlam.DLG
@@ -1007,7 +1241,10 @@ files:
 
 Elanee City Watch dialog fix by SothisB
 v.180702
-This dialog fix makes the conversation with Elanee that becomes available to players that take the Thieves path also available to players taking the City Watch route. The conversation becomes available after letting Elanee distract the guards in the Back Alley.
+This dialog fix makes the conversation with Elanee that becomes available to
+players that take the Thieves path also available to players taking the City
+Watch route. The conversation becomes available after letting Elanee distract
+the guards in the Back Alley.
 files:
 - 1900_Slums
 10_alley_cw2.dlg
@@ -1015,7 +1252,8 @@ files:
 
 Sand Shop (Fireburst scroll) fix by kevL
 v.180812
-The Fireburst scroll in Sand's store has the description of "Repulsion" and it doesn't work. This fix replaces that bogus scroll with a legitimate scroll.
+The Fireburst scroll in Sand's store has the description of "Repulsion" and it
+doesn't work. This fix replaces that bogus scroll with a legitimate scroll.
 files:
 - 1000_Neverwinter_A1
 2007_cliententer.NSS
@@ -1023,7 +1261,10 @@ files:
 
 Niyra Mithral Chainmail Drop fix by kevL
 v.180913
-Niyra has a suit of Elven Chainmail in her inventory that will drop but it does not have the Mithral armorrulestat (it's not regular Elven Chainmail either) although its material-type is Mithral. This fix replaces that item with one that has the Mithral armorrulestat.
+Niyra has a suit of Elven Chainmail in her inventory that will drop but it does
+not have the Mithral armorrulestat (it's not regular Elven Chainmail either)
+although its material-type is Mithral. This fix replaces that item with one
+that has the Mithral armorrulestat.
 files:
 - 2200_Port_Llast
 nw_maarcl037_niyra.UTI [created]
@@ -1032,7 +1273,10 @@ rivalparty_client_en.NSS
 
 Trent Vendall double spawn fix by travus
 v.180918
-Trent would incorrectly spawn right next to Cormick after speaking with Cormick about the docks sweep. Removed the create object script from end of the docks sweep branch as Trent is already correctly spawned through 10a_faulk_state script. Added a faction check to the Shadow Thief node.
+Trent would incorrectly spawn right next to Cormick after speaking with Cormick
+about the docks sweep. Removed the create object script from end of the docks
+sweep branch as Trent is already correctly spawned through 10a_faulk_state
+script. Added a faction check to the Shadow Thief node.
 files:
 - 1000_Neverwinter_A1
 10_cormick.DLG
@@ -1040,7 +1284,9 @@ files:
 
 Cain dialog fix not by Obsidian
 v.180918
-In the lute duel with Cain, fixes a Sleight of Hand check (was Perform) and fixes an influence check with Grobnar when asking for help to play the fourth riff.
+In the lute duel with Cain, fixes a Sleight of Hand check (was Perform) and
+fixes an influence check with Grobnar when asking for help to play the fourth
+riff.
 files:
 - 2000_Neverwinter
 20_cain.DLG
@@ -1048,7 +1294,9 @@ files:
 
 Neverneath end quest workaround by kevL
 v.180920
-The Defend Castle Never quest might not complete by the stock mechanic. This workaround ought check that and force it to complete when the throne-door is opened to rescue Lord Nasher in the throneroom. Reported by zzc.
+The Defend Castle Never quest might not complete by the stock mechanic. This
+workaround ought check that and force it to complete when the throne-door is
+opened to rescue Lord Nasher in the throneroom. Reported by zzc.
 files:
 - 3000_Neverwinter_A3
 3000_throne_onused.NSS
@@ -1056,7 +1304,9 @@ files:
 
 Temple of Seasons tweak by kevL
 v.180920
-Update to the previous fixes for Temple of Seasons. Put the fixes into their own codeblock since player may have entered the Temple area before installing the patch.
+Update to the previous fixes for Temple of Seasons. Put the fixes into their
+own codeblock since player may have entered the Temple area before installing
+the patch.
 files:
 - 2400_Illefarn_Ruins
 2430_area_ce.NSS
@@ -1064,7 +1314,10 @@ files:
 
 Nevalle dialog fix by kevL
 v.180920
-Nevalle could assign the PC to the Disturbing Connections quest at any time, but the dialog itself refers to the PC as a Squire. This fix ensures that the PC is a Squire in good standing with Neverwinter, cleared of all allegations, before the quest will be assigned. Reported by zzc.
+Nevalle could assign the PC to the Disturbing Connections quest at any time,
+but the dialog itself refers to the PC as a Squire. This fix ensures that the
+PC is a Squire in good standing with Neverwinter, cleared of all allegations,
+before the quest will be assigned. Reported by zzc.
 files:
 - 2000_Neverwinter
 20_nevalle.DLG
@@ -1072,7 +1325,12 @@ files:
 
 Hlam dialog fix + Another Hlam dialog fix by sanpats
 v.180921
-Modified the fix by NinjaSpectre, but change nkhelgarismonk=1 to nkhelgardecided=1 when he decided to stay as a fighter, to ensure compatibility with later dialogs that may think Khelgar is a monk when he stay as a fighter. In case that Khelgar decided to be a monk, I set both nkhelgarismonk and nkhelgardecide to 1. All condition checks in this dialog that check nkhelgarismonk was changed to check nkhelgardecided instead.
+Modified the fix by NinjaSpectre, but change nkhelgarismonk=1 to
+nkhelgardecided=1 when he decided to stay as a fighter, to ensure compatibility
+with later dialogs that may think Khelgar is a monk when he stay as a fighter.
+In case that Khelgar decided to be a monk, I set both nkhelgarismonk and
+nkhelgardecide to 1. All condition checks in this dialog that check
+nkhelgarismonk was changed to check nkhelgardecided instead.
 files:
 - 1700_Merchant_Quarter
 10_hlam.DLG
@@ -1082,7 +1340,9 @@ files:
 
 Khelgar dialog fix by sanpats
 v.180921
-Prevent the dialog node, where PC tries to convince Khelgar to give up the quest to become a monk, from firing when Khelgar's already decided to stay a fighter when talked to Hlam.
+Prevent the dialog node, where PC tries to convince Khelgar to give up the
+quest to become a monk, from firing when Khelgar's already decided to stay a
+fighter when talked to Hlam.
 files:
 - Campaign
 gl_khelgar.DLG
@@ -1090,7 +1350,9 @@ gl_khelgar.DLG
 
 Wizard's Arsenal quest/dialog fix by Aqvilinus (impl. kevL)
 v.181122
-Don't let Tarmas assign the Wizard's Arsenal quest if player has already looted his house. Sets a local variable on the module when his house is entered that is checked in Tarmas' dialog.
+Don't let Tarmas assign the Wizard's Arsenal quest if player has already looted
+his house. Sets a local variable on the module when his house is entered that
+is checked in Tarmas' dialog.
 files:
 - 1100_West_Harbor
 11_tarmas.DLG
@@ -1099,9 +1361,12 @@ files:
 
 Ward Mossfeld fix by kevL
 v.190413
-11_wounded_ward.DLG - leave Ward destroyable when telling him you're going to get help from Brother Merring (as is done in '11_wounded_wyl.DLG')
-11_wounded_wyl.DLG - set "11_bWylState" = 1 correctly so that Ward's dialog will know you've found Wyl (as is done in '11_wounded_ward.DLG')
-11_wound_heal.NSS - do not re-assign an identical series of actions to NPCs (discovered by fleenots); switch Wyl's one-liner dialog w/ Pitney's
+11_wounded_ward.DLG - leave Ward destroyable when telling him you're going to
+get help from Brother Merring (as is done in '11_wounded_wyl.DLG')
+11_wounded_wyl.DLG - set "11_bWylState" = 1 correctly so that Ward's dialog
+will know you've found Wyl (as is done in '11_wounded_ward.DLG')
+11_wound_heal.NSS - do not re-assign an identical series of actions to NPCs
+(discovered by fleenots); switch Wyl's one-liner dialog w/ Pitney's
 files:
 - 1100_West_Harbor
 11_wounded_ward.DLG
@@ -1112,12 +1377,24 @@ files:
 Georg and Tarmas fix by kevL
 v.190416
 Fixes stuff in the opening battle in West Harbor after the tutorial finishes.
-11_a_georg_lv.NSS - better redundancy check that ensures Georg gets to the gathering point before the wheatfield battle; refactored and optimized because it's just too difficult/frustrating to figure out what's going on otherwise.
-11_cs_tarmas.NSS - move Tarmas to a gather-point instead of directly to the wheatfield; do not assign Tarmas a custom heartbeat script (ForceRest) since it just gets in the way of his actions/combat/behaviors.
-11_dcr_tarmaswheat.NSS - get the nearest hostile creature to a friendly who is below half health for Tarmas to target. ie, Rewrite script.
-11_wound_heal.NSS - don't AssignCommand to OBJECT_SELF; check the entire PC party for moss, not just the true PCs; don't make recruits wait so long before moving to destination; refactored and optimized overall.
-1100_client_en.NSS - destroy pre-placed Tarmas and spawn Tarmas w/ spells; this instantiates the 'tarmasbattle.UTC' file.
-tarmasbattle.UTC - this is not a copy of the stock 'tarmasbattle.UTC' but a copy of the pre-placed Tarmas as he appears in West Harbor. It is identical to the pre-placed Tarmas except it has Ray of Frost (x4), Magic Missile (x4), Melf's Acid Arrow (x4), Flame Arrow (x3), and uses the standard heartbeat script instead of the ForceRest script.
+11_a_georg_lv.NSS - better redundancy check that ensures Georg gets to the
+gathering point before the wheatfield battle; refactored and optimized because
+it's just too difficult/frustrating to figure out what's going on otherwise.
+11_cs_tarmas.NSS - move Tarmas to a gather-point instead of directly to the
+wheatfield; do not assign Tarmas a custom heartbeat script (ForceRest) since it
+just gets in the way of his actions/combat/behaviors.
+11_dcr_tarmaswheat.NSS - get the nearest hostile creature to a friendly who is
+below half health for Tarmas to target. ie, Rewrite script.
+11_wound_heal.NSS - don't AssignCommand to OBJECT_SELF; check the entire PC
+party for moss, not just the true PCs; don't make recruits wait so long before
+moving to destination; refactored and optimized overall.
+1100_client_en.NSS - destroy pre-placed Tarmas and spawn Tarmas w/ spells; this
+instantiates the 'tarmasbattle.UTC' file.
+tarmasbattle.UTC - this is not a copy of the stock 'tarmasbattle.UTC' but a
+copy of the pre-placed Tarmas as he appears in West Harbor. It is identical to
+the pre-placed Tarmas except it has Ray of Frost (x4), Magic Missile (x4),
+Melf's Acid Arrow (x4), Flame Arrow (x3), and uses the standard heartbeat
+script instead of the ForceRest script.
 files:
 - 1100_West_Harbor
 11_a_georg_lv.NSS
@@ -1130,8 +1407,10 @@ tarmasbattle.UTC
 
 Brother Merring's Moss fix by Aqvilinus (impl. kevL)
 v.190417
-11_a_journal_wound.NSS - don't finish quest if simply talking to a 2nd wounded villager; a villager must be healed before quest completes.
-11_wound_heal.NSS - account for the fact that Amie could have had the healing moss and dropped it when she died.
+11_a_journal_wound.NSS - don't finish quest if simply talking to a 2nd wounded
+villager; a villager must be healed before quest completes.
+11_wound_heal.NSS - account for the fact that Amie could have had the healing
+moss and dropped it when she died.
 files:
 - 1100_West_Harbor
 11_a_journal_wound.NSS
@@ -1148,7 +1427,16 @@ files:
 
 Many Starred Cloaks fix (Vale, Sevann, Nathe) by kevL
 v.200118
-flag Vale,Sevann,Nathe as immortal and Vale as plot for the Crossroad Keep basement battle with BlackGarius. The problem is that if Vale dies the game breaks since his dialog is required to exit the basement. When the PC first meets the MSC they are spawned from blueprints that have the flags set properly; but a change was made to preplace them in the basement before the battle, but those flags were not set. This fix changes the flags of the preplaced instances to match those of the blueprints, in the OnEnter script of the Crossroad Keep basement. (Note: I left Vale as non-plot but immortal, since there is code in the AI that can prevent plot-characters from becoming engaged in combat.)
+flag Vale,Sevann,Nathe as immortal and Vale as plot for the Crossroad Keep
+basement battle with BlackGarius. The problem is that if Vale dies the game
+breaks since his dialog is required to exit the basement. When the PC first
+meets the MSC they are spawned from blueprints that have the flags set
+properly; but a change was made to preplace them in the basement before the
+battle, but those flags were not set. This fix changes the flags of the
+preplaced instances to match those of the blueprints, in the OnEnter script of
+the Crossroad Keep basement. (Note: I left Vale as non-plot but immortal, since
+there is code in the AI that can prevent plot-characters from becoming engaged
+in combat.)
 files:
 - 2300_Crossroad_Keep_Adv
 2330_cli_enter.NSS
@@ -1156,7 +1444,10 @@ files:
 
 Alteration Powder fix by kevL
 v.200203
-The baseitem type of the Alteration Powder in Port Llast is a large box container. Fixed by changing baseitem type to #24 Miscellaneous small. The .UTI file also had a bunch of entries that should only be for creatures; these were automatically removed during item-export.
+The baseitem type of the Alteration Powder in Port Llast is a large box
+container. Fixed by changing baseitem type to #24 Miscellaneous small. The .UTI
+file also had a bunch of entries that should only be for creatures; these were
+automatically removed during item-export.
 files:
 - 2200_Port_Llast
 22_it_powder.UTI
@@ -1164,7 +1455,10 @@ files:
 
 12_elanee_stalk dialog fix by kevL
 v.200203
-When deciding which exit the party should use after the Elanee (stalker) cutscenes, they tried to set a variable with a gc_ script. But a gc_ script doesn't work too well as a dialog action script. fix: Changed the script-call from 'gc_local_int' to 'ga_local_int'.
+When deciding which exit the party should use after the Elanee (stalker)
+cutscenes, they tried to set a variable with a gc_ script. But a gc_ script
+doesn't work too well as a dialog action script. fix: Changed the script-call
+from 'gc_local_int' to 'ga_local_int'.
 files:
 - 1200_Highcliff
 12_elanee_stalk.DLG
@@ -1172,7 +1466,9 @@ files:
 
 Khelgar dialog fix by kevL
 v.200205
-Khelgar tells his story of getting beaten up by monks to the PC only if the PC's influence is high enough. However, the check for failure is "5" instead of "<6". fixed.
+Khelgar tells his story of getting beaten up by monks to the PC only if the
+PC's influence is high enough. However, the check for failure is "5" instead of
+"<6". fixed.
 files:
 - Campaign
 gl_khelgar.DLG
@@ -1180,7 +1476,10 @@ gl_khelgar.DLG
 
 Lyssa bluffed fix by kevL
 v.200220
-If the PC bluffs the dryad Lyssa into handing over the Alteration Powder, in Duskwood before retrieving the Glowstone, the text indicates that the PC has received the powder. This fix actually gives the Alteration Powder item to the PC.
+If the PC bluffs the dryad Lyssa into handing over the Alteration Powder, in
+Duskwood before retrieving the Glowstone, the text indicates that the PC has
+received the powder. This fix actually gives the Alteration Powder item to the
+PC.
 files:
 - 2200_Port_Llast
 22_cs_lyssa.DLG
@@ -1188,7 +1487,20 @@ files:
 
 Consolidate 2330_cli_enter.NSS by kevL
 v.200220
-The OnClientEnter (area) script '2330_cli_enter' exists in two versions: one for 2300_Crossroad_Keep_Adv (module) and another for 2000_Neverwinter (module). They are different but the same filename is slotted for specific areas' OnClientEnter events of both modules. This creates a conflict when a script of that filename is in the Override folder; the engine is going to use the script in Override regardless of which area is entered. So this tweak merges the two stock scripts of both areas together into one script, separated into two distinct codeblocks that are conditioned according to whether or not Torio is present. Both are the basement areas of Crossroad Keep - 2330_ck_base (area in 2300_Crossroad_Keep_Adv) is used for the Torio cutscene after the Trial By Combat, and 2330_ck_base (area in 2000_Neverwinter) is used for the battle against Black Garius with the Many Starred Cloaks. The merged script shall be kept in the 2300_Crossroad_Keep_Adv folder, however, since that's where the prefix of its filename implies it should be.
+The OnClientEnter (area) script '2330_cli_enter' exists in two versions: one
+for 2300_Crossroad_Keep_Adv (module) and another for 2000_Neverwinter (module).
+They are different but the same filename is slotted for specific areas'
+OnClientEnter events of both modules. This creates a conflict when a script of
+that filename is in the Override folder; the engine is going to use the script
+in Override regardless of which area is entered. So this tweak merges the two
+stock scripts of both areas together into one script, separated into two
+distinct codeblocks that are conditioned according to whether or not Torio is
+present. Both are the basement areas of Crossroad Keep - 2330_ck_base (area in
+2300_Crossroad_Keep_Adv) is used for the Torio cutscene after the Trial By
+Combat, and 2330_ck_base (area in 2000_Neverwinter) is used for the battle
+against Black Garius with the Many Starred Cloaks. The merged script shall be
+kept in the 2300_Crossroad_Keep_Adv folder, however, since that's where the
+prefix of its filename implies it should be.
 files:
 - 2300_Crossroad_Keep_Adv
 2330_cli_enter.NSS
@@ -1205,9 +1517,7 @@ Fixes a couple of caravans.
 files:
 - F_X2
 wp_2_to_14.nss
-wp_2_to_14.ncs
 wp_3_to_7.nss [created]
-wp_3_to_7.ncs [created]
 
 
 Prototype declaration fix by Pain of Dungeon Eternal
@@ -1220,7 +1530,8 @@ kinc_trade_system.nss
 
 Final Battle door lock fix by kevL's
 v.160904
-The script locks the door but doesn't make sure it's shut first. This shuts the door and locks it.
+The script locks the door but doesn't make sure it's shut first. This shuts the
+door and locks it.
 files:
 - O_X2
 o08_a_battle.NSS
@@ -1228,7 +1539,8 @@ o08_a_battle.NSS
 
 Lizardfolk Warrior fix by kevL's
 v.180214
-This lizard should not drop its Claw and Bite creature-weapons. The fix here gives its blueprint Creature Weapon Proficiency.
+This lizard should not drop its Claw and Bite creature-weapons. The fix here
+gives its blueprint Creature Weapon Proficiency.
 files:
 - G_X2
 g13_lizardfolk_2.UTC
@@ -1236,7 +1548,11 @@ g13_lizardfolk_2.UTC
 
 Goodie (diary) fix by kevL's
 v.180228
-One of the goodies that appear randomly on the OverlandMap is a diary. Unfortunately the placeable is flagged static and it doesn't have an OnUsed script. So, while it appears on the OL like any other goodie, the PC can't activate it to get a reward. This fix removes the static-flag, enables the usable-flag, and assigns it the standard OnUsed script for goodies.
+One of the goodies that appear randomly on the OverlandMap is a diary.
+Unfortunately the placeable is flagged static and it doesn't have an OnUsed
+script. So, while it appears on the OL like any other goodie, the PC can't
+activate it to get a reward. This fix removes the static-flag, enables the
+usable-flag, and assigns it the standard OnUsed script for goodies.
 files:
 - Campaign
 nx2_plc_gd_book.UTP
@@ -1244,7 +1560,9 @@ nx2_plc_gd_book.UTP
 
 More Lizardfolk fixes by kevL's
 v.180303
-Lizardmen shouldn't drop their claws. This gives them Creature Weapon Proficiency so they'll equip their claws and keep them equipped instead. Same with the umberhulk thrall creature.
+Lizardmen shouldn't drop their claws. This gives them Creature Weapon
+Proficiency so they'll equip their claws and keep them equipped instead. Same
+with the umberhulk thrall creature.
 files:
 - T_X2
 t03_lizmanhunt.UTC
@@ -1264,7 +1582,22 @@ t03_umber.UTC
 
 Teamwork Training fixes by kevL's
 v.180406
-The script (m_c_tw_rush) that checks prerequisites for Team Rush should require that the pc-speaker has *both* the Toughness feat AND Survival skill 8+. The script (m_c_tw_cob) that checks prerequisites for Circle of Blades should require that the pc-speaker has *both* BAB 6+ AND Weapon Specialization (any melee). The script (m_c_tw_foe) that checks prerequisites for Foe Hunting should require that other party-members have *both* BAB 4+ AND Survival skill 1+; also allow Favored Enemy Plant to satisfy pc-speaker prerequisite. The script (m_c_teamwork) that checks if Circle of Blades has already been trained also mistakenly checked that Superior Flank had not been trained yet (note: this script may clash with an alternate method using global_ints that also get used to check if a particular Teamwork feat has been trained - usage seems arbitrary). Daerred's dialog (m11_daerred) was missing several navigation nodes (these were fixed by someone else and I only include the file here). Candril's dialog (m11_candril) referenced a non-existent script (m_c_trance_prereq) and is properly 'm_c_tw_trance' (this was fixed by someone else and I only include the file here).
+The script (m_c_tw_rush) that checks prerequisites for Team Rush should require
+that the pc-speaker has *both* the Toughness feat AND Survival skill 8+. The
+script (m_c_tw_cob) that checks prerequisites for Circle of Blades should
+require that the pc-speaker has *both* BAB 6+ AND Weapon Specialization (any
+melee). The script (m_c_tw_foe) that checks prerequisites for Foe Hunting
+should require that other party-members have *both* BAB 4+ AND Survival skill
+1+; also allow Favored Enemy Plant to satisfy pc-speaker prerequisite. The
+script (m_c_teamwork) that checks if Circle of Blades has already been trained
+also mistakenly checked that Superior Flank had not been trained yet (note:
+this script may clash with an alternate method using global_ints that also get
+used to check if a particular Teamwork feat has been trained - usage seems
+arbitrary). Daerred's dialog (m11_daerred) was missing several navigation nodes
+(these were fixed by someone else and I only include the file here). Candril's
+dialog (m11_candril) referenced a non-existent script (m_c_trance_prereq) and
+is properly 'm_c_tw_trance' (this was fixed by someone else and I only include
+the file here).
 files:
 - M_X2
 m_c_teamwork.NSS
@@ -1277,7 +1610,9 @@ m11_daerred.DLG
 
 Trip fix by kevL's
 v.180406
-Worgs and Mastiffs (tag-based creature-weapon scripts) were disallowing knockdown on higher difficulty levels. The fix is to invert the operation and disallow knockdown on lower difficulties.
+Worgs and Mastiffs (tag-based creature-weapon scripts) were disallowing
+knockdown on higher difficulty levels. The fix is to invert the operation and
+disallow knockdown on lower difficulties.
 files:
 - M_X2
 i_m_bite_mastiff_hc.NSS
@@ -1286,7 +1621,11 @@ i_m_bite_worg_hc.NSS
 
 Trade UI backout fix by kevL's
 v.180408
-In the UIScene of these XML files, closing them by pressing the Escape key would try to fire a script 'ga_enc_ignore' but it doesn't exist. The proper script to fire is 'gui_enc_ignore' when these Trade UI screens close. That is, nearby encounters on the OL Map should ignore the PC when a Trade UI screen is open, and then stop ignoring the PC when the screen is closed.
+In the UIScene of these XML files, closing them by pressing the Escape key
+would try to fire a script 'ga_enc_ignore' but it doesn't exist. The proper
+script to fire is 'gui_enc_ignore' when these Trade UI screens close. That is,
+nearby encounters on the OL Map should ignore the PC when a Trade UI screen is
+open, and then stop ignoring the PC when the screen is closed.
 files:
 - Campaign
 nx2_caravan.xml
@@ -1298,7 +1637,9 @@ nx2_trade_inv.xml
 
 Neverwinter City Guard dialog fix by kevL's
 v.180417
-Fixed typo "bPassPurcahsed" to "bPassPurchased". Also added a couple of end-dialog nodes (so that even if you have the coin there's an option to back out of the dialog).
+Fixed typo "bPassPurcahsed" to "bPassPurchased". Also added a couple of
+end-dialog nodes (so that even if you have the coin there's an option to back
+out of the dialog).
 files:
 - F_X2
 f00_nw_guard.DLG
@@ -1306,7 +1647,8 @@ f00_nw_guard.DLG
 
 Strange Druid dialog fix by kevL's
 v.180914
-The Strange Druid fight would not start if he was intimidated. Fixed by adding ga_initiate_encounter() to the Attack node. Reported by Question2.
+The Strange Druid fight would not start if he was intimidated. Fixed by adding
+ga_initiate_encounter() to the Attack node. Reported by Question2.
 files:
 - G_X2
 g00_en_s_jungle_druid.DLG
@@ -1314,7 +1656,8 @@ g00_en_s_jungle_druid.DLG
 
 SnakeTongue Assassins fix by kevL
 v.180917
-The Plot encounter assassins were neutral instead of evil. Reported by Question2.
+The Plot encounter assassins were neutral instead of evil. Reported by
+Question2.
 files:
 - F_X2
 f_snakeassassin.UTC
@@ -1323,7 +1666,8 @@ f_snakeassassinbow.UTC
 
 logistical fixes for nx2_crafting.2da by kevL
 v.181008
-Nx2_Crafting.2da has numerous formatting errors. This fix corrects those but does not attempt to address any gameplay mechanics.
+Nx2_Crafting.2da has numerous formatting errors. This fix corrects those but
+does not attempt to address any gameplay mechanics.
 files:
 - Campaign
 nx2_crafting.2da
@@ -1331,7 +1675,10 @@ nx2_crafting.2da
 
 Fix prototype vs definition default value mismatch in GetCaravanIncome() by kevL
 v.181122
-The default value for 'nLevel' in the prototype was 1 while that in the definition is 0. This fix sets them both to 0 (rather arbitrarily - I mean it might be better as "1" but you'd have to poke through SoZ for a couple hours to figure that out with any degree of certainty).
+The default value for 'nLevel' in the prototype was 1 while that in the
+definition is 0. This fix sets them both to 0 (rather arbitrarily - I mean it
+might be better as "1" but you'd have to poke through SoZ for a couple hours to
+figure that out with any degree of certainty).
 files:
 - Campaign
 kinc_trade.NSS
@@ -1339,7 +1686,8 @@ kinc_trade.NSS
 
 Nevalle dialog fix by Travus (impl. kevL)
 v.181122
-Nevalle asks for 800 tradebars for the trading post in Neverwinter but didn't take them. This fix takes them.
+Nevalle asks for 800 tradebars for the trading post in Neverwinter but didn't
+take them. This fix takes them.
 files:
 - N_X2
 n00_nevalle.DLG
@@ -1347,7 +1695,15 @@ n00_nevalle.DLG
 
 SoZ: Accusation in Nimbre and the Inquisitive Pig by HS_Tri
 v.190214
-An attempt at restoring the Nimbre situation in Obsidian's expansion Storm of Zehir. Now you can convince the captain to let the villagers go if you find evidence that there is a traitor living in their village. Additionally this restores the Inquisitive Pig. Spoilers: Spot 8 will let you notice the loremaster's snake tattoo. He then proceeds to attack you. Two cultists will join the battle (not terribly difficult). On the loremaster's body you will find a certain scroll which you can show to the captain outside. The villagers won't be terribly thankful, though... As far as the pig is concerned, just speak to it.
+An attempt at restoring the Nimbre situation in Obsidian's expansion Storm of
+Zehir. Now you can convince the captain to let the villagers go if you find
+evidence that there is a traitor living in their village. Additionally this
+restores the Inquisitive Pig. Spoilers: Spot 8 will let you notice the
+loremaster's snake tattoo. He then proceeds to attack you. Two cultists will
+join the battle (not terribly difficult). On the loremaster's body you will
+find a certain scroll which you can show to the captain outside. The villagers
+won't be terribly thankful, though... As far as the pig is concerned, just
+speak to it.
 files:
 - G_X2
 /nimbre (subfolder)
@@ -1355,7 +1711,22 @@ files:
 
 Port Llast Undead Army Fix (SoZ)
 v.190216
-This is a simple fix for (some) of the problems with the Port Llast quests that have to do with Septimund, Nya, and Lord Adreum. I [Joshauwa] have only fixed errors where it is obvious what the developers have meant to do, so I have not assumed that the developers meant to allow you to lead the undead army into Port Llast AND keep Septimund, since there is no evidence in the scripting that this was an original plan. Also, while it is feasible that there was supposed to be an option to put Adreum to rest without leading the army or killing him, I found no evidence for it and so did not create it. It also seems reasonable that the developers originally meant Adreum to only show up when Nya mentioned him, but there's also no real evidence in the scripting for that, so I didn't change it. Finally, I didn't bother fixing the sloppy coding that doesn't actually affect gameplay: the music doesn't change back in the graveyard after the undead army leaves, for example. If anyone feels inclined to changed these things, they are welcome to use the files in my fix as a starting point (you shouldn't need any other files, except that you will have to create scripts and journal entries that don't yet exist).
+This is a simple fix for (some) of the problems with the Port Llast quests that
+have to do with Septimund, Nya, and Lord Adreum. I [Joshauwa] have only fixed
+errors where it is obvious what the developers have meant to do, so I have not
+assumed that the developers meant to allow you to lead the undead army into
+Port Llast AND keep Septimund, since there is no evidence in the scripting that
+this was an original plan. Also, while it is feasible that there was supposed
+to be an option to put Adreum to rest without leading the army or killing him,
+I found no evidence for it and so did not create it. It also seems reasonable
+that the developers originally meant Adreum to only show up when Nya mentioned
+him, but there's also no real evidence in the scripting for that, so I didn't
+change it. Finally, I didn't bother fixing the sloppy coding that doesn't
+actually affect gameplay: the music doesn't change back in the graveyard after
+the undead army leaves, for example. If anyone feels inclined to changed these
+things, they are welcome to use the files in my fix as a starting point (you
+shouldn't need any other files, except that you will have to create scripts and
+journal entries that don't yet exist).
 https://neverwintervault.org/project/nwn2/other/port-llast-undead-army-fix-soz
 files:
 - S_X2
@@ -1364,7 +1735,9 @@ files:
 
 Sheydann dialog (swamp cult) fix by kevL
 v.200305
-If the PC is male with less than 10 Diplomacy the dialog has no where to go. Fix: link the dangling node to the same nodes that would appear if the PC were female.
+If the PC is male with less than 10 Diplomacy the dialog has no where to go.
+Fix: link the dangling node to the same nodes that would appear if the PC were
+female.
 files:
 - T_X2
 t02_sheydann.DLG
@@ -1373,11 +1746,14 @@ t02_sheydann.DLG
 Skullcrusher dialog fix by kevL
 v.200310
 "Huh. Well, you look like know how to handle yourself ..."
-- remove check for all players >= level 5 to prevent dangling node in multiplayer
+- remove check for all players >= level 5 to prevent dangling node in
+multiplayer
 "Well said. I'm sure there's something out there that could knock you down ..."
-- remove check for all players >= level 10 to prevent dangling node in multiplayer
+- remove check for all players >= level 10 to prevent dangling node in
+multiplayer
 "Like you?"
-- fix arguments for gc_skill_rank so it checks for Diplomacy >= 4 instead of CraftArmor >= 6
+- fix arguments for gc_skill_rank so it checks for Diplomacy >= 4 instead of
+CraftArmor >= 6
 files:
 - F_X2
 f36_skullcrusher.DLG
