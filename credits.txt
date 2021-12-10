@@ -719,6 +719,19 @@ files:
 placeableobjsnds.2da
 
 
+fx_drip fix by RjShae
+v.211210
+When you place the fx_drip effect in an area, sometimes the drops appear to go
+up rather than down. The reason this happens is that the VelocityVariance
+parameter in the 'fx_drip_fx1.pfx' effect file (under NWN2_VFX_X1/FX_Ambient) is
+set to '6'. This is much larger than the z-direction velocity of '-2'. If you
+set the VelocityVariance to '1', then the drips generally go in the correct
+direction.
+files:
+- sefs
+fx_drip_fx1.pfx
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
