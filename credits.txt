@@ -732,6 +732,17 @@ files:
 fx_drip_fx1.pfx
 
 
+Gnome female cloth armor fix by RjShae
+v.211216
+The Gnome female cloth armor in slot 8 is missing the tint map in the material
+properties, so it can’t be tinted in the toolset. (This is the body-length brown
+robe.) Since it shares the same texture files as the human female, I added the
+same human female tint map file to the model.
+files:
+- models
+P_GGF_CL_Body09.MDB
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
