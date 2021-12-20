@@ -743,6 +743,29 @@ files:
 P_GGF_CL_Body09.MDB
 
 
+splitgold.XML enhancement by Lance_Botelle
+v.211219
+Multi-player barter subscreen. When you first open it, the input window is not
+the focus, so you have to click in its text window to be able to start typing.
+Secondly, there is either a figure “0” (zero) by default, or the last gold
+figure you had entered and used every time it is opened. So you have to click in
+the text box, delete the figures in the text box, and then click on the OK
+button. Very cumbersome. Two required steps even before you can use it!
+
+By contrast, this box has immediate text entry focus, does not have any
+redundant text in it (that would require deletion) and is ready for immediate
+input and 'enter' for those who prefer efficiency of input. (Or escape to
+cancel.) It makes gold splitting (on a MP barter) much more intuitive.
+
+- better initial focus
+- maintains focus
+- forgets previous input on reuse
+- allows escape to cancel and return key to accept
+files:
+- ui
+splitgold.xml
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder

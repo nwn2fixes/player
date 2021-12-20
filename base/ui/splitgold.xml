@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="NWN2UI"?>
+
+<!-- local:0 = The screen that popped this up. barter, inventory, container -->
+
+<UIScene name="SCREEN_BARTER" x="ALIGN_CENTER" y="ALIGN_CENTER" width="388" height="200"
+scriptloadable="true" idleexpiretime="0.1" backoutkey="true" modal="true"
+fadeout="0.3" fadein="0.3" priority="SCENE_INGAME" draggable="true"
+OnAdd='UIScene_OnAdd_SetFocus(GoldAmountEDIT)' />
+
+	<!-- Instructions -->
+	<UIText name="TITLE" strref="63448" x="ALIGN_CENTER" y="40" width="280" height="50"
+	align="center" valign="middle" fontfamily="Title_Font" style="1" />
+
+	<!-- Text Input Field -->
+	<UIText name="GoldAmountEDIT" text="" x="ALIGN_CENTER" y="75" width="245" height="25"
+	align="right" valign="middle" selectable="true" editable="true"
+	filter="numeric" maxlength="6" multiline="false"
+	OnReturn='UIButton_Input_SplitGold("GoldAmountEDIT")'
+	OnUpdate='UIObject_Input_SetFocus(GoldAmountEDIT)' update="true" />
+
+	<!-- Text Frame -->
+	<UIFrame x="ALIGN_CENTER" y="74" width="254" height="29" border="5"
+	topleft="tp_frame_tl.tga" topright="tp_frame_tr.tga" bottomleft="tp_frame_bl.tga" bottomright="tp_frame_BR.tga"
+	top="tp_frame_t.tga" bottom="tp_frame_b.tga" left="tp_frame_l.tga" right="tp_frame_r.tga"
+	fill="tp_frame_bg.tga" fillstyle="stretch" />
+
+	<UIPane name="PLAYER_GOLD" x="ALIGN_CENTER" y="107" width="258" height="28" >
+<!--	<UIText name="PLAYER_GOLD" x="ALIGN_LEFT" y="0" width="70" height="28"
+		valign="middle" align="left" fontfamily="Title_Font" style="1"
+		OnUpdate='UIObject_OnUpdate_GetCharacterData("PARTY","PLAYER_GOLD")' update="true" /> -->
+
+		<!-- Set the above text field equal to the player's total gold. The
+		parameter is the name of the EDIT box to set to the player's gold total. -->
+		<UIButton name="AllBTN" strref="67445" x="ALIGN_RIGHT" y="0" style="STYLE_SMALL_BUTTON"
+		OnLeftClick='UIButton_Input_AllGold("GoldAmountEDIT")' />
+	</UIPane>
+
+	<!-- Button Container -->
+	<UIPane x="ALIGN_CENTER" y="145" width="258" height="28" >
+		<!-- The parameter is the name of the text field to query for the amount of gold to split off -->
+		<UIButton name="OkayBTN" strref="66" x="0" y="0" style="STYLE_SMALL_BUTTON"
+		OnLeftClick='UIButton_Input_SplitGold("GoldAmountEDIT")' />
+		<!-- Just close the screen, don't have to do anything else -->
+		<UIButton name="CancelBTN" strref="67" x="134" y="0" style="STYLE_SMALL_BUTTON"
+		OnLeftClick='UIButton_Input_ScreenClose()' />
+	</UIPane>
+
+	<!-- Top Detail -->
+	<UIText name="TITLE" strref="6649" x="20" y="4" width="300" height="31"
+	align="left" valign="middle" fontfamily="Title_Font" style="2" />
+	<UIIcon name="DETAIL_TOP" x="10" y="8" width="369" height="31"
+	img="title_medium03.tga" ignoreevents="true" />
+
+	<!-- Main Window -->
+	<UIFrame width="PARENT_WIDTH" height="PARENT_HEIGHT" border="32"
+	topleft="frame1_tl.tga" topright="frame1_tr.tga" bottomleft="frame1_bl.tga" bottomright="frame1_BR.tga"
+	top="frame1_t.tga" bottom="frame1_b.tga" left="frame1_l.tga" right="frame1_r.tga" />
+
+	<UIFrame x="7" y="8" width="374" height="184" fillstyle="tile" fill="cloth_bg.tga"/>
