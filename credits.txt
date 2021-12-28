@@ -732,7 +732,7 @@ files:
 fx_drip_fx1.pfx
 
 
-Gnome female cloth armor fix by RjShae
+Gnome female cloth armor fix (1) by RjShae
 v.211216
 The Gnome female cloth armor in slot 8 is missing the tint map in the material
 properties, so it can’t be tinted in the toolset. (This is the body-length brown
@@ -764,6 +764,17 @@ cancel.) It makes gold splitting (on a MP barter) much more intuitive.
 files:
 - ui
 splitgold.xml
+
+
+Gnome female cloth armor fix (2) by RjShae
+v.211227
+The Gnome female cloth armor in slot 7 is missing the tint map in the material
+properties, so it can’t be tinted in the toolset. Since it shares the same
+texture files as the human female, I added the same human female tint map file
+to the model.
+files:
+- models
+P_GGF_CL_Body08.MDB
 
 
 --------------------------------------------------------------------------------
