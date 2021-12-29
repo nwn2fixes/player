@@ -777,6 +777,16 @@ files:
 P_GGF_CL_Body08.MDB
 
 
+Gnome female cloth armor fix (3) by RjShae
+v.211229
+The Gnome female cloth armor in slot nine had been assigned the Human male cloth
+armor textures. The mesh has been updated to use the Human female cloth armor
+textures, consistent with the other playable races.
+files:
+- models
+P_GGF_CL_Body10.MDB
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
