@@ -787,6 +787,16 @@ files:
 P_GGF_CL_Body10.MDB
 
 
+Dwarven male scale armor fix by RjShae
+v.220109
+The second Dwarven male scale mail armor body model is missing the tint map and
+has a higher specular power setting (1.5) than for the other races (1.0). The
+mesh has been updated to be consistent with the other races.
+files:
+- models
+P_DDM_SC_Body02.MDB
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
