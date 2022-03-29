@@ -1584,6 +1584,24 @@ files:
 2330_cli_enter.NSS
 
 
+Silver Sword reforged fixes by kevL
+v.220329
+In the cutscene that plays when reforging the Silver Sword in West Harbor, the
+dialog's script could force PC to drop an item but the routine that checks for a
+full inventory was incorrect. The fix is to take the routine out and let the
+PC's hand-items drop to the ground if his/her inventory really is full. Further,
+better handling for creating and equipping the reforged Silver Sword has been
+implemented - there should be no chance of it falling to the ground now, space
+will be made in the PC's inventory if need be. Also fixed the party staring in
+random directions by moving the action script to StandGround before the script
+that jumps the party to its cutscene-location. Also corrected an assignment
+operator (=) that should be an equivalency check (==).
+files:
+- 3000_Neverwinter_A3
+3052a_cut_scar.NSS
+3052_cut_scar.DLG
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
