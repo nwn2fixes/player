@@ -1591,14 +1591,33 @@ dialog's script could force PC to drop an item but the routine that checks for a
 full inventory was incorrect. The fix is to take the routine out and let the
 PC's hand-items drop to the ground if his/her inventory really is full. Further,
 better handling for creating and equipping the reforged Silver Sword has been
-implemented - there should be no chance of it falling to the ground now, space
-will be made in the PC's inventory if need be. Also fixed the party staring in
-random directions by moving the action script to StandGround before the script
-that jumps the party to its cutscene-location. Also corrected an assignment
-operator (=) that should be an equivalency check (==).
+implemented - there should be slight chance of it falling to the ground now,
+space will be made in the PC's inventory if need be. Also fixed the party
+staring in random directions by moving the action script to StandGround before
+the script that jumps the party to its cutscene-location. Also corrected an
+assignment operator (=) that should be an equivalency check (==).
+v.220506
+Many changes including a general rewrite of the cutscene script and adapting the
+dialog file to reflect those changes.
+- changed the dialog owner from the PC to Zhjaeve. This simplifies many of the
+character-facing problems in the cutscene.
+- assigned appropriate names to the camera-trackers since they are assigned as
+the speakers of several dialog nodes.
+- kPrC Pack compatibility with BaseItems.2da: the camera-trackers didn't have
+Weapon Proficiency to equip their invisible gloves; this grants them Weapon
+Proficiency (Simple) and re-equips their gloves if necessary.
+- created a modified OnEnter script for the cutscene-trigger which turns off the
+party's OrientOnDialog flags. The flags are re-enabled in a dialog end/abort
+script.
+- wrote a better routine that destroys all shards in the Module and any that
+have been stashed on characters in the roster. This routine also destroys any
+'rogue' shards that are being incorrectly stored by the Module.
 files:
 - 3000_Neverwinter_A3
+3052_cliententer.NSS
 3052a_cut_scar.NSS
+3052_cut_scar_end.NSS [created]
+3052_gtr_speak_node.NSS [created]
 3052_cut_scar.DLG
 
 

@@ -1,8 +1,9 @@
 //::///////////////////////////////////////////////////////////////////////////
 //::
-//::	3052a_cut_scar.nss
+//::	'3052a_cut_scar'
 //::
-//::	This file contains the cutscene actions for conversation 3052_cut_scar.
+//::	This file contains the cutscene actions for conversation
+//::	'3052_cut_scar'.
 //::
 //::///////////////////////////////////////////////////////////////////////////
 //::
@@ -10,245 +11,262 @@
 //::	Created on: 11/9/05
 //::
 //::///////////////////////////////////////////////////////////////////////////
-// kL 2022 mar 29 - UnequipPC() unequip lefthand before righthand and get rid of
+// kL 2022 mar 29 - UnequipPc() unequip lefthand before righthand and get rid of
 //                  the bogus drop routine.
-// kL 2022 mar 29 - call DestroySilverShards() before UnequipPC() instead of at
-//                  the end of the dialog to lessen chance of PC's hand-items
+//                - call DestroyShards() before UnequipPc() instead of at the
+//                  end of the dialog to lessen chance of PC's hand-items
 //                  dropping to ground if his/her inventory is full.
-// kL 2022 mar 29 - CreateAndEquipSilverSwordOnPC() ensure there's room in the
-//                  PC's inventory for the Silver blade.
-// kL 2022 mar 29 - general maintenance.
-// kL 2022 mar 29 - fix DestroySilverShards() was using an assignment operator
-//                  instead of an equivalency check.
+//                - CreateAndEquipSilverSword() ensure there's room in the PC's
+//                  inventory for the Silver blade.
+//                - general maintenance.
+//                - fix DestroyShards() was using an assignment operator instead
+//                  of an equivalency check.
+// kL 2022 apr 2  - fix: call DestroyShards() on a node before UnequipPc().
+//                - turn Zhjaeve to face the party after she walks to the scar.
+//                - more maintenance.
+//                - efforts to ensure that the PC and Zhjaeve face each other.
+//                - CreateAndEquipSilverSword() don't drop plot or cursed items
+//                  or items that can stack or any bag.
+// kL 2022 apr 3  - SetOrientOnDialog(FALSE) for all party. Woohoo - character
+//                  facing shall be either scripted here or done on the dialog-
+//                  nodes.
+// kL 2022 apr 16 - fed up. refactor and try to make character movements
+//                  transparent and more believable.
+// kL 2022 apr 20 - fixed DestroyShards() to check roster. Plus optimizations.
 
-//::///////////////////////////////////////////////////////////////////////////
+/**
+ * Includes
+ */
+
 #include "30_constants"
-//#include "30_true_name_inc"
-#include "ginc_companions"
 #include "ginc_group"
-#include "ginc_object"
-#include "x0_i0_partywide"
-#include "ginc_cutscene"
-//::///////////////////////////////////////////////////////////////////////////
 
-const string RR_SILVER_SWORD = "silver_sword";
-const string TAG_SILVER_SWORD = "silver_sword";
+/**
+ * Constants
+ */
+
+const string TAG_REGULATOR     = "3052_ip_controller";
+
+const string RR_SILVER_SWORD   = "silver_sword";
+const string TAG_SILVER_SWORD  = "silver_sword";
 
 const string REAVER_PARTY_NAME = "Reaver2Party";
-const string REAVER_MINIONS = "Reaver2Minions";
+const string REAVER_MINIONS    = "Reaver2Minions";
 
-//::///////////////////////////////////////////////////////////////////////////
-void UnequipPC();
+const string SHARD_TAG_PRE     = "nwn2_it_shard";
+const int    SHARDS_TOTAL      = 8;
+
+/**
+ * Declarations
+ */
+
 void DestroyDanan();
-void MoveCameraTracker3();
-void HideCameraTracker1();
-void HideCameraTracker2();
-void HideCameraTracker3();
-void HideCameraTracker4();
-void HideCameraTracker5();
+void DestroyShards();
+void unhide_trackers(); // kL
+
 void ZhjaeveMovesToScar();
-//void PCMovesToScar();
-void ZhjaeveSits();
-void PCSits();
+void PcMovesToScarAndZhjaeveSits();
+void PcSits();
 void SpawnSwordFragments();
-void PCGlowsSoftly();
-void PCGlowsBrightly();
 void ShardsGlowSoftly();
+void PcGlowsSoftly();
 void ShardsGlowBrightly();
-void MoveCameraTracker5();
+void PcGlowsBrightly();
+void CreateSwordPlacedEffect();
 void DestroyShardPlaceable();
-void PlayReforgingEffect();
-void MoveCameraTracker2();
 void FadeToWhite();
-void CreateAndEquipSilverSwordOnPC();
 void PCRaiseSilverSword();
-void ZhjaeveStandsUp();
-void MoveCameraTracker1();
+void CreateAndEquipSilverSword();
+void ZhjaeveAndPcStandUp();
+
 void RevealReaver();
-void ReaverEntersScene();
-void MoveCameraTracker4();
+void FlamesErupt();
 void RevealShadows1();
 void RevealShadows2();
-void FlamesErupt();
 void TurnReaverPartyHostile();
-void DestroySilverShards();
-//void UseTrueName(string sTag);
-void DestroyCameraMen();
-//::///////////////////////////////////////////////////////////////////////////
 
+void MoveCameraTracker(string id);
+void HideCameraTracker(string id);
+void DestroyCameraTrackers();
 
+void party_face(object oTarget); // kL
+float GetDirectionTo(object oTarget, object oSource = OBJECT_SELF); // kL
+
+/**
+ * Forward definitions
+ */
+
+//
+void play(object oCreature, string sAni, int bLoop = TRUE, float fSpeed = 1.f)
+{
+	PlayCustomAnimation(oCreature, sAni, bLoop, fSpeed);
+}
+
+/**
+ * Main void
+ */
+
+// kL_note: I have changed the dialog-owner (OBJECT_SELF) to Zhjaeve in
+// '3052_cliententer'
+// obsolete: OBJECT_SELF was the PC or the controlled Co that entered the
+// speak-trigger. But that's asking for trouble wrt the automatic facing
+// routines; fixed.
 void main(int iCase)
 {
-	object oRegulator = GetTarget("3052_ip_controller");
-	object oZhjaeve;
-
 	switch (iCase)
 	{
-		case 3: // not used in 3052_cut_scar
-			ActionPauseCutscene(3000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(3.0f));
-			break;
-
 		case 4:
 			ActionPauseCutscene(2000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(2.0f));
-			DestroyDanan();
-			break;
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(2.f));
 
-		case 6:
-			// kL move DestroySilverShards() here from 110 to lower the
-			// chance that the PC's hand-items fall to the ground when
-			// unequipped
-			DestroySilverShards();
-			UnequipPC();
+			DestroyDanan();
+
+			unhide_trackers();
+
+			// kL moved DestroyShards() here from the end of the dialog to lower
+			// the chance that the PC's hand-items fall to the ground when
+			// unequipped in case 17
+			DelayCommand(0.25f, DestroyShards()); // delayed for fade-to-black (instant)
 			break;
 
 		case 5:
 			ActionPauseCutscene(4000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(4.0f));
-			MoveCameraTracker3();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(4.f));
+
+			MoveCameraTracker("3");
 			break;
 
 		case 8:
-			HideCameraTracker3();
+			HideCameraTracker("3");
 			break;
 
 		case 10:
 			ActionPauseCutscene(4000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(4.0f));
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(4.f));
+
 			ZhjaeveMovesToScar();
 			break;
 
 		case 12:
 			ActionPauseCutscene(3000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(3.0f));
-//			PCMovesToScar();
-			ZhjaeveSits();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(3.f));
+
+			PcMovesToScarAndZhjaeveSits();
 			break;
 
 		case 1:
 			ActionPauseCutscene(1000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(1.0f));
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(1.f));
 			break;
 
 		case 17:
 			ActionPauseCutscene(2000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(2.0f));
-			PCSits();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(2.f));
+
+			PcSits();
 			break;
 
 		case 19:
 			ActionPauseCutscene(3000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(3.0f));
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(3.f));
+
 			DelayCommand(0.5f, SpawnSwordFragments());
 			break;
 
 		case 2:
 			ActionPauseCutscene(2000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(2.0f));
-			break;
-
-		case 15: // not used in 3052_cut_scar
-			ActionPauseCutscene(2000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(2.0f));
-			ZhjaeveSits();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(2.f));
 			break;
 
 		case 20:
 			ActionPauseCutscene(2000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(2.0f));
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(2.f));
+
 			ShardsGlowSoftly();
-			MoveCameraTracker5();
+
+			MoveCameraTracker("5");
 			break;
 
 		case 25:
 			ActionPauseCutscene(2000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(2.0f));
-			PCGlowsSoftly();
-			HideCameraTracker5();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(2.f));
+
+			PcGlowsSoftly();
+
+			HideCameraTracker("5");
 			break;
 
 		case 30:
 			ActionPauseCutscene(2000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(2.0f));
-			ShardsGlowBrightly();
-			PCGlowsBrightly();
-			break;
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(2.f));
 
-		case 31:
-			DestroyShardPlaceable();
+			ShardsGlowBrightly();
+			PcGlowsBrightly();
 			break;
 
 		case 32:
 			ActionPauseCutscene(5000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(5.0f));
-			PlayReforgingEffect();
-			break;
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(5.f));
 
-		case 33:
-			MoveCameraTracker2();
-			break;
+			MoveCameraTracker("2");
 
-		case 34:
-			DelayCommand(4.5f, AssignCommand(oRegulator, FadeToWhite()));
+			CreateSwordPlacedEffect();
+			DestroyShardPlaceable();
+
+			DelayCommand(4.5f, FadeToWhite());
 			DelayCommand(5.0f, PCRaiseSilverSword());
-			break;
-
-		case 110:
-//			DestroySilverShards(); // kL Moved to case 6 before unequip hands.
 			break;
 
 		case 35:
 			ActionPauseCutscene(3000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(3.0f));
-			DelayCommand(2.0f, CreateAndEquipSilverSwordOnPC());
-			HideCameraTracker2();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(3.f));
+
+			DelayCommand(2.f, CreateAndEquipSilverSword());
+
+			HideCameraTracker("2");
 			break;
 
 		case 40:
 			ActionPauseCutscene(3000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(3.0f));
-//			PCRaiseSilverSword();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(3.f));
 			break;
 
 		case 45:
 			ActionPauseCutscene(2000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(2.0f));
-			ZhjaeveStandsUp();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(2.f));
+
+			ZhjaeveAndPcStandUp();
 			break;
 
 		case 48:
 			ActionPauseCutscene(4000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(4.0f));
-			MoveCameraTracker1();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(4.f));
+
+			MoveCameraTracker("1");
 			break;
 
 		case 50:
 			ActionPauseCutscene(3000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(3.0f));
-			HideCameraTracker1();
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(3.f));
+
+			HideCameraTracker("1");
+
 			RevealReaver();
-			break;
-
-		case 60: // not used in 3052_cut_scar
-			ActionPauseCutscene(PAUSE_TIME, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ReaverEntersScene());
-			break;
-
-		case 75:
 			FlamesErupt();
 			break;
 
 		case 70:
 			ActionPauseCutscene(6000, FALSE);
-			AssignCutsceneActionToObject(oRegulator, ActionWait(6.0f));
-			MoveCameraTracker4();
-			DelayCommand(1.0f, RevealShadows1());
-			DelayCommand(4.0f, RevealShadows2());
+			AssignCutsceneActionToObject(GetNearestObjectByTag(TAG_REGULATOR), ActionWait(6.f));
+
+			MoveCameraTracker("4");
+
+			DelayCommand(1.f, RevealShadows1());
+			DelayCommand(4.f, RevealShadows2());
 			break;
 
 		case 72:
-			HideCameraTracker4();
+			HideCameraTracker("4");
 			break;
 
 		case 80:
@@ -256,35 +274,14 @@ void main(int iCase)
 			break;
 
 		case 85:
-			DestroyCameraMen();
-			break;
-
-		default:
-			PrettyError("Unhandled case (" + IntToString(iCase) + ") in 3052a_cut_scar.");
+			DestroyCameraTrackers();
 			break;
 	}
 }
 
-//::///////////////////////////////////////////////////////////////////////////
-
-void PlayCustomAnimationWrapper(object oObject, string sAni, int bLoop = TRUE, float fSpeed = 1.0f)
-{
-	PlayCustomAnimation(oObject, sAni, bLoop, fSpeed);
-}
-
-// kL Modified: got rid of the bogus drop routine.
-void UnequipPC()
-{
-	object oPC = GetFactionLeader(GetFirstPC());
-
-	object oWeaponLh = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-	object oWeaponRh = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-
-	AssignCommand(oPC, ClearAllActions());
-
-	AssignCommand(oPC, ActionUnequipItem(oWeaponLh));
-	AssignCommand(oPC, ActionUnequipItem(oWeaponRh));
-}
+/**
+ * Definitions
+ */
 
 void DestroyDanan()
 {
@@ -299,203 +296,266 @@ void DestroyDanan()
 	DestroyObject(oShadowRetta);
 }
 
-void MoveCameraTracker3()
-{
-	object oTracker = GetTarget("3052_camera_tracker3");
-	object oWP = GetTarget("3052_wp_tracker3");
 
-	AssignCommand(oTracker, ClearAllActions(TRUE));
-	AssignCommand(oTracker, ActionForceMoveToObject(oWP, FALSE));
+// kL helper for DestroyShardsRoster()
+int DestroyShardsInventory(object oTarget)
+{
+	int tally = 0;
+
+	object oShard; string sShard;
+
+	int i = 0;
+	while (++i <= SHARDS_TOTAL)
+	{
+		sShard = SHARD_TAG_PRE + IntToString(i);
+		if (GetIsObjectValid(oShard = GetItemPossessedBy(oTarget, sShard)))
+		{
+			++tally;
+			DestroyObject(oShard);
+		}
+	}
+	return tally;
 }
 
-void HideCameraTracker1()
+// kL helper for DestroyShardsRoster()
+void despawn(object oRoster, string sRoster)
 {
-	object oTracker = GetTarget("3052_camera_tracker1");
-	SetScriptHidden(oTracker, TRUE);
+	SetScriptHidden(oRoster, FALSE);
+	DespawnRosterMember(sRoster);
 }
 
-void HideCameraTracker2()
+// kL helper for DestroyShards()
+// Those geniuses forgot that a despawned roster character could have shard(s)
+// (and that shards can be stashed in containers in other Modules).
+void DestroyShardsRoster(int tally)
 {
-	object oTracker = GetTarget("3052_camera_tracker2");
-	SetScriptHidden(oTracker, TRUE);
+	object oRoster;
+
+	location loc = GetLocation(GetPCSpeaker());
+
+	string sRoster = GetFirstRosterMember();
+	while (sRoster != "")
+	{
+		if (!GetIsObjectValid(GetObjectFromRosterName(sRoster)))
+		{
+			oRoster = SpawnRosterMember(sRoster, loc);
+			SetScriptHidden(oRoster, TRUE);
+
+			tally += DestroyShardsInventory(oRoster);
+
+			DelayCommand(5.f, despawn(oRoster, sRoster));
+
+			if (tally >= SHARDS_TOTAL)
+				break;
+		}
+		sRoster = GetNextRosterMember();
+	}
 }
 
-void HideCameraTracker3()
+// kL rewrite
+// note: silver shards cannot be dropped on the ground. See 'k_mod_unacquire' in
+// the OC Campaign folder.
+void DestroyShards()
 {
-	object oTracker = GetTarget("3052_camera_tracker3");
-	SetScriptHidden(oTracker, TRUE);
+	int tally = 0;
+
+	object oShard; string sShard;
+
+	int i = 0;
+	while (++i <= SHARDS_TOTAL)
+	{
+		sShard = SHARD_TAG_PRE + IntToString(i);
+
+		int j = -1;
+		while (GetIsObjectValid(oShard = GetObjectByTag(sShard, ++j))) // destroy all shards ->
+		{
+			if (GetIsObjectValid(GetItemPossessor(oShard)))
+			{
+				// its on party that are despawned (in the current Module)
+				// can remain as 'loose' its in the Module in addition to
+				// being saved out on the roster character
+				//
+				// so don't count those loose/rogue its; count only its
+				// in containers
+				++tally;
+			}
+
+			DestroyObject(oShard, 0.f, FALSE);
+		}
+	}
+
+	if (tally < SHARDS_TOTAL)
+		DelayCommand(0.f, DestroyShardsRoster(tally));
 }
 
-void HideCameraTracker4()
+
+// kL Unhides the camera-trackers that were set ScriptHidden in
+// '3052_cliententer' OnClientEnter handler for the area.
+void unhide_trackers()
 {
-	object oTracker = GetTarget("3052_camera_tracker4");
-	SetScriptHidden(oTracker, TRUE);
+	object oTracker;
+
+	int i = 0;
+	while (++i <= 5)
+	{
+		oTracker = GetNearestObjectByTag("3052_camera_tracker" + IntToString(i));
+		SetScriptHidden(oTracker, FALSE);
+	}
 }
 
-void HideCameraTracker5()
-{
-	object oTracker = GetTarget("3052_camera_tracker5");
-	SetScriptHidden(oTracker, TRUE);
-}
 
 void ZhjaeveMovesToScar()
 {
-	object oZhjaeve = GetTarget(TAG_ZHJAEVE);
-	object oWP = GetTarget("3052_wp_zhjaeve_sit");
+	ActionForceMoveToObject(GetNearestObjectByTag("3052_wp_zhjaeve_sit"), FALSE, 0.f);
+	ActionDoCommand(SetFacingPoint(GetPosition(GetNearestObjectByTag("3052_wp_ssplaceable")))); // SetFacing() fails (or can fail) here
 
-	AssignCommand(oZhjaeve, ActionForceMoveToObject(oWP, FALSE));
+	object oPc = GetPCSpeaker();
+	float dir = GetDirectionTo(GetNearestObjectByTag("3052_wp_ssplaceable"), oPc);
+	AssignCommand(oPc, DelayCommand(0.9f, ActionDoCommand(SetFacing(dir))));
 }
 
-/* void PCMovesToScar()
+void PcMovesToScarAndZhjaeveSits()
 {
-	object oPC = GetFactionLeader(GetFirstPC());
-	object oWP = GetTarget("3052_wp_pc_sit");
+	object oPc = GetPCSpeaker();
 
-	AssignCommand(oPC, ClearAllActions(TRUE));
-	AssignCommand(oPC, ActionForceMoveToObject(oWP, FALSE));
-}*/
+	AssignCommand(oPc, ActionForceMoveToObject(GetNearestObjectByTag("3052_wp_pc_sit"), FALSE, 0.f));
 
-void ZhjaeveSits()
-{
-	object oZhjaeve = GetTarget(TAG_ZHJAEVE);
-	object oPC = GetFactionLeader(GetFirstPC());
-	object oWP = GetTarget("3052_wp_pc_sit");
+	float dir = GetDirectionTo(GetNearestObjectByTag("3052_wp_ssplaceable"), oPc);
+	AssignCommand(oPc, ActionDoCommand(SetFacing(dir))); // SetFacingPoint() fails (or can fail) here
 
-	DelayCommand(1.0f, AssignCommand(oZhjaeve, PlayCustomAnimationWrapper(oZhjaeve, "sitgroundidle")));
-	AssignCommand(oPC, ActionForceMoveToObject(oWP, FALSE, 0.0f));
+	DelayCommand(1.2f, play(OBJECT_SELF, "sitgroundidle"));
 }
 
-void PCSits()
+// helper for PcSits()
+// kL Modified: got rid of the bogus drop routine.
+void unequip(object oTarget)
 {
-	object oPC = GetFactionLeader(GetFirstPC());
-	DelayCommand(1.0f, AssignCommand(oPC, PlayCustomAnimationWrapper(oPC, "sitgroundidle")));
+	object oWeaponLh = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget);
+	object oWeaponRh = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+
+	AssignCommand(oTarget, ClearAllActions());
+
+	AssignCommand(oTarget, ActionUnequipItem(oWeaponLh));
+	AssignCommand(oTarget, ActionUnequipItem(oWeaponRh));
+}
+
+void PcSits()
+{
+	object oPc = GetPCSpeaker();
+
+	DelayCommand(0.7f, unequip(oPc)); // delayed to make any weapon drop more noticeable
+
+	DelayCommand(1.1f, play(oPc, "sitgroundidle"));
+	DelayCommand(1.5f, party_face(OBJECT_SELF));
 }
 
 void SpawnSwordFragments()
 {
-	object oWP = GetTarget("3052_wp_ssplaceable");
-	location lLocation = GetLocation(oWP);
-
-	CreateObject(OBJECT_TYPE_PLACEABLE, "3052_plc_brokenswd", lLocation, FALSE, "3052_ss_fragments");
-}
-
-void PCGlowsSoftly()
-{
-	object oPC = GetFactionLeader(GetFirstPC());
-	effect eGlow = EffectNWN2SpecialEffectFile("fx_shard_rip");
-
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGlow, oPC, 15.0f);
-}
-
-void PCGlowsBrightly()
-{
-	object oPC = GetFactionLeader(GetFirstPC());
-	location lPC = GetLocation(oPC);
-	effect eGlow = EffectNWN2SpecialEffectFile("fx_glowstone_blue_p");
-
-//	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGlow, oPC, 5.0f);
-	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eGlow, lPC, 5.0f);
+	object oWp = GetNearestObjectByTag("3052_wp_ssplaceable");
+	CreateObject(OBJECT_TYPE_PLACEABLE,
+				 "3052_plc_brokenswd",
+				 GetLocation(oWp),
+				 FALSE,
+				 "3052_ss_fragments");
 }
 
 void ShardsGlowSoftly()
 {
-	object oShards = GetTarget("3052_ss_fragments");
-	effect eGlow = EffectNWN2SpecialEffectFile("fx_shard_rip");
+	effect eSef = EffectNWN2SpecialEffectFile("fx_shard_rip");
+	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSef, GetNearestObjectByTag("3052_ss_fragments"), 5.f);
+}
 
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGlow, oShards, 5.0f);
+void PcGlowsSoftly()
+{
+	effect eSef = EffectNWN2SpecialEffectFile("fx_shard_rip");
+	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSef, GetPCSpeaker(), 15.f);
 }
 
 void ShardsGlowBrightly()
 {
-	object oShards = GetTarget("3052_ss_fragments");
-	effect eGlow = EffectNWN2SpecialEffectFile("3052_fx_shard_glow");
-
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGlow, oShards, 10.0f);
+	effect eSef = EffectNWN2SpecialEffectFile("3052_fx_shard_glow");
+	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSef, GetNearestObjectByTag("3052_ss_fragments"), 10.f);
 }
 
-void MoveCameraTracker5()
+void PcGlowsBrightly()
 {
-	object oTracker = GetTarget("3052_camera_tracker5");
-	object oWP = GetTarget("3052_wp_tracker5");
+	effect eSef = EffectNWN2SpecialEffectFile("fx_glowstone_blue_p");
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSef, GetLocation(GetPCSpeaker()), 5.f);
+}
 
-	AssignCommand(oTracker, ClearAllActions(TRUE));
-	AssignCommand(oTracker, ActionForceMoveToObject(oWP, FALSE));
+void CreateSwordPlacedEffect()
+{
+	object oWp = GetNearestObjectByTag("3052_wp_ssplaceable");
+
+	vector pos = GetPosition(oWp);
+	location loc = Location(GetArea(oWp), Vector(pos.x - 0.75f, pos.y, pos.z), 0.f); // else Location of oWp can effup.
+	object oSword = CreateObject(OBJECT_TYPE_PLACED_EFFECT, "fx_silversword_reform", loc);
+
+	object oSound = GetNearestObjectByTag("3052_snd_sword_forge");
+	DelayCommand(0.5f, SoundObjectPlay(oSound));
+
+	DelayCommand(6.f, DestroyObject(oSword));
 }
 
 void DestroyShardPlaceable()
 {
-	object oShards = GetTarget("3052_ss_fragments");
+	object oShards = GetNearestObjectByTag("3052_ss_fragments");
 	DestroyObject(oShards);
-}
-
-void PlayReforgingEffect()
-{
-	object oSound = GetTarget("3052_snd_sword_forge");
-	DelayCommand(0.5f, SoundObjectPlay(oSound));
-
-//	object oPC = GetFactionLeader(GetFirstPC());
-//	effect ePC = EffectNWN2SpecialEffectFile("fx_silversword_fx");
-//	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePC, oPC, 6.0f);
-//	effect eShards = EffectNWN2SpecialEffectFile("3052_fx_silversword_reform");
-//	ApplyEffectToObject(DURATION_TYPE_INSTANT, eShards, oPC);
-
-	location lReforge = GetLocation(GetTarget("3052_wp_scar"));
-	object oSword = CreateObject(OBJECT_TYPE_PLACED_EFFECT, "fx_silversword_reform", lReforge);
-
-	DelayCommand(6.0f, DestroyObject(oSword));
-}
-
-void MoveCameraTracker2()
-{
-	object oTracker = GetTarget("3052_camera_tracker2");
-	object oWP = GetTarget("3052_wp_tracker2");
-
-	AssignCommand(oTracker, ClearAllActions(TRUE));
-	AssignCommand(oTracker, ActionForceMoveToObject(oWP, FALSE));
 }
 
 void FadeToWhite()
 {
-	object oPC = GetFirstPC();
-	object oParty = GetFirstFactionMember(oPC);
+	object oPc = GetFirstPC();
+	object oParty = GetFirstFactionMember(oPc);
 	while (GetIsObjectValid(oParty))
 	{
-		FadeToBlack(oParty, 1.0f, 10.0f, 16777215);
-		oParty = GetNextFactionMember(oPC);
+		FadeToBlack(oParty, 1.f, 9.13f, 0xFFFFFF); // white
+		oParty = GetNextFactionMember(oPc);
 	}
 }
 
-// kL
-void copy_dropped(object oDropped, object oPC)
+void PCRaiseSilverSword()
 {
-	CopyObject(oDropped, GetLocation(oPC), oPC);
+	play(GetPCSpeaker(), "liftswordloop", TRUE, 0.5f);
+}
+
+
+// kL helper for CreateAndEquipSilverSword()
+int is_stacksize_one(object oIt)
+{
+	int type = GetBaseItemType(oIt);
+	string stacksize = Get2DAString("baseitems", "Stacking", type);
+	return stacksize == "1";
+}
+
+// kL helper for create_and_equip()
+void copy_dropped(object oDropped, object oPc)
+{
+	CopyObject(oDropped, GetLocation(oPc), oPc);
 	DestroyObject(oDropped);
 }
-// kL
-void create_and_equip(object oPC, object oDropped)
-{
-	object o = CreateItemOnObject(RR_SILVER_SWORD, oPC);
-	AssignCommand(oPC, ActionEquipItem(o, INVENTORY_SLOT_RIGHTHAND));
 
-	if (GetIsObjectValid(oDropped)) // safety. 'oDropped' shall be valid (unless PC has 128 bags ...)
-		AssignCommand(oPC, ActionDoCommand(copy_dropped(oDropped, oPC)));
+// kL helper for CreateAndEquipSilverSword()
+void create_and_equip(object oPc, object oDropped)
+{
+	object oSilverSword = CreateItemOnObject(RR_SILVER_SWORD, oPc);
+	AssignCommand(oPc, ActionEquipItem(oSilverSword, INVENTORY_SLOT_RIGHTHAND));
+
+	AssignCommand(oPc, ActionDoCommand(copy_dropped(oDropped, oPc)));
 }
+
 // kL Modified: Ensure there's room in the PC's inventory for the Silver blade.
-void CreateAndEquipSilverSwordOnPC()
+void CreateAndEquipSilverSword()
 {
-	object oPC = GetFactionLeader(GetFirstPC());
-	object oSilverSword = CreateItemOnObject(RR_SILVER_SWORD, oPC);
+	object oPc = GetPCSpeaker();
+	object oSilverSword = CreateItemOnObject(RR_SILVER_SWORD, oPc);
 
-	if (!GetIsObjectValid(GetItemPossessedBy(oPC, RR_SILVER_SWORD))) // blade dropped; inventory full; handle it ->
+	if (!GetIsObjectValid(GetItemPossessedBy(oPc, RR_SILVER_SWORD))) // blade dropped; inventory full; handle it ->
 	{
-		DestroyObject(oSilverSword);
-
-		object oDropped = OBJECT_INVALID;
-
-		object oDropit = GetFirstItemInInventory(oPC); // don't drop a bag ... find an item outside a bag to drop ->
+		object oDropit = GetFirstItemInInventory(oPc); // find an item outside a bag to drop ->
 		while (GetIsObjectValid(oDropit))
 		{
-			if (GetHasInventory(oDropit))
+			if (GetHasInventory(oDropit)) // don't drop a bag ...
 			{
 				object oContainer = oDropit;
 
@@ -503,57 +563,45 @@ void CreateAndEquipSilverSwordOnPC()
 				while (GetIsObjectValid(oSubit))
 				{
 					oSubit = GetNextItemInInventory(oContainer);
-					oDropit = GetNextItemInInventory(oPC);
+					oDropit = GetNextItemInInventory(oPc);
 				}
 			}
-			else
+			else if (!GetPlotFlag(oDropit) // not a bag or plot or cursed etc. Go with it
+				&& !GetItemCursedFlag(oDropit)
+				&& is_stacksize_one(oDropit))
+			{
 				break;
+			}
+			// else Silver blade drops to the ground
 
-			oDropit = GetNextItemInInventory(oPC);
+			oDropit = GetNextItemInInventory(oPc);
 		}
-		oDropped = CopyObject(oDropit, GetLocation(oPC)); // 'oDropped' shall be valid (unless PC has 128 bags ...)
-		DestroyObject(oDropit);
 
-		DelayCommand(0.0f, create_and_equip(oPC, oDropped)); // delayed to ensure 'oDropit' is destroyed first
+		if (GetIsObjectValid(oDropit)) // safety. 'oDropit' shall be valid (unless PC has 128 bags ... and/or only uncontained items that are plot or cursed)
+		{
+			object oDropped = CopyObject(oDropit, GetLocation(oPc));
+			DestroyObject(oDropit);
+
+			DestroyObject(oSilverSword);
+
+			DelayCommand(0.f, create_and_equip(oPc, oDropped)); // delayed to ensure 'oDropit' is destroyed first
+		}
+		// else Silver blade drops to the ground
 	}
 	else
-		AssignCommand(oPC, ActionEquipItem(oSilverSword, INVENTORY_SLOT_RIGHTHAND));
+		AssignCommand(oPc, ActionEquipItem(oSilverSword, INVENTORY_SLOT_RIGHTHAND));
 }
 
-void PCRaiseSilverSword()
+void ZhjaeveAndPcStandUp()
 {
-	object oPC = GetFactionLeader(GetFirstPC());
-	PlayCustomAnimationWrapper(oPC, "%");
-	PlayCustomAnimationWrapper(oPC, "liftswordloop", TRUE, 0.5f);
-
-//	AssignCutsceneActionToObject(oPC, ActionPlayAnimation(ANIMATION_FIREFORGET_VICTORY1));
-	// TODO: replace animation constant with final animation when available
-	// kL_note: yeh better not forget that ...
+	play(OBJECT_SELF, "%");
+	play(GetPCSpeaker(), "%");
 }
 
-void ZhjaeveStandsUp()
-{
-	object oZhjaeve = GetTarget(TAG_ZHJAEVE);
-	AssignCommand(oZhjaeve, ClearAllActions(TRUE));
-//	AssignCommand(oZhjaeve, ActionPlayAnimation(ANIMATION_FIREFORGET_SALUTE));
-	AssignCommand(oZhjaeve, PlayCustomAnimationWrapper(oZhjaeve, "%"));
-
-	object oPC = GetFactionLeader(GetFirstPC());
-	PlayCustomAnimationWrapper(oPC, "%");
-}
-
-void MoveCameraTracker1()
-{
-	object oTracker = GetTarget("3052_camera_tracker1");
-	object oWP = GetTarget("3052_wp_tracker1");
-
-	AssignCommand(oTracker, ClearAllActions(TRUE));
-	AssignCommand(oTracker, ActionForceMoveToObject(oWP, FALSE));
-}
 
 void RevealReaver()
 {
-	object oReaver = GetTarget(TAG_REAVER_3052);
+	object oReaver = GetNearestObjectByTag(TAG_REAVER_3052);
 	SetScriptHidden(oReaver, FALSE);
 
 	effect eFlash = EffectNWN2SpecialEffectFile("fx_garius_ritual");
@@ -564,52 +612,63 @@ void RevealReaver()
 
 	object o;
 
-	int i;
-	for (i = 1; i <= 3; i++)
+	int i = 0;
+	while (++i <= 3)
 	{
-		o = GetTarget("3052_felemen" + IntToString(i));
+		o = GetNearestObjectByTag("3052_felemen" + IntToString(i));
 		SetScriptHidden(o, FALSE);
 		GroupAddMember(REAVER_PARTY_NAME, o, FALSE);
 	}
 
-	for (i = 1; i <= 2; i++)
+	i = 0;
+	while (++i <= 2)
 	{
-		o = GetTarget("3052_bgolem" + IntToString(i));
+		o = GetNearestObjectByTag("3052_bgolem" + IntToString(i));
 		SetScriptHidden(o, FALSE);
 		GroupAddMember(REAVER_PARTY_NAME, o, FALSE);
 	}
+
+	party_face(oReaver);
 }
 
-void ReaverEntersScene()
+void FlamesErupt()
 {
-	object oReaver = GetTarget(TAG_REAVER_3052);
+	object oWp;
 
-	AssignCutsceneActionToObject(oReaver, ActionForceMoveToObject(GetPCSpeaker()));
-}
+	int i = 0;
+	while (++i <= 13)
+	{
+		oWp = GetNearestObjectByTag("3052_wp_reaverfire" + IntToString(i));
+		CreateObject(OBJECT_TYPE_PLACED_EFFECT,
+					 "n2_fx_fire_lg",
+					 GetLocation(oWp),
+					 FALSE,
+					 "3052_reaverfire" + IntToString(i));
+	}
 
-void MoveCameraTracker4()
-{
-	object oTracker = GetTarget("3052_camera_tracker4");
-	object oWP = GetTarget("3052_wp_tracker4");
+	object o3052 = GetObjectByTag("3052_wharbor");
 
-	AssignCommand(oTracker, ClearAllActions(TRUE));
-	AssignCommand(oTracker, ActionForceMoveToObject(oWP, FALSE));
+	SetLocalInt(o3052, "ReaverFlamesOn", TRUE);
+
+	SoundObjectPlay(GetNearestObjectByTag("3052_snd_reaver_entrance"));
+	SoundObjectPlay(GetNearestObjectByTag("3052_snd_fire_smolder_scar"));
+	SoundObjectPlay(GetNearestObjectByTag("3052_snd_fire_large_scar"));
+
+	MusicBackgroundStop(o3052);
 }
 
 void RevealShadows1()
 {
 	effect ePoof = EffectNWN2SpecialEffectFile("sp_bless");
+	object oShadow;
 
-	int i;
-	object oPC = GetFactionLeader(GetFirstPC());
-	object oShadow = GetNearestObjectByTag("3052_reaver_shadow", oPC, i);
-//	object oShadow = GetNearestObjectByTag(TAG_SHADOW_3052, oPC, i);
-	for (i = 1; i <= 2; i++)
+	int i = 0;
+	while (++i <= 2)
 	{
-		oShadow = GetTarget("3052_reaver_shadow" + IntToString(i));
+		oShadow = GetNearestObjectByTag("3052_reaver_shadow" + IntToString(i)); // TAG_SHADOW_3052
 
 		SetScriptHidden(oShadow, FALSE);
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoof, oShadow, 1.0f);
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoof, oShadow, 1.f);
 
 		GroupAddMember(REAVER_MINIONS, oShadow);
 	}
@@ -618,49 +677,18 @@ void RevealShadows1()
 void RevealShadows2()
 {
 	effect ePoof = EffectNWN2SpecialEffectFile("sp_bless");
+	object oShadow;
 
-	int i;
-	object oPC = GetFactionLeader(GetFirstPC());
-	object oShadow = GetNearestObjectByTag("3052_reaver_shadow", oPC, i);
-//	object oShadow = GetNearestObjectByTag(TAG_SHADOW_3052, oPC, i);
-	for (i = 3; i <= 4; i++)
+	int i = 2;
+	while (++i <= 4)
 	{
-		oShadow = GetTarget("3052_reaver_shadow" + IntToString(i));
+		oShadow = GetNearestObjectByTag("3052_reaver_shadow" + IntToString(i)); // TAG_SHADOW_3052
 
 		SetScriptHidden(oShadow, FALSE);
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoof, oShadow, 1.0f);
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoof, oShadow, 1.f);
 
 		GroupAddMember(REAVER_MINIONS, oShadow);
 	}
-}
-
-void FlamesErupt()
-{
-	object oWP;
-	location lFire;
-	string sTag;
-
-	int i;
-	for (i = 1; i <= 13; i++)
-	{
-		oWP = GetNearestObjectByTag("3052_wp_reaverfire" + IntToString(i));
-		lFire = GetLocation(oWP);
-		sTag = "3052_reaverfire" + IntToString(i);
-		CreateObject(OBJECT_TYPE_PLACED_EFFECT, "n2_fx_fire_lg", lFire, FALSE, sTag);
-	}
-
-	object o3052 = GetObjectByTag("3052_wharbor");
-
-	SetLocalInt(o3052, "ReaverFlamesOn", 1);
-
-	object oEntranceSound = GetTarget("3052_snd_reaver_entrance");
-	SoundObjectPlay(oEntranceSound);
-	object oFire1 = GetTarget("3052_snd_fire_smolder_scar");
-	SoundObjectPlay(oFire1);
-	object oFire2 = GetTarget("3052_snd_fire_large_scar");
-	SoundObjectPlay(oFire2);
-
-	MusicBackgroundStop(o3052);
 }
 
 void TurnReaverPartyHostile()
@@ -671,57 +699,108 @@ void TurnReaverPartyHostile()
 	GroupDetermineCombatRound(REAVER_MINIONS);
 }
 
-void DestroySilverShards()
+
+void MoveCameraTracker(string id)
 {
-	int bShardFound;
+	object oTracker = GetNearestObjectByTag("3052_camera_tracker" + id);
+	object oWp = GetNearestObjectByTag("3052_wp_tracker" + id);
 
-	string sShardTag, sShardTagPrefix = "nwn2_it_shard";
-	object oShard;
+	AssignCommand(oTracker, ActionForceMoveToObject(oWp));
+}
 
-	int iCount = 0;
-	while (iCount < 9)
+void HideCameraTracker(string id)
+{
+	object oTracker = GetNearestObjectByTag("3052_camera_tracker" + id);
+	SetScriptHidden(oTracker, TRUE);
+}
+
+void DestroyCameraTrackers()
+{
+	object oTracker;
+
+	int i = 0;
+	while (++i <= 5)
 	{
-		bShardFound = FALSE;
-
-		sShardTag = sShardTagPrefix + IntToString(iCount);
-		oShard = GetTarget(sShardTag);				// check the module first
-
-		if (GetIsObjectValid(oShard))				// found it in the module (outside of inventory)
-		{
-			bShardFound = TRUE;
-			DelayCommand(0.1f, DestroyObject(oShard));
-		}
-		else										// iterate through the roster members and check their inventory
-		{
-			object oCompanion;
-
-			string sRoster = GetFirstRosterMember();
-			while (sRoster != "")
-			{
-				oCompanion = GetTarget(sRoster);
-				oShard = GetItemPossessedBy(oCompanion, sShardTag);
-
-				if (GetIsObjectValid(oShard))		// found it in the roster member's inventory
-				{
-					bShardFound = TRUE;
-					DelayCommand(0.1f, DestroyObject(oShard));
-				}
-
-				sRoster = GetNextRosterMember();
-			}
-		}
-
-		if (!bShardFound)							// if it STILL hasn't been found just, remove it from the party PCs
-		{
-			object oPC = GetFirstPC();
-			RemoveItemFromParty(oPC, sShardTag);	// this will cover the PCs in the party; last resort but most likely outcome
-		}
-
-		++iCount;
+		oTracker = GetNearestObjectByTag("3052_camera_tracker" + IntToString(i));
+		DestroyObject(oTracker);
 	}
 }
 
-/* Helper function for UseTrueName()
+// kL
+void party_face(object oTarget)
+{
+	object oZhjaeve = OBJECT_SELF;
+	object oPc = GetPCSpeaker();
+
+	float dir;
+
+	object oParty = GetFirstFactionMember(oPc, FALSE);
+	while (GetIsObjectValid(oParty))
+	{
+		if (oParty != oPc && oParty != oZhjaeve) // PC and Zhjaeve already have their facing taken care of.
+		{
+			dir = GetDirectionTo(oTarget, oParty);
+			AssignCommand(oParty, ActionDoCommand(SetFacing(dir)));
+		}
+		oParty = GetNextFactionMember(oPc, FALSE);
+	}
+}
+
+// kL
+const float epsi = 0.00005f;
+
+// kL
+// Gets the direction (0.f .. 360.f in degrees) for oSource to face oTarget.
+// - returns 999.f if source and target are at the same position
+// - note before call Ensure that
+//   (GetIsObjectValid(oSource) && GetIsObjectValid(oTarget)
+//    && GetArea(oSource) == GetArea(oTarget))
+// - a check should also be done for (oSource != oTarget) but if they are the
+//   return is 999.f
+float GetDirectionTo(object oTarget, object oSource = OBJECT_SELF)
+{
+	vector pSource = GetPosition(oSource);
+	vector pTarget = GetPosition(oTarget);
+
+	float dx = pTarget.x - pSource.x;
+	float dy = pTarget.y - pSource.y;
+
+	float dx_abs = fabs(dx);
+	float dy_abs = fabs(dy);
+
+	if (dx_abs > epsi || dy_abs > epsi)
+	{
+		if (dx_abs <= epsi) // guard vs divbyzero
+		{
+			if (dy < 0.f) return 270.f;
+						  return  90.f;
+		}
+
+		if (dy_abs <= epsi)
+		{
+			if (dx < 0.f) return 180.f;
+						  return   0.f;
+		}
+
+		float dir = atan(dy_abs/dx_abs); // yep they return atan in degrees ...
+
+		if (dx < 0.f)
+		{
+			if (dy > 0.f) return 180.f - dir;	// top left quadrant
+						  return 180.f + dir;	// bot left quadrant
+		}
+
+		if (dy < 0.f) return 360.f - dir;		// bot right quadrant
+					  return         dir;		// top right quadrant
+	}
+	return 999.f;
+}
+
+
+//#include "30_true_name_inc"
+//void UseTrueName(string sTag);
+
+/* helper for UseTrueName()
 void CastTrueName(object oTarget)
 {
 	ClearAllActions(TRUE);
@@ -734,19 +813,7 @@ void UseTrueName(string sTag)
 	AssignCommand(oReciter, CastTrueName(oReaver));
 
 //	location lReaver = GetLocation(oReaver);
-//	object oTrueNameScroll = GetItemPossessedBy(oReciter, TAG_TRUE_NAME_SCROLL);
-//	event eActivateTrueNameScroll = EventActivateItem(oTrueNameScroll, lReaver, oReaver);
-//	SignalEvent(oReciter, eActivateTrueNameScroll);
+//	object oScroll = GetItemPossessedBy(oReciter, TAG_TRUE_NAME_SCROLL);
+//	event eActivate = EventActivateItem(oScroll, lReaver, oReaver);
+//	SignalEvent(oReciter, eActivate);
 } */
-
-void DestroyCameraMen()
-{
-	object oCameraMan;
-
-	int i;
-	for (i = 1; i <= 5; i++)
-	{
-		oCameraMan = GetTarget("3052_camera_tracker" + IntToString(i));
-		DestroyObject(oCameraMan);
-	}
-}
