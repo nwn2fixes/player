@@ -797,6 +797,44 @@ files:
 P_DDM_SC_Body02.MDB
 
 
+More LoD fixes by RjShae
+v.220627
+This is a performance improvement patch that adds (missing) level-of-detail
+(LoD) meshes to stock creatures that have a higher number of faces. It includes
+the blue dragon, clockroach, gnoll #2, hag #2, imaskari golem, jinn, panther,
+ravenous incarnation, siege tower, snow leopard, giant spider, treant, and
+troll.
+
+Note that the troll models did include some LoD3 and LoD6 parts, but a
+recently-discovered bug may have prevented the game engine from properly
+triggering the LoD at range. The full range of L01-L06 has now been added to the
+Troll models.
+
+[kL_note: 8 previously included models have been updated here]
+files:
+- models
+c_bluedragon_CL_Body01.MDB
+c_bluedragon_Head01.MDB
+c_bluedragon_Tail.MDB
+c_clockroach_cl_body01.MDB    [update]
+c_Gnoll_CL_Body02.MDB
+c_Gnoll_CL_Head02.MDB
+C_Hag_CL_Body02.MDB
+c_imaskarigolem_cl_body01.MDB [update]
+c_imaskarigolem_head01.MDB    [update]
+c_jinn_CL_Body01.MDB          [update]
+c_jinn_Head01.MDB             [update]
+c_panther_cl_body01.MDB       [update]
+c_RavenousInc_CL_Body01.MDB
+c_RavenousInc_head01.MDB
+c_siegetowerB_CL_Body01.MDB
+C_Spidgiant_CL_Body01.MDB     [update]
+c_treant_CL_body01.MDB        [update]
+C_Troll_CL_Body01.MDB
+C_Troll_Head01.MDB
+C_Troll_PF_Body01.MDB
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
