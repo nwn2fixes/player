@@ -839,7 +839,7 @@ TurnUndead Mapped Feats fix by TonyK
 v.220628
 Sacred Purification feat icon doesn't show the Turn Undead uses left in game.
 Fix by adding 294 (Turn Undead feat id) into the UsesMapFeat column of row 2255
-(Sacred Purification feat id). Also of note is that Kaedrin’s latest PrC pack
+(Sacred Purification feat id). Also of note is that Kaedrin's latest PrC pack
 has this bug additionally for Divine Vengeance.
 
 [impl. kevL - both feats included]
