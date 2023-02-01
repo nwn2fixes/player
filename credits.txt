@@ -848,6 +848,24 @@ files:
 feat.2da
 
 
+Song of Requiem fix by kevL
+v.230201
+The bard's Song of Requiem spellscript had several issues. This is a rewrite of
+that script; see notes in the script for details. Big thanks to TonyK for
+suggestions and feedback.
+files:
+- scripts\songs
+nx_s2_sngrequiem.NSS
+
+EffectIcons.2da fix and additions by kevL
+v.230201
+Fixed typo on row #58 "ise_dispelsest" to "ise_dispelbest". Added rows #136 and
+#137 to support effecticons for Song/Hymn of Requiem spellscript changes.
+files:
+- 2da
+effecticons.2da
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
