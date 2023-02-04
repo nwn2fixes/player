@@ -867,6 +867,17 @@ files:
 effecticons.2da
 
 
+Soundset fixes by rjshae
+v.230201
+Some creature soundsets throw an exception in the toolset when you try to play
+them. For example, "Female, Playful" will throw when you attempt to play it from
+the pop-up menu button. The remedy is to place a repaired 'vs_fx0slinf.SSF' file
+in the Override folder.
+files:
+- sound
+*.SSF
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
