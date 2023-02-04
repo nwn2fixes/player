@@ -857,6 +857,7 @@ files:
 - scripts\songs
 nx_s2_sngrequiem.NSS
 
+
 EffectIcons.2da fix and additions by kevL
 v.230201
 Fixed typo on row #58 "ise_dispelsest" to "ise_dispelbest". Added rows #136 and
@@ -1688,6 +1689,16 @@ files:
 3052_cut_scar_end.NSS [created]
 3052_gtr_speak_node.NSS [created]
 3052_cut_scar.DLG
+
+
+Harvest Brawl workaround by kevL
+v.230204
+The Mossfelds can get stuck without a target to attack during the Harvest Brawl
+in the tutorial. This workaround simply gives them a nudge to find someone in
+the PC party to attack.
+files:
+- 0_Tutorial
+0b_moss_hb.NSS
 
 
 --------------------------------------------------------------------------------
