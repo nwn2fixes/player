@@ -1715,7 +1715,7 @@ files:
 Tor's Holy Symbol turn-in fix by kevL
 v.230211
 When turning in Tor's Holy Symbol in Highcliff, only the TruePC's inventory was
-checked for the item. This fix changes Tor's dialog to run a script the checks
+checked for the item. This fix changes Tor's dialog to run a script that checks
 the rest of the PC-party also.
 files:
 - 1200_Highcliff
