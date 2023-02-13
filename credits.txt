@@ -1723,6 +1723,22 @@ a_take_symbol.NSS
 tor_new.DLG
 
 
+Tor's Holy Symbol pick-up fix by kevL
+v.230213
+There are 2 holy symbols in the area. One is on the Bandit Chief and the other
+is in a chest. If the former is killed and/or if the chest is bashed open the
+symbol drops into a bodybag and Obsidian's routine to find and destroy the
+symbol that is not acquired breaks. So iterate over all symbols in the module
+and destroy the one that wasn't just acquired.
+Also use IsItemMarkedAsDone() and MarkItemAsDone() to prevent the OnItemAcquired
+script from firing in other modules in case player elects to not turn in the
+Holy Symbol.
+Also use IsItemAcquiredByPartyMember() for multiplayer compatibility.
+files:
+- 1200_Highcliff
+i_12_tor_it_aq.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
