@@ -877,6 +877,20 @@ files:
 - sound
 *.SSF
 
+Model fixes (SoZ Ruins) by Gribo
+v.230221
+Camera goes under the terrain, into models and is generally hard to control when
+the PC is near these placeables. The solution is to add C2 collision mesh. These
+models didn't have it.
+files:
+- models
+PLC_MC_Ruins03.MDB
+PLC_MC_ruins04.MDB
+PLC_MC_Ruins05.MDB
+PLC_MC_Ruins06.MDB
+PLC_MC_Ruins07.MDB
+PLC_MC_Ruins08.MDB
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
