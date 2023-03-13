@@ -31,7 +31,7 @@ void main()
 
 			FeatAdd(OBJECT_SELF, FEAT_WEAPON_PROFICIENCY_MARTIAL, FALSE);
 			object oWarmace = GetItemPossessedBy(OBJECT_SELF, "mst_bldm_drk_3");
-			AssignCommand(OBJECT_SELF, ActionEquipItem(oWarmace, INVENTORY_SLOT_RIGHTHAND));
+			ActionEquipItem(oWarmace, INVENTORY_SLOT_RIGHTHAND);
 			// kL_end.
 
             NoInterrupt(); // optional - insures action queue not interrupted
