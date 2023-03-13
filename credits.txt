@@ -1753,6 +1753,16 @@ files:
 i_12_tor_it_aq.NSS
 
 
+Shadow Priest warmace fix by kevL
+v.230312
+They gave the priest a warmace but forgot to grant feat martial weapon
+proficiency. The fix is to grant the feat and equip the warmace when player
+enters the room with the Shadow Priest and zombies rise to fight the party.
+files:
+- 1200_Highcliff
+12_b_shadprst_ud.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
