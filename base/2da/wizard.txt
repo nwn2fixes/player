@@ -1,0 +1,198 @@
+The following are specialist Wizard spell package files that are
+assigned by packages.2da. They are used in cases of auto-leveling
+with the LevelUpHenchman() call. They can also be called by the
+'Set to Package Default' button under the character blueprint
+Spells tab.
+
+In each case, the list contains some spells from the opposition
+school and is missing a few spells from the specialist school.
+Where possible, I replaced selected opposition spells with the
+missing specialist spells, or else with a non-opposition spell.
+I moved the modified specialist spell rows up the spell level
+list so the character is more likely to gain the spell on level up.
+
+PackSPWiz2.2da -- Sorcerer/Wizard_Abjuration (no Wiz Conjuration spells)
+9: Summon Creature IX (C) → Shadow Simulacrum (I)
+9: Gate (C) → Burst of Glacial Wrath (V)
+8: Greater Planar Binding (C) → Wall of Greater Dispel Magic (A) → row 20
+8: Summon Creature VIII (C) → Power Word Petrify (D)
+7: Summon Creature VII (C) → Power Word Blind (D)
+6: Acid Fog (C) → Superior Resistance (A) → row 53
+6: Planar Binding (C) → Mass Bull Strength (T)
+6: Summon Creature VI (C) → Extract Water Elemental (T)
+5: Lesser Planar Binding (C) → Wall of Dispel Magic (A) → row 76
+5: Summon Creature V (C) → Glass Doppelganger (I)
+5: Vitriolic Sphere (C) → Greater Reduce Person (T)
+4: Evard’s Black Tentacles (C) → Greater Resistance (A) → row 94
+4: Summon Creature IV (C) → Shout (T)
+3: Flame Arrow (C) → Mass Curse of Impending Blades (N)
+3: Improved Mage Armor (C) → Mass Snakes Swiftness (T)
+3: Mestil's Acid Breath (C) → Power Word Weaken (D)
+3: Stinking Cloud (C) → Power Word Maladroit (D)
+3: Summon Creature III (C): **** no spell available ****
+2: Melf's Acid Arrow (C) → Curse of Impending Blades (N)
+2: Summon Creature II (C) → Scorching Ray (V)
+1: Grease (C) → Nightshield (A)
+1: Mage Armor (C) → Reduce Person (T)
+1: Summon Creature I: **** no spell available ****
+0: Ray of Frost (C) → Touch of Fatigue (N)
+0: Acid Splash (C): **** no spell available ****
+
+PackSPWiz3.2da -- Sorcerer/Wizard_Conjuration (no Wiz Transmutation spells)
+9: Shapechange (T) → Burst of Glacial Wrath (V)
+9: Etherealness (T) → Shadow Simulacrum (I)
+8: Iron Body (T) → Polar Ray (V)
+7: Ethereal Jaunt (T) → Power Word Blind (D)
+7: Mordenkainen's Sword (T) → Hiss of Sleep (E)
+6: Disintegrate (T) → Mass Contagion (N)
+6: Flesh to Stone (T) → Superior Resistance (A)
+6: Stone Body (T): **** no spell available ****
+6: Stone to Flesh (T): **** no spell available ****
+6: Tenser's Transformation (T): **** no spell available ****
+4: Bestow Curse (T) → Orb of Fire (C) → row 91
+4: Polymorph Self (T) → Orb of Electricity (C) → row 94
+3: Greater Magic Weapon (T) → Mass Curse of Impending Blades (N)
+3: Haste (T) → Power Word Weaken (D)
+3: Keen Edge (T) → Power Word Maladroit (D)
+3: Slow (T): **** no spell available ****
+3: Spiderskin (T): **** no spell available ****
+3: Weapon of Impact (T): **** no spell available ****
+2: Bull's Strength → Curse of Impending Blades (N)
+2: Cat's Grace → Scorching Ray (V)
+2: Eagle's Splendor (T) → Touch of Idiocy (E)
+2: Fox's Cunning (T) → Bladeweave (I)
+2: Knock (T): **** no spell available ****
+2: Owl's Wisdom (T): **** no spell available ****
+2: Blindsight (T): **** no spell available ****
+2: Balagarn's Iron Horn (T): **** no spell available ****
+1: Low Light Vision (T) → Blade of Fire (C) → row 176
+1: Magic Weapon (T) → Lesser Orb of Fire (C) → row 178
+1: Expeditious Retreat (T) → Lesser Orb of Cold (C)
+1: Enlarge Person (T) → Lesser Orb of Acid (C)
+1: Burning Hands (T) → Lesser Orb of Electricity (C)
+
+PackSPWiz4.2da -- Sorcerer/Wizard_Divination (no Wiz Illusion spells)
+9: Shades (I) → Burst of Glacial Wrath (V)
+9: Weird (I): **** no spell available ****
+8: Mass Blindness and Deafness (I) → Power Word Petrify (D) → row 19
+7: Greater Shadow Conjuration (I) → Power Word Blind (D) → row 38
+7: Shadow Shield (I) → Hiss of Sleep (E)
+6: Ethereal Visage (I) → True Seeing (D)
+4: Greater Invisibility (I) → Shout (T)
+4: Phantasmal Killer (I) → Greater Resistance (A)
+4: Shadow Conjuration (I) → Orb of Acid (C)
+3: Displacement (I) → Power Word Maladroit (D) → row 116
+3: Invisibility Sphere (I) → Power Word Weaken (D) → row 119
+2: Ghostly Visage (I) → Curse of Impending Blades (N)
+2: Invisibility (I) → Scorching Ray (V)
+2: Mirror Image (I) → Touch of Idiocy (E)
+2: Blindness and Deafness (I) → Snakes Swiftness (T)
+1: Color Spray (I) → Nightshield (A)
+
+PackSPWiz5.2da -- Sorcerer/Wizard_Enchantment (no Wiz Illusion spells)
+9: Shades (I) → Burst of Glacial Wrath (V)
+9: Weird (I): **** no spell available ****
+8: Mass Blindness and Deafness (I) → Power Word Petrify (D)
+7: Greater Shadow Conjuration (I) → Hiss of Sleep (E) → row 36
+7: Shadow_Shield (I) → Banishment (A)
+6: Ethereal Visage (I) → Mass Contagion (N)
+4: Greater Invisibility (I) → Shout (T)
+4: Phantasmal Killer (I) → Greater Resistance (A)
+4: Shadow Conjuration (I) → Orb of Sound (C)
+3: Invisibility Sphere (I) → Mass Curse of Impending Blades (N)
+3: Displacement (I) → Mass Snakes Swiftness (T)
+2: Blindness and Deafness (I) → Touch of Idiocy (E) → row 141
+2: Invisibility (I) → Scorching Ray (V)
+2: Mirror Image (I) → Blindsight (T)
+1: Color Spray (I) → Expeditious Retreat (T)
+
+PackSPWiz6.2da -- Sorcerer/Wizard_Evocation (no Wiz Conjuration spells)
+9: Gate (C) → Burst of Glacial Wrath (V) → row 3
+9: Summon Creature IX (C) → Shadow Simulacrum (I)
+8: Greater Planar Binding (C) → Power Word Petrify (D)
+8: Summon Creature VIII (C) → Greater Wall of Dispel Magic (A)
+7: Summon Creature VII (C) → Power Word Blind (D)
+6: Acid Fog (C) → Mass Bull Strength (T)
+6: Planar Binding (C) → Mass Contagion (N)
+6: Summon Creature VI (C) → SUperior Resistance (A)
+5: Lesser_Planar_Binding (C) → Cacophonic_Burst (V) → row 77
+5: Summon Creature V (C) → Glass Doppelganger (I)
+5: Vitriolic Sphere (C) → Wall of Dispel Magic (A)
+4: Evard's Black Tentacles (C) → Shout (T)
+4: Summon Creature IV (C) → Greater Resistance (A)
+3: Flame Arrow (C) → Mass Curse of Impending Blades (N)
+3: Improved Mage Armor (C) → Mass Snakes Swiftness (T)
+3: Mesti's Acid Breath → Power Word Weaken (D)
+3: Stinking Cloud (C) → Power Word Maladroit (D)
+3: Summon Creature III (C) → **** no spell available ****
+2: Melf's Acid Arrow (C) → Scorching Ray (V) → row 146
+2: Summon Creature II (C) → Snake's Swiftness (T)
+2: Web (C) → Touch of Idiocy (E)
+1: Grease (C) → Ray of Enfeeblement (N)
+1: Mage Armor (C) → Nightshield (A)
+1: Summon Creature I (C) → Reduce Person (T)
+0: Ray of Frost (C) → Touch of Fatigue (N)
+0: Acid Splash (C): **** no spell available ****
+
+PackSPWiz7.2da -- Sorcerer/Wizard_Illusion (no Wiz Enchantment spells)
+9: Mass Hold Moster (E) → Shadow Simulacrum (I) → row 4
+9: Dominate Monster (E) → Burst of Glacial Wrath (V)
+8: Mass Charm Monster (E) → Power Word Petrify (D)
+8: Blackstaff (E) → Greater Shout (T)
+7: Mass Hold Person (E) → Solipsism (I) → row 37
+6: Greater Heroism (E) → Mass Bull Strength (T)
+5: Dominate Person (E) → Glass Doppelganger (I) → row 74
+5: Hold Monster (E) → Arc of Lightning (C)
+5: Mind Fog (E) → Cacophonic Burst (V)
+4: Confusion (E) → Shout (T)
+4: Crushing Despair (E) → Greater Resistance (A)
+4: Charm Monster (E) → Orb of Fire (C)
+3: Heroism (E) → Mass Curse of Impending Blades (N)
+3: Hold Person (E) → Mass Snake's Swiftness (T)
+3: Deep Slumber (E) → Power Word Weaken (D)
+3: Rage (E) → Power Word Maladroit (D)
+2: Tasha's Hideous Laughter (E) → Bladeweave (I) → row 144
+1: Charm Person (E) → Nightshield (A)
+0: Daze (E) → Touch of Fatigue (N)
+
+PackSPWiz8.2da -- Sorcerer/Wizard_Necromancy (no Wiz Divination spells)
+9: Power Word Kill (D) → Burst of Glacial Wrath (V)
+8: Power Word Stun (D) → Greater Shout (T)
+8: Premonition (D) → Greater Wall of Dispel Magic (A)
+6: Legend Lore (D) → Mass Contagion (N) → row 52
+6: True Seeing (D) → Superior Resistance (A)
+5: Feeblemind (D) → Cacophonic Burst (V)
+4: Assay Resistance (D) → Orb of Cold (C)
+3: Clairaudience and Clairvoyance (D) → Mass Curse of Impending Blades (N)
+2: See Invisibility (D) → Curse of Impending Blades (N) → row 144
+1: Detect Undead (D) → Nightshield (A)
+1: True Strike (D) → Lesser Orb of Cold (C)
+
+PackSPWiz9.2da -- Sorcerer/Wizard_Transmutation (no Wiz Conjuration spells)
+9: Gate (C) → Burst of Glacial Wrath (V)
+9: Summon Creature IX (C) → Shadow Simulacrum (I)
+8: Greater Planar Binding (C) → Greater Shout (T) → row 19
+8: Summon Creature VIII (C) → Power Word Petrify (D)
+7: Summon Creature VII (C) → Power Word Blind (D)
+6: Acid Fog (C) → Extract Water Elemental (T) → row 51
+6: Planar Binding (C) → Mass Bull's Strength (T) → row 55
+6: Summon Creature VI (C) → Mass Cat's Grace (T) → row 57
+5: Lesser Planar Binding (C) → Greater Reduce Person (T) → row 76
+5: Summon Creature V (C) → Cacophonic Burst (V)
+5: Vitriolic Sphere (C) → Wall of Dispel Magic (A)
+4: Evard's Black Tentacles (C) → Shout (T) → row 91
+4: Summon Creature IV (C) → Greater Resistance (A)
+3: Improved Mage Armor (C) → Mass Snake's Swiftness (T) → row 119
+3: Mestil's Acid Breath (C) → Mass Curse of Impending Blades (N)
+3: Stinking Cloud (C) → Power Word Weaken (D)
+3: Summon Creature III (C) → Power Word Maladroit (D)
+3: Flame Arrow (C): **** no spell available ****
+2: Melf's Acid Arrow (C) → Snake's Swiftness (T) → row 148
+2: Summon Creature II (C) → Animalistic Power (T) → row 146
+2: Web (C) → Scorching Ray (V)
+1: Mage Armor (C) → Reduce Person (T) → row 176
+1: Grease (C): **** no spell available ****
+1: Summon Creature I (C): **** no spell available ****
+0: Ray of Frost (C) → Touch of Fatigue (N)
+0: Acid Splash (C): **** no spell available ****
+

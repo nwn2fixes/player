@@ -892,6 +892,32 @@ PLC_MC_Ruins07.MDB
 PLC_MC_Ruins08.MDB
 
 
+Wizard/Sorcerer default School Specializations fixes by rjshae
+v.230331
+The following are specialist Wizard spell package files that are assigned by
+packages.2da. They are used in cases of auto-leveling with the LevelUpHenchman()
+call. They can also be called by the 'Set to Package Default' button under the
+character blueprint Spells tab.
+
+In each case, the list contains some spells from the opposition school and is
+missing a few spells from the specialist school. Where possible, I replaced
+selected opposition spells with the missing specialist spells, or else with a
+non-opposition spell. I moved the modified specialist spell rows up the spell
+level list so the character is more likely to gain the spell on level up.
+
+See 'wizard.txt' in the 2da folder for exact changes.
+files:
+- 2da
+packspwiz2.2da
+packspwiz3.2da
+packspwiz4.2da
+packspwiz5.2da
+packspwiz6.2da
+packspwiz7.2da
+packspwiz8.2da
+packspwiz9.2da
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
