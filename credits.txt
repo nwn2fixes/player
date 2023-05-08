@@ -877,6 +877,7 @@ files:
 - sound
 *.SSF
 
+
 Model fixes (SoZ Ruins) by Gribo
 v.230221
 Camera goes under the terrain, into models and is generally hard to control when
@@ -916,6 +917,17 @@ packspwiz6.2da
 packspwiz7.2da
 packspwiz8.2da
 packspwiz9.2da
+
+
+ga_cast_spell fixes by travus
+v.230507
+The stock versions of these 2 dialog action scripts stop the conversation. The
+fix is to insert ActionPauseCutscene() before casting (or fake casting) the
+spell. [impl. kevL]
+files:
+- scripts
+ga_cast_spell_at_object.NSS
+ga_cast_fake_spell_at_object.NSS
 
 
 --------------------------------------------------------------------------------
