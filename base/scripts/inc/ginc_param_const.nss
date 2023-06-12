@@ -22,6 +22,7 @@
 // 2/14/07 ChazM - added optional delimiter override to GetFloatParam(), GetIntParam(), and GetStringParam()
 // 2018.12.11 Aqvilinus - use return from RemoveNVP() when adding an NVP with AppendUniqueToNVP()
 // 2018.12.11 kevL - use the delimiter passed by AppendUniqueToNVP() for all NVP functs.
+// 2023.06.11 travus - fix GetDurationType()
 
 
 //void main(){}
@@ -56,7 +57,7 @@ struct rNameValueStringPair
 {
 	string sName;
 	string sValue;
-};	
+};
 
 
 ///////////////////////////////////////////////////////////
@@ -96,7 +97,7 @@ int GetSkillConstant(int nSkill)
 {
 	int nSkillVal;
 
-	switch (nSkill)	
+	switch (nSkill)
 	{
         case 0:     // APPRAISE
             nSkillVal = SKILL_APPRAISE;
@@ -245,16 +246,16 @@ float GetFloatParam(string sString, int nPos, string sDelim=",")
 object GetTarget(string sTarget, string sDefault=TARGET_OWNER)
 {
 	object oTarget = OBJECT_INVALID;
-	
+
 	// If sTarget is blank, use sDefault
 	if ("" == sTarget || "0" == sTarget) sTarget = sDefault;
-	
+
 	// Check if sTarget is a special identifier
 	if (IsParameterConstant(sTarget))
 	{
 		string sIdentifier = sTarget;
 		sIdentifier = GetStringUpperCase(sIdentifier);
-		
+
 		if (TARGET_OWNER == sIdentifier) 			oTarget = OBJECT_SELF;
 		else if (TARGET_OBJECT_SELF == sIdentifier)	oTarget = OBJECT_SELF;
 		else if (TARGET_OWNED_CHAR == sIdentifier)	oTarget = GetOwnedCharacter(OBJECT_SELF);
@@ -272,23 +273,23 @@ object GetTarget(string sTarget, string sDefault=TARGET_OWNER)
 	else
 	{
 		oTarget = GetNearestObjectByTag(sTarget);	// Search area
-		
+
 
 		//EPF 4/13/06 -- get nearest misses if the owner is the object we're looking for
 		//	so check and see if the target is OBJECT_SELF.  I'm putting this after the GetNearest()
 		// call since string compares are expensive, but before the GetObjectByTag() call, since
 		// that's liable to return the wrong instance.  We can move this to before the GetNearest() call
 		// if this becomes a problem.
-		if(!GetIsObjectValid(oTarget))	
-		{								
+		if(!GetIsObjectValid(oTarget))
+		{
 			if(sTarget == GetTag(OBJECT_SELF))
 			{
 				oTarget = OBJECT_SELF;
-			}	
+			}
 		}
 		// If not found
-		if (GetIsObjectValid(oTarget) == FALSE) 
-		{	
+		if (GetIsObjectValid(oTarget) == FALSE)
+		{
 			oTarget = GetObjectByTag(sTarget);		// Search module
 		}
 	}
@@ -298,7 +299,7 @@ object GetTarget(string sTarget, string sDefault=TARGET_OWNER)
 	{
 		PrettyDebug("GetTarget() -- Could not find target with tag: " + sTarget);
 	}
-	
+
 	return (oTarget);
 }
 
@@ -309,13 +310,13 @@ object GetTarget(string sTarget, string sDefault=TARGET_OWNER)
 //{
 //	string sVarName;
 //    object oTarg = GetTarget(sTarget, TARGET_OBJECT_SELF);
-//	
+//
 //	if (GetIsObjectValid(oTarg))
 //		sVarName = GetTag(oTarg);
 //	else
 //		sVarName = sTarget;
-//		
-//	sVarName = sVarName + "_Influence";		
+//
+//	sVarName = sVarName + "_Influence";
 //	return (sVarName);
 //}
 
@@ -365,15 +366,16 @@ int GetObjectTypes(string sType)
 // 	I = INSTANT
 //  P = PERMANENT
 //  T = TEMPORARY
+// travus 23.06.11 - fixed.
 int GetDurationType(string sType)
 {
     sType = GetStringUpperCase(sType);
     int iType = DURATION_TYPE_INSTANT;
 
-    if (FindSubString(sType, "P"))
+    if (FindSubString(sType, "P") == 0)
         iType = DURATION_TYPE_PERMANENT;
 
-    if (FindSubString(sType, "T"))
+    if (FindSubString(sType, "T") == 0)
         iType = DURATION_TYPE_TEMPORARY;
 
 	return (iType);
@@ -385,9 +387,9 @@ int GetStandardFaction(string sFactionName)
 {
 	int iFaction = -1;
 	if (IsParameterConstant(sFactionName))
-	{	
+	{
 		string sTargetFaction = GetStringUpperCase(sFactionName);
-	
+
 		if (sTargetFaction == PARAM_COMMONER)
 			iFaction = STANDARD_FACTION_COMMONER;
 		else if (sTargetFaction == PARAM_DEFENDER)
@@ -396,7 +398,7 @@ int GetStandardFaction(string sFactionName)
 			iFaction = STANDARD_FACTION_HOSTILE;
 		else if (sTargetFaction == PARAM_MERCHANT)
 			iFaction = STANDARD_FACTION_MERCHANT;
-		
+
 	}
 	return (iFaction);
 }
@@ -417,8 +419,8 @@ object GetSoundObjectByTag(string sTarget)
 
 	if (GetIsObjectValid(oTarget) == FALSE)
 		ErrorMessage("GetSoundObjetByTag: " + sTarget + " not found!");
-	else 
-	{	
+	else
+	{
 		int iType = GetObjectType(oTarget);
 		if (iType != OBJECT_TYPE_ALL) // sound object don't have their own special type...
 			ErrorMessage("GetSoundObjetByTag: " + sTarget + " is wrong type: " + IntToString(iType) + " - attempting to use anyway.");
@@ -447,7 +449,7 @@ struct rNameValueStringPair GetNameValuePairStruct (string sNameValuePair, strin
 		oNameValuePair.sName = sNameValuePair;
 		oNameValuePair.sValue = "";
 	}
-	
+
 	return (oNameValuePair);
 }
 
@@ -460,7 +462,7 @@ string GetNVPValue(string sNVPList, string sName, string sDelim="=")
 	int bFound = FALSE;
 	int i = 0;
 	string sRet = "";
-	
+
 	string sNameValuePair = GetStringParam(sNVPList, i);
 	while (sNameValuePair != "" && !bFound)
 	{
@@ -470,11 +472,11 @@ string GetNVPValue(string sNVPList, string sName, string sDelim="=")
 			bFound = TRUE;
 			sRet = oNameValuePair.sValue;
 			break;
-		}			
+		}
 		i++;
 		sNameValuePair = GetStringParam(sNVPList, i);
 	}
-	
+
 	return sRet;
 }
 

@@ -930,6 +930,25 @@ ga_cast_spell_at_object.NSS
 ga_cast_fake_spell_at_object.NSS
 
 
+GetDurationType() fix by travus
+v.230611
+The string-parameter passed (I, T, or P) was not being converted to a
+duration-type correctly. FindSubString() returns the position of the letter,
+which one expects to be 0 (the first letter). However, 0 evaluated to FALSE
+instead of TRUE, so the correct return was bypassed and the default
+duration-type got returned. Additionally, if FindSubString() doesn't find the
+letter, it returns -1, which evaluates to TRUE instead of FALSE, which caused a
+duration-type other than the default to return. The fix is to compare the first
+letter of the string-parameter to the allowed types (I, T, or P).
+[kL_note: recompile 'ga_effect' and 'ga_effect_polymorph']
+files:
+- scripts
+ga_effect.NSS
+ga_effect_polymorph.NSS
+- scripts\inc
+ginc_param_const.nss
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
