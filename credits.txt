@@ -1843,6 +1843,23 @@ files:
 3033_ds_fgking.NSS
 
 
+1100_West_Harbor dialog fixes by travus
+v.230725
+0_bevil.DLG - Missing a condition script for the diplomacy check at this node:
+"[Success] Well ... here. You can have what I've got left from my militia pay.
+Things are probably more expensive out there." There is a failure node, but this
+will always succeed as there is no condition script. Added a
+'gc_skill_rank(6,6)' script.
+11_merring.DLG - Missing a condition script for the class check at this node:
+"|Devout or Cleric|Yes - yes, there is. Over the years we've talked many times
+about Lathander and his teachings." The comment on this node states to check for
+devout or cleric, but only devout is checked. Added an 'OR gc_check_class(2)'.
+files:
+- 1100_West_Harbor
+0_bevil.DLG
+11_merring.DLG
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
