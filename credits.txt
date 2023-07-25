@@ -1820,6 +1820,29 @@ files:
 12_b_shadprst_ud.NSS
 
 
+RemoveJournalQuestEntry() fix by travus
+v.230724
+The '11_a_tarmas_center' script (1100_West_Harbor module) still has a loophole
+that doesn't remove the quest from the entire party (at this point you will have
+a companion in the party). It only removes the quest from the currently
+controlled character. The issue is with the RemoveJournalQuestEntry() function -
+specifically, with the 'bAllPartyMembers' and 'bAllPlayers' parameters both
+being set to TRUE. See the comment in the corrected script below. This script
+was already in the nwn2fixes - I just added additional code to fix the issue.
+Additionally, the RemoveJournalQuestEntry() function with both mentioned
+parameters set to TRUE is used in the '3031_ds_tholapsyx' and '3033_ds_fgking'
+scripts (both in the 3000_Neverwinter_A3 module). I haven't looked closely at
+those but I'm assuming the issue will occur there as well.
+It's also used in the tutorial but, from what I can tell, there is already
+scripting employed there to clear the journal entries from the entire party.
+files:
+- 1100_West_Harbor
+11_a_tarmas_center.NSS
+- 3000_Neverwinter_A3
+3031_ds_tholapsyx.NSS
+3033_ds_fgking.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
