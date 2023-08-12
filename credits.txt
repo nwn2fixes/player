@@ -698,7 +698,7 @@ v.210411
 This set of files provides fixes for the stock PLC_MC_CHANDL01 and
 PLC_MC_CHANDL02 chandelier models. For both chandeliers it increases the swing
 amplitude to half a degree, so it is still subtle but at least visible to the
-player’s eye. For the second chandelier it corrects the height setting so that
+player's eye. For the second chandelier it corrects the height setting so that
 the top of the chain lines up with the static component.
 files:
 - models
@@ -735,7 +735,7 @@ fx_drip_fx1.pfx
 Gnome female cloth armor fix (1) by RjShae
 v.211216
 The Gnome female cloth armor in slot 8 is missing the tint map in the material
-properties, so it can’t be tinted in the toolset. (This is the body-length brown
+properties, so it can't be tinted in the toolset. (This is the body-length brown
 robe.) Since it shares the same texture files as the human female, I added the
 same human female tint map file to the model.
 files:
@@ -747,7 +747,7 @@ splitgold.XML enhancement by Lance_Botelle
 v.211219
 Multi-player barter subscreen. When you first open it, the input window is not
 the focus, so you have to click in its text window to be able to start typing.
-Secondly, there is either a figure “0” (zero) by default, or the last gold
+Secondly, there is either a figure "0" (zero) by default, or the last gold
 figure you had entered and used every time it is opened. So you have to click in
 the text box, delete the figures in the text box, and then click on the OK
 button. Very cumbersome. Two required steps even before you can use it!
@@ -769,7 +769,7 @@ splitgold.xml
 Gnome female cloth armor fix (2) by RjShae
 v.211227
 The Gnome female cloth armor in slot 7 is missing the tint map in the material
-properties, so it can’t be tinted in the toolset. Since it shares the same
+properties, so it can't be tinted in the toolset. Since it shares the same
 texture files as the human female, I added the same human female tint map file
 to the model.
 files:
@@ -1858,6 +1858,88 @@ files:
 - 1100_West_Harbor
 0_bevil.DLG
 11_merring.DLG
+
+
+OC dialog fixes by travus
+v.230811
+OC module 1000_Neverwinter_A1 dialog buggery:
+
+10_4cs_wolf2.DLG
+- Intimidate check missing at this node: "[Success] {Unsettled}You walk this
+time, Wolf... This time...". Recommend gc_skill_rank(11, 1) to keep similar to
+the diplomacy check in the node above it. Additionally, the same node does not
+have a failure branch. Recommend adding a link to the failure branch in the
+diplomacy check node above it.
+
+10_caleb.DLG
+- Almost all skill checks were using a non-existent check script
+(gc_check_skill). Recommend changing all to the equivalent gc_skill_rank.
+- Intimidate nodes had a "success" link to diplomacy check nodes. Recommend
+copy/paste text from the diplomacy success nodes above them to create a new node
+for the intimidate check branches. Then add a respective gc_skill_rank script to
+those new nodes. Finally, link back to the diplomacy branch from there.
+- A successful Bluff check did not award XP at this node: "[Success] Now hold on
+a moment. I do know some people - important people. I can't just show you the
+way to them though. They don't like strangers". Recommend adding
+ga_give_xp(50,1) to keep in-line with prior skill successes.
+- Accepting a bribe from Caleb when successfully using the intimidate branch
+gave you gold twice. Recommend removing the ga_give_gold script from the "I'll
+be on my way, then" node as the gold is already given (200 or 100gp) prior to
+this point.
+- Set some of the skill check nodes to "once per game" to prevent them from
+showing again after a failure. Otherwise it is possible to keep selecting the
+same nodes over and over until success.
+- Added ga_camera_facing_point_party and ga_face_target scripts to the CONTINUE
+node just after this node: "That you did. Here's your share, and there's more to
+come. Plenty of merchants around here that aren't under our 'protection' yet".
+This was done to change the camera to view Hagen and the guards when they
+arrive. Otherwise it is not clear to the player who is the one talking if the
+camera is facing the other direction as they arrive behind the player.
+
+10_cs_qara_intro.DLG
+- Skill check missing at this node: "[Diplomacy] I'm sure there's another way we
+can work this out without me and my friends becoming involved". Recommend
+gc_skill_rank(6,4).
+- Skill check missing at this node: "|Intimidate|[Intimidate] If a single spell
+is cast, I will kill you all without a second thought". Recommend
+gc_skill_rank(11,4).
+- All nodes commented with alignment shifts had no ga_alignment scripts.
+
+10_guardatk.DLG
+- Diplomacy check missing at this node: "[Success] You're right. Taking this
+'gift' makes me just as bad as the other turncoats". Recommend
+gc_skill_rank(6,6).
+
+10_guardnp.DLG
+- All skill checks had no check scripts. I count 5 total between Diplomacy and
+Intimidate. Recommend all rank 6 checks.
+
+10_guardnp2.DLG
+- All skill checks had no check scripts. I count 4 total between Diplomacy and
+Intimidate. Recommend all rank 6 checks.
+
+10_hagen.DLG
+- All skill checks had no check scripts. I count 8 total between Diplomacy,
+Intimidate and Appraise. Recommend all rank 6 checks.
+
+10_lockpicker.DLG
+- All skill checks had no check scripts. I count 4 total between Diplomacy and
+Intimidate. Recommend all rank 6 checks.
+
+10_mugger - Diplomacy skill check was using a non-existent check script
+(gc_check_skill). Recommend changing to the equivalent gc_skill_rank.
+
+files:
+- 1000_Nevewinter_A1
+10_4cs_wolf2.DLG
+10_caleb.DLG
+10_cs_qara_intro.DLG
+10_guardatk.DLG
+10_guardnp.DLG
+10_guardnp2.DLG
+10_hagen.DLG
+10_lockpicker.DLG
+10_mugger.DLG
 
 
 --------------------------------------------------------------------------------
