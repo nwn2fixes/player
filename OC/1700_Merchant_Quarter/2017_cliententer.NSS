@@ -1,57 +1,39 @@
-//::///////////////////////////////////////////////////////////////////////////
-//::
-//::	2017_cliententer.nss
-//::
-//::	Insert comment about this file here.
-//::
-//::///////////////////////////////////////////////////////////////////////////
-//::
-//::	Created by: Brian Fox
-//::	Created on: 9/24/05
-//::
-//::///////////////////////////////////////////////////////////////////////////
-#include "ginc_var_ops"
+// '2017_cliententer'
+/*
+	OnClientEnter script for area: {1017}axle.
+*/
+// Created by: Brian Fox
+// Created on: 9/24/05
+// kevL 2023 aug 12 - destealth Moire [travus fix]
+
 #include "20_inc"
-#include "ginc_journal"
-//::///////////////////////////////////////////////////////////////////////////
-/* CONSTANT VALUES MAY BE SHARED WITH 2017_onenter!  MAKE SURE THAT CHANGES HERE ARE UPDATED THERE AS WELL! */
-const string EDMUND_INTRO_ID_TAG = "12";
 
-const string AXLE_TAG = "20_axle";
-const string AXLE_SP_TAG = "sp_2017_axle";
-const string AXLE_RESREF = "10axle";
-
-const string EDMUND_SP_TAG = "sp_2017_edmund";
-const string EDMUND_RESREF = "20_edmund";
-
-//::///////////////////////////////////////////////////////////////////////////
-
-int GetIsReadyForEdmundIntro(object oPC)
+//
+int GetIsReadyForEdmundIntro(object oPc)
 {
-	object oEnteringObject = GetFirstEnteringPC();
-	int nQuestEntry = GetJournalQuestEntry("20_squiring", oPC);
-
-	return ( (nQuestEntry == 12 || nQuestEntry == 21) && (GetGlobalInt("gbWatch") == 0));
-}	
-	
-
-//::///////////////////////////////////////////////////////////////////////////
-
-int StartingConditional()
-{
-	if(!FiredFromPartyTransition())
-		return FALSE;
-	object oEnteringObject = GetFactionLeader(GetFirstEnteringPC());
-
-
-	if ( GetIsReadyForEdmundIntro(oEnteringObject) )	// Edmund cutscene (first entry into this area when gbWatch == FALSE)
+	if (!GetGlobalInt("gbWatch"))
 	{
-		ShowSponsor(oEnteringObject);
+		int iQuestState = GetJournalQuestEntry("20_squiring", oPc);
+		return iQuestState == 12 || iQuestState == 21;
 	}
-	else // just populate Axle as normal
-	{
-		HideSponsor(oEnteringObject);
-	}
-
 	return FALSE;
+}
+
+
+//
+void main()
+{
+	object oLeader = GetFactionLeader(GetFirstEnteringPC());
+	if (FiredFromPartyTransition())
+	{
+		if (GetIsReadyForEdmundIntro(oLeader))
+		{
+			ShowSponsor(oLeader); // Edmund cutscene (first entry into this area when gbWatch==FALSE)
+		}
+		else
+			HideSponsor(oLeader); // just populate Axle as normal
+	}
+
+	object oMoire = GetNearestObjectByTag("10_moire", oLeader); // travus fix ->
+	SetActionMode(oMoire, ACTION_MODE_STEALTH, FALSE);
 }

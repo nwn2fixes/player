@@ -1942,6 +1942,20 @@ files:
 10_mugger.DLG
 
 
+Moire fix by travus
+v.230813
+Evil path - At a point, Moire will leave her place in the docks to meet you at
+Axle's place in the merchant district. But once you get to Axle's place, Moire
+is nowhere to be found. This is because Moire has an OnSpawn script and
+X2_L_SPAWN_USE_STEALTH variable that sets her to stealth mode. She has a high
+hide/move silent skill, so unless you have a high spot/listen, you'll never see
+her in Axle's place, therefore breaking the game. The fix is to destealth Moire
+in the OnClientEnter script for Axle's area. [impl. kevL]
+files:
+- 1700_Merchant_Quarter
+2017_cliententer.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
