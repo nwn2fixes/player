@@ -1979,6 +1979,17 @@ files:
 i_10_cait_ring_aq.nss [created]
 
 
+Ember candle flame fix by travus
+v.230817
+There are many floating candle flame effects near the buildings in the
+1616_ember area (1600_Githyanki_Caves.mod). I’m guessing there used to be lamps
+on the sides of the buildings but then they got deleted. They just forgot to
+delete the flame effects too. [impl. kevL]
+files:
+- 1600_Githyanki_Caves
+1616_center.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
