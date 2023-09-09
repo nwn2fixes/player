@@ -66,13 +66,13 @@ int StartingConditional()
 		SetGlobalInt("bOLMapTutorialDone", TRUE);
 	}
 
-	object oLeader = GetLocalObject(GetModule(), "oPartyLeader");								// First try to set the leader to the old actor...
+	// Disabled because it was causing player confusion about who
+	// was supposed to be leading the party when transition to OL.
+/*	object oLeader = GetLocalObject(GetModule(), "oPartyLeader");								// First try to set the leader to the old actor...
 	int bValidLeader = (GetIsRosterMember(oLeader) || GetIsOwnedByPlayer(oLeader))
 					&& GetCommandable(oLeader) && !GetIsDead(oLeader) && GetIsObjectValid(oLeader);
 
-	// Disabled because it was causing player confusion about who
-	// was supposed to be leading the party when transition to OL.
-/*	if (bValidLeader == TRUE)																	// If that leader is now invalid, try the first faction member.
+	if (bValidLeader == TRUE)																	// If that leader is now invalid, try the first faction member.
 	{
 		SetPartyActor(oLeader, oPC);
 	}
@@ -82,7 +82,7 @@ int StartingConditional()
 		bValidLeader = (GetIsRosterMember(oNewLeader) || GetIsOwnedByPlayer(oNewLeader))
 					&& GetCommandable(oNewLeader) && !GetIsDead(oNewLeader) && GetIsObjectValid(oNewLeader);
 
-		while(bValidLeader != TRUE && GetIsObjectValid(oNewLeader))								// Then try everyone else in the faction until we find someone.
+		while (bValidLeader != TRUE && GetIsObjectValid(oNewLeader))							// Then try everyone else in the faction until we find someone.
 		{
 			oNewLeader = GetNextFactionMember(oPC, FALSE);										// You should never have nobody valid...
 			bValidLeader = (GetIsRosterMember(oNewLeader) || GetIsOwnedByPlayer(oNewLeader))	// but if you do you'll just get the first faction member.
