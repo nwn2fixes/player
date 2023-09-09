@@ -3,6 +3,7 @@
 	On Client Enter script for an overland map area.
 */
 // JH/EF-OEI: 01/17/08
+// Akhacha 2023.09.09 - ensure that "oPartyLeader" is valid on the module-object
 
 #include "ginc_overland"
 #include "ginc_overland_constants"
@@ -65,6 +66,12 @@ int StartingConditional()
 		DisplayOLMapTutorial();
 		SetGlobalInt("bOLMapTutorialDone", TRUE);
 	}
+
+
+	// Akhacha_fix - modified by kevL
+	object oLeader = GetFactionLeader(GetFirstPC());
+	SetLocalObject(GetModule(), "oPartyLeader", oLeader);
+	// Akhacha_end
 
 	// Disabled because it was causing player confusion about who
 	// was supposed to be leading the party when transition to OL.
@@ -133,11 +140,12 @@ int StartingConditional()
 			SetLocalInt(oParty, "bLoaded", TRUE);
 		}
 
-		if (oParty != GetFactionLeader(oParty))
+		if (oParty != oLeader)
 			SetScriptHidden(oParty, TRUE, FALSE);
 
-		// strip "bad" modes for OL map travel
+		// disable modes that hurt OL map travel
 		StripOLMapModes(oParty);
+
 		oParty = GetNextFactionMember(oPC, FALSE);
 	}
 
