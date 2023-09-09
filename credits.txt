@@ -569,7 +569,7 @@ files:
 nw_s0_jagtooth.nss
 
 
-Bolt of Domination spellabilityfix by kevL
+Bolt of Domination spellability fix by kevL
 v.200225
 Fix Bolt of Domination. See script for details.
 files:
