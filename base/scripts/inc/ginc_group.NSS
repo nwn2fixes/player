@@ -9,7 +9,7 @@
 	4. give group actions -- under *** Group Actions ***
 
 	Notes:
-	When creating groups, a creature already in a group will not join another.  Some functions have params
+	When creating groups, a creature already in a group will not join another. Some functions have params
 	to overide this, but it is not recommended and can have odd side effects.
 
 */
@@ -22,11 +22,11 @@
 // EPF 6/7/05 Added support for a rectangular formation.
 // ChazM 6/7/05 Added support for additional formation types with variable sets of params.
 //			Added GroupSetBMAFormation(), GroupSetCircleFormation(), GroupSetRectangleFormation(), GroupSetNoise(),
-//			modified GroupMoveToWP(), removed GetFormationLocationByIndex().  Added and modified some of the base funcs.
+//			modified GroupMoveToWP(), removed GetFormationLocationByIndex(). Added and modified some of the base funcs.
 // ChazM 6/7/05 Added support for running in formation, added GroupClearAllActions()
 // ChazM 6/8/05 modified FactionToGroup(), GetBMALocation(), GetHuddleLocation(), GroupMoveToWP(), added constants, numerous comments
 // ChazM 6/15/05 added GetPartyGroup(), modified ResetGroup(), added constants, added comments, added prototypes,
-//			modified GroupMoveToWP to work better w/ defualts.  added GroupActionOrientToTag().
+//			modified GroupMoveToWP to work better w/ defaults. added GroupActionOrientToTag().
 // ChazM 6/16/05 added GroupSetLocalString(), GroupOnDeathBeginConversation(), SetGroupString(), GetGroupString(),
 //			modified AddToGroup()
 // ChazM 6/18/05 added EncounterToGroup(), modified AddToGroup()
@@ -36,7 +36,7 @@
 // ChazM 6/27/05 modified ResetGroup(), renamed bunch of "private" functions and all references, modified AddToGroup(), added InsertIntoGroup()
 //				added some "how to use" comments, modified GetPartyGroup()
 // ChazM 6/28/05 added DeleteGlobalObject(), modified GroupDeleteObjectIndex()
-//  			added GroupActionForceExit(), GroupChangeFaction, GroupChangeToStandardFaction
+//				added GroupActionForceExit(), GroupChangeFaction, GroupChangeToStandardFaction
 // ChazM 7/1/05 added AddNearestWithTagToGroup(), GroupMoveToFormationLocation(), GroupActionMoveToObject(),
 //				modified GroupMoveToWP()
 // ChazM 7/5/05 added GetFirstValidInGroupFromCurrent(), modified GetNextInGroup() and GetFirstInGroup()
@@ -73,8 +73,8 @@
 // EPF 12/5/05 -- Added GroupOnDeathSetJournalEntry()
 // EPF 1/12/06 -- added GroupSetSemicircleFormation and support for a new Semicircle formation.
 // EPF 1/13/06 -- Fixed an off-by-one error in GroupAddNearestTag().
-// EPF 1/30/06 -- missed a spot in the last fix, so GroupAddNearestTag was adding one too many.  Fixed.
-// EPF 1/30/06 -- GroupAddTag() has a completely different off-by-one error.  Fixing.
+// EPF 1/30/06 -- missed a spot in the last fix, so GroupAddNearestTag was adding one too many. Fixed.
+// EPF 1/30/06 -- GroupAddTag() has a completely different off-by-one error. Fixing.
 // DBR 2/01/06 -- Added GetGroupName(), for retrieving the group that a creature is in (wrapper function)
 // BMA-OEI 2/8/06 -- Added bFadeOut param to GroupOnDeathConversation()
 // BMA-OEI 2/14/06 -- Removed bFadeOut param
@@ -91,7 +91,7 @@
 // ChazM 5/10/07 -- added param bSetToHostile to GroupAttackGroup() and GroupAttack()
 // ChazM 5/18/07 -- comment changes
 // ChazM 5/30/07 -- modified GroupDetermineCombatRound() - decoupled DCR
-// ChazM 5/30/07 -- GetGroupNumKiled -> GetGroupNumKilled.  Some OC module scripts might not compile, but the NCS will remain, so this shouldn't pose a problem.
+// ChazM 5/30/07 -- GetGroupNumKiled -> GetGroupNumKilled. Some OC module scripts might not compile, but the NCS will remain, so this shouldn't pose a problem.
 // ChazM 5/31/07 -- modified GroupDetermineCombatRound() - now uses AssignDCR() in nw_i0_generic
 // ChazM 6/6/07 -- added ListMembersOfGroup()
 // ChazM 6/27/07 -- Added function DoMoveType()
@@ -110,74 +110,74 @@
 //-------------------------------------------------
 // Public constants
 //-------------------------------------------------
-const int FORMATION_DEFAULT 			= 0;
-const int FORMATION_BMA 				= 1;
-const int FORMATION_HUDDLE_FACE_IN 		= 2;
-const int FORMATION_HUDDLE_FACE_OUT 	= 3;
-const int FORMATION_HUDDLE_FACE_FORWARD = 4;
-const int FORMATION_RECTANGLE 			= 5;
-const int FORMATION_NONE 				= 6;
+const int FORMATION_DEFAULT				= 0;
+const int FORMATION_BMA					= 1;
+const int FORMATION_HUDDLE_FACE_IN		= 2;
+const int FORMATION_HUDDLE_FACE_OUT		= 3;
+const int FORMATION_HUDDLE_FACE_FORWARD	= 4;
+const int FORMATION_RECTANGLE			= 5;
+const int FORMATION_NONE				= 6;
 const int FORMATION_LINE				= 7;
 const int FORMATION_SEMICIRCLE_FACE_OUT	= 8;
-const int FORMATION_SEMICIRCLE_FACE_IN 	= 9;
+const int FORMATION_SEMICIRCLE_FACE_IN	= 9;
 
-const int MOVE_WALK 					= 1;
-const int MOVE_RUN 						= 2;
-const int MOVE_JUMP 					= 3;
-const int MOVE_JUMP_INSTANT 			= 4;
-const int MOVE_FORCE_WALK 				= 5;
-const int MOVE_FORCE_RUN 				= 6;
+const int MOVE_WALK						= 1;
+const int MOVE_RUN						= 2;
+const int MOVE_JUMP						= 3;
+const int MOVE_JUMP_INSTANT				= 4;
+const int MOVE_FORCE_WALK				= 5;
+const int MOVE_FORCE_RUN				= 6;
 
-const int GROUP_LEADER_FIRST 			= -1;
-const int GROUP_LEADER_LAST 			= -2;
-const int GROUP_LEADER_EXCLUDE 			= -3;
+const int GROUP_LEADER_FIRST			= -1;
+const int GROUP_LEADER_LAST				= -2;
+const int GROUP_LEADER_EXCLUDE			= -3;
 
-const string PARTY_GROUP_NAME 			= "theParty";
+const string PARTY_GROUP_NAME			= "theParty";
 
-const int TYPE_INT 						= 1;
-const int TYPE_FLOAT 					= 2;
-const int TYPE_STRING 					= 3;
+const int TYPE_INT						= 1;
+const int TYPE_FLOAT					= 2;
+const int TYPE_STRING					= 3;
 
 // Private constants
-const string GROUP_VAR_NUM_KILLED		= "NumKilled";
-const string OBJ_GROUP_MY_GROUP			= "MyGroup"; // var name stored on objects (so object can identify the group he's in)
-const string OBJ_GROUP_PREFIX 			= "_OG";
-const string OBJ_GROUP_NUM				= "_Num";
-const string OBJ_GROUP_INDEX			= "_Indx";
-const string OBJ_GROUP_FORMATION_TYPE 	= "Fmn";
-const string OBJ_GROUP_FORMATION_RADIUS = "Rad";
-const string OBJ_GROUP_FORMATION_COLS 	= "Col";
-const string OBJ_GROUP_FORMATION_SPACING = "Spc";
-const string OBJ_GROUP_NOISE_START 		= "StN";
-const string OBJ_GROUP_NOISE_FACING 	= "FcN";
-const string OBJ_GROUP_NOISE_LOCATION 	= "LcN";
+const string GROUP_VAR_NUM_KILLED			= "NumKilled";
+const string OBJ_GROUP_MY_GROUP				= "MyGroup"; // var name stored on objects (so object can identify the group he's in)
+const string OBJ_GROUP_PREFIX 				= "_OG";
+const string OBJ_GROUP_NUM					= "_Num";
+const string OBJ_GROUP_INDEX				= "_Indx";
+const string OBJ_GROUP_FORMATION_TYPE		= "Fmn";
+const string OBJ_GROUP_FORMATION_RADIUS		= "Rad";
+const string OBJ_GROUP_FORMATION_COLS		= "Col";
+const string OBJ_GROUP_FORMATION_SPACING	= "Spc";
+const string OBJ_GROUP_NOISE_START			= "StN";
+const string OBJ_GROUP_NOISE_FACING			= "FcN";
+const string OBJ_GROUP_NOISE_LOCATION		= "LcN";
 
-const float DEFAULT_SPACING				= 1.8f;
+const float DEFAULT_SPACING = 1.8f;
 
 
 //-------------------------------------------------
 // Public function Prototypes
 //-------------------------------------------------
 
-void ResetGroup(string sGroupName);	// Reset a group for re-use
-int IsGroupEmpty(string sGroupName);	// used to see if the group already contains creatures in it.
-int GroupGetNumValidObjects(string sGroupName, int bIsDead=FALSE);	// return number of valid creatures in group
-int	GetIsGroupValid(string sGroupName, int bNotDying=FALSE);		// check if group has any valid creatures in it
-string GetGroupName(object oMember);	//Retrieves the group a creature is in
+void ResetGroup(string sGroupName); // Reset a group for re-use
+int IsGroupEmpty(string sGroupName); // used to see if the group already contains creatures in it.
+int GroupGetNumValidObjects(string sGroupName, int bIsDead = FALSE); // return number of valid creatures in group
+int GetIsGroupValid(string sGroupName, int bNotDying = FALSE); // check if group has any valid creatures in it
+string GetGroupName(object oMember); // Retrieves the group a creature is in
 
 // Return TRUE, if all remaining members are dominated
-int GetIsGroupDominated( string sGroupName );
+int GetIsGroupDominated(string sGroupName);
 
 // **********************
 // *** Group creation ***
 // **********************
-string GetPartyGroup(object oPC);	// creates group for the party and returns name.
+string GetPartyGroup(object oPC); // creates group for the party and returns name.
 
-void GroupAddMember(string sGroupName, object oMember, int bOverridePrevGroup=FALSE);
-void GroupAddFaction(string sGroupName, object oFactionMember, int nLeaderPos=GROUP_LEADER_FIRST, int bOverridePrevGroup=FALSE);
-void GroupAddTag(string sGroupName, string sTag, int iMax=20, int bOverridePrevGroup=FALSE);
-void GroupAddNearestTag(string sGroupName, string sTag, object oTarget=OBJECT_SELF, int iMax=20, int bOverridePrevGroup=FALSE);
-void GroupAddEncounter(string sGroupName, int bWander=2, int bOverridePrevGroup=FALSE);
+void GroupAddMember(string sGroupName, object oMember, int bOverridePrevGroup = FALSE);
+void GroupAddFaction(string sGroupName, object oFactionMember, int nLeaderPos = GROUP_LEADER_FIRST, int bOverridePrevGroup = FALSE);
+void GroupAddTag(string sGroupName, string sTag, int iMax = 20, int bOverridePrevGroup = FALSE);
+void GroupAddNearestTag(string sGroupName, string sTag, object oTarget = OBJECT_SELF, int iMax = 20, int bOverridePrevGroup = FALSE);
+void GroupAddEncounter(string sGroupName, int bWander = 2, int bOverridePrevGroup = FALSE);
 void GroupSpawnAtLocation(string sGroupName, string sTemplate, location lLocation, int nNum);
 void GroupSpawnAtWaypoint(string sGroupName, string sTemplate, string sWaypoint, int nNum);
 
@@ -185,20 +185,20 @@ void GroupSpawnAtWaypoint(string sGroupName, string sTemplate, string sWaypoint,
 // ***************************************
 // *** Group Formation and Noise setup ***
 // ***************************************
-void GroupSetNoFormation(string sGroupName);	// single base destination for group
-void GroupSetBMAFormation(string sGroupName, float fSpacing=DEFAULT_SPACING);	// a staggered marching formation
-void GroupSetCircleFormation(string sGroupName, int iFacing=FORMATION_HUDDLE_FACE_IN , float fRadius=5.0f);	// a circle or huddle formation
+void GroupSetNoFormation(string sGroupName); // single base destination for group
+void GroupSetBMAFormation(string sGroupName, float fSpacing = DEFAULT_SPACING); // a staggered marching formation
+void GroupSetCircleFormation(string sGroupName, int iFacing = FORMATION_HUDDLE_FACE_IN , float fRadius = 5.0f); // a circle or huddle formation
 void GroupSetSemicircleFormation(string sGroupName, int iFacing = FORMATION_SEMICIRCLE_FACE_OUT, float fRadius = 5.f);
-void GroupSetLineFormation(string sGroupName, float fSpacing=DEFAULT_SPACING); // single row formation, leader in middle
-void GroupSetRectangleFormation(string sGroupName, float fSpacing=1.8f, int nColumns=2);	// a rectangular or single line formation
+void GroupSetLineFormation(string sGroupName, float fSpacing = DEFAULT_SPACING); // single row formation, leader in middle
+void GroupSetRectangleFormation(string sGroupName, float fSpacing = 1.8f, int nColumns = 2); // a rectangular or single line formation
 
-void GroupSetNoise(string sGroupName, float fStartNoise=1.0f, float fFacingNoise=10.0f, float fLocationNoise=1.0f);	// use to add noise to the group and make them appear less synchronized
+void GroupSetNoise(string sGroupName, float fStartNoise = 1.0f, float fFacingNoise = 10.0f, float fLocationNoise = 1.0f); // use to add noise to the group and make them appear less synchronized
 
-//  Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
-void GroupOnDeathBeginConversation(string sGroupName, string sTalkerTag, string sConversation);	// use to have a convo begin after everyone in the group dies
-void GroupOnDeathSetLocalInt( string sGroupName, object oTargetObject, string sVariableName, int nNewValue );	// Used for setting a local integer on a target object upon the death of the specified group
-void GroupOnDeathSetLocalFloat( string sGroupName, object oTargetObject, string sVariableName, float fNewValue );	// Used for setting a local float on a target object upon the death of the specified group
-void GroupOnDeathSetLocalString( string sGroupName, object oTargetObject, string sVariableName, string sNewValue );	// Used for setting a local string on a target object upon the death of the specified group
+// Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
+void GroupOnDeathBeginConversation(string sGroupName, string sTalkerTag, string sConversation); // use to have a convo begin after everyone in the group dies
+void GroupOnDeathSetLocalInt(string sGroupName, object oTargetObject, string sVariableName, int nNewValue); // Used for setting a local integer on a target object upon the death of the specified group
+void GroupOnDeathSetLocalFloat(string sGroupName, object oTargetObject, string sVariableName, float fNewValue); // Used for setting a local float on a target object upon the death of the specified group
+void GroupOnDeathSetLocalString(string sGroupName, object oTargetObject, string sVariableName, string sNewValue); // Used for setting a local string on a target object upon the death of the specified group
 void GroupOnDeathSetJournalEntry(string sGroup, string sQuestTag, int nEntry, int bAllowOverride = FALSE);
 void GroupOnDeathExecuteCustomScript(string sGroupName, string sScriptName);
 
@@ -206,35 +206,35 @@ void GroupOnDeathExecuteCustomScript(string sGroupName, string sScriptName);
 // *********************
 // *** Group Actions ***
 // *********************
-void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun=FALSE, float fTimeout=30.0f);
-void GroupMoveToFormationLocation(string sGroupName, location lDestination, int iMoveType=MOVE_WALK);	// locomote a group to a specified location (formation and noise should be set first)
-void GroupMoveToWP(string sGroupName, string sWaypoint, int iMoveType=MOVE_WALK); // locomote a group to a specified waypoint (formation and noise should be set first)
-void GroupMoveToObject(string sGroupName, object oTarget, int iMoveType=MOVE_WALK); // locomote a group to a specified object (formation and noise should be set first)
-void GroupFleeToExit(string sGroupName, string sWaypoint, int iMoveType=MOVE_WALK);
+void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun = FALSE, float fTimeout = 30.0f);
+void GroupMoveToFormationLocation(string sGroupName, location lDestination, int iMoveType = MOVE_WALK); // locomote a group to a specified location (formation and noise should be set first)
+void GroupMoveToWP(string sGroupName, string sWaypoint, int iMoveType = MOVE_WALK); // locomote a group to a specified waypoint (formation and noise should be set first)
+void GroupMoveToObject(string sGroupName, object oTarget, int iMoveType = MOVE_WALK); // locomote a group to a specified object (formation and noise should be set first)
+void GroupFleeToExit(string sGroupName, string sWaypoint, int iMoveType = MOVE_WALK);
 void GroupJumpToWP(string sGroupName, string sWaypoint);
-void GroupAttack(string sGroupName, object oTarget, int bSetToHostile=TRUE);
+void GroupAttack(string sGroupName, object oTarget, int bSetToHostile = TRUE);
 void GroupClearAllActions(string sGroupName, int nClearCombatState = FALSE);
-void GroupPlayAnimation(string sGroupName, int nAnimation, float fStartNoise=1.0f, float fSpeedBase=1.0f, float fSpeedRange=1.0f, float fDurationSectondsBase=0.0f, float fDurationSectondsRange=0.0f);
-void GroupActionWait(string sGroupName, float fSeconds=0.0f);
-void GroupActionOrientToTag(string sGroupName, string sTag, int iOrientation=ORIENT_FACE_TARGET, int bIgnoreWait=FALSE);
-void GroupResurrect(string sGroupName, int bIgnoreWait=FALSE);
+void GroupPlayAnimation(string sGroupName, int nAnimation, float fStartNoise = 1.0f, float fSpeedBase = 1.0f, float fSpeedRange = 1.0f, float fDurationSectondsBase = 0.0f, float fDurationSectondsRange = 0.0f);
+void GroupActionWait(string sGroupName, float fSeconds = 0.0f);
+void GroupActionOrientToTag(string sGroupName, string sTag, int iOrientation = ORIENT_FACE_TARGET, int bIgnoreWait = FALSE);
+void GroupResurrect(string sGroupName, int bIgnoreWait = FALSE);
 
 void GroupSetLocalString (string sGroupName, string sVarName, string sValue);
 void GroupSetLocalObject (string sGroupName, string sVarName, object oValue);
 void GroupSetLocalInt (string sGroupName, string sVarName, int iValue);
 void GroupSetLocalFloat (string sGroupName, string sVarName, float fValue);
 
-void GroupSetSpawnInCondition(string sGroupName, int nCondition, int bValid=TRUE);
+void GroupSetSpawnInCondition(string sGroupName, int nCondition, int bValid = TRUE);
 void GroupWander(string sGroupName, int bValid = TRUE);
-void GroupActionForceExit(string sGroupName, string sWPTag = "WP_EXIT", int bRun=FALSE); 	// forces all in group to go to destination and then destroy self.
-void GroupChangeFaction(string sGroupName, string sTargetFactionMember);	// Changes everyone in group to join faction of given creature
-void GroupChangeToStandardFaction(string sGroupName, int iFaction);		// Changes everyone in group to join one of the standard factions
+void GroupActionForceExit(string sGroupName, string sWPTag = "WP_EXIT", int bRun = FALSE); // forces all in group to go to destination and then destroy self.
+void GroupChangeFaction(string sGroupName, string sTargetFactionMember); // Changes everyone in group to join faction of given creature
+void GroupChangeToStandardFaction(string sGroupName, int iFaction); // Changes everyone in group to join one of the standard factions
 
-void GroupActionMoveToObject(string sGroupName, object oTarget, int bRun=FALSE, float fRange=1.0f);	// does action move to object for all in group (doesn't use formation/noise)
-void GroupAttackGroup(string sAttackerGroupName, string sAttackedGroupName, int bSetToHostile=TRUE); // have group attak targets in another group
+void GroupActionMoveToObject(string sGroupName, object oTarget, int bRun = FALSE, float fRange = 1.0f); // does action move to object for all in group (doesn't use formation/noise)
+void GroupAttackGroup(string sAttackerGroupName, string sAttackedGroupName, int bSetToHostile = TRUE); // have group attak targets in another group
 void GroupDetermineCombatRound(string sGroupName);
-void GroupSetFacingPoint(string sGroupName, vector vPoint);	// assign SetFacingPoint(vPoint) to each member, no delay
-void DestroyObjectsInGroup(string sGroupName, float fDelay=0.0f);
+void GroupSetFacingPoint(string sGroupName, vector vPoint); // assign SetFacingPoint(vPoint) to each member, no delay
+void DestroyObjectsInGroup(string sGroupName, float fDelay = 0.0f);
 
 void GroupSetImmortal(string sGroupName, int bImmortal);
 void GroupSetPlotFlag(string sGroupName, int bPlotFlag);
@@ -250,10 +250,10 @@ void GroupActionCastFakeSpellAtObject(string sGroupName, int nSpell, object oTar
 void GroupSignalEvent(string sGroupName, event eEvent);
 void GroupSetScriptHidden(string sGroupName, int bHidden = TRUE);
 
-int IncGroupNumKilled( string sGroupName );
-int GetGroupNumKilled( string sGroupName );
+int IncGroupNumKilled(string sGroupName);
+int GetGroupNumKilled(string sGroupName);
 
-void GroupSetIsDestroyable( string sGroupName, int bDestroyable, int bRaisable=TRUE, int bSelectableWhenDead=FALSE );
+void GroupSetIsDestroyable(string sGroupName, int bDestroyable, int bRaisable = TRUE, int bSelectableWhenDead = FALSE);
 
 
 //-------------------------------------------------
@@ -298,16 +298,16 @@ object GetGroupObject( string sGroupName, string sVarName );
 
 vector GetBMAFormationStartPosition(vector vPosition, int nIndex, float fSpacing, float fFacing);
 location GetBMALocation(location lToJumpTo, int nIndex, float fSpacing);
-location GetHuddleLocation(location lDestination, int iMemberIndex, int iNumObjects, float fRadius=10.0f, int iFaceType=FORMATION_HUDDLE_FACE_IN);
+location GetHuddleLocation(location lDestination, int iMemberIndex, int iNumObjects, float fRadius = 10.0f, int iFaceType = FORMATION_HUDDLE_FACE_IN);
 location GetLineLocation(location lDestination, int iMemberIndex, float fSpacing);
 location GetRectangleLocation(location lDestination, int nMemberIndex, int nColumns, float fSpacing);
 
 // old versions of functions - don't use but kept for compatibility
-int AddToGroup(string sGroupName, object oObject);	// add a new a creature to a group (fails if object is already in another group)
-void FactionToGroup(object oFactionMember, string sGroupName, int iLeaderPos=GROUP_LEADER_FIRST, int bOverridePrevGroup = FALSE);	// add an entire faction to a goup
-void AddNearestWithTagToGroup(string sGroupName, string sTag, int iMax=20);	// adds all in the area w/ tag to a group up to specified max.
-void EncounterToGroup(string sGroupName, int bWander = 2);	// adds all encounter creatures to a group
-void SpawnCreaturesInGroupAtWP(int iNum, string sTemplate, string sGroupName, string sWayPoint="SPAWN_POINT");	// spawns in creatures and adds them to a group
+int AddToGroup(string sGroupName, object oObject); // add a new a creature to a group (fails if object is already in another group)
+void FactionToGroup(object oFactionMember, string sGroupName, int iLeaderPos = GROUP_LEADER_FIRST, int bOverridePrevGroup = FALSE); // add an entire faction to a goup
+void AddNearestWithTagToGroup(string sGroupName, string sTag, int iMax = 20); // adds all in the area w/ tag to a group up to specified max.
+void EncounterToGroup(string sGroupName, int bWander = 2); // adds all encounter creatures to a group
+void SpawnCreaturesInGroupAtWP(int iNum, string sTemplate, string sGroupName, string sWayPoint = "SPAWN_POINT"); // spawns in creatures and adds them to a group
 
 
 //-------------------------------------------------
@@ -321,12 +321,13 @@ void ListMembersOfGroup(string sGroupName)
 {
 	PrettyDebug("Number of objects in Group " + sGroupName + ": " + IntToString(GroupGetNumObjects(sGroupName)));
 	PrettyDebug("Members of Group " + sGroupName + ": ");
-	object oMember = GetFirstInGroup(sGroupName);
+
 	int nCount = 0;
 
-	while (GetIsObjectValid(oMember) == TRUE)
+	object oMember = GetFirstInGroup(sGroupName);
+	while (GetIsObjectValid(oMember))
 	{
-		nCount++;
+		++nCount;
 		PrettyDebug(" Member " + IntToString(nCount) + ": " + GetName(oMember) + " tag: " + GetTag(oMember));
 		oMember = GetNextInGroup(sGroupName);
 	}
@@ -335,7 +336,7 @@ void ListMembersOfGroup(string sGroupName)
 location GetWPLocation(string sWayPoint)
 {
 	object oWaypoint = GetWaypointByTag(sWayPoint);
- 	return (GetLocation(oWaypoint));
+	return GetLocation(oWaypoint);
 }
 
 // Returns number of valid objects in a group
@@ -347,90 +348,73 @@ int GroupGetNumValidObjects(string sGroupName, int bIsDead = FALSE)
 	int nHP;
 
 	int i;
-	for (i=0; i<=nPossible; i++)
+	for (i = 0; i <= nPossible; ++i)
 	{
 		oMember = GroupGetObjectIndex(sGroupName, i);
-
-		if (GetIsObjectValid(oMember) == TRUE)
+		if (GetIsObjectValid(oMember))
 		{
-			if (bIsDead == TRUE)
+			if (bIsDead)
 			{
-				if (GetIsDead(oMember) == FALSE)
-				{
-					nCount = nCount + 1;
-				}
+				if (!GetIsDead(oMember))
+					++nCount;
 			}
 			else
-			{
-				nCount = nCount + 1;
-			}
+				++nCount;
 		}
 	}
 
-	return (nCount);
+	return nCount;
 }
 
 // Returns true if at least one group member reference is valid
 // If bNotDying is TRUE, only check members that are HP>0
-int	GetIsGroupValid(string sGroupName, int bNotDying = FALSE)
+int GetIsGroupValid(string sGroupName, int bNotDying = FALSE)
 {
 	int nPossible = GroupGetNumObjects(sGroupName);
 
 	object oMember;
 
 	int i;
-	for (i = 0; i <= nPossible; i++)
+	for (i = 0; i <= nPossible; ++i)
 	{
 		oMember = GroupGetObjectIndex(sGroupName, i);
-
-		if (GetIsObjectValid(oMember) == TRUE)
+		if (GetIsObjectValid(oMember)
+			&& (!bNotDying || !GetIsDead(oMember)))
 		{
-			if (bNotDying == FALSE)
-			{
-				return (TRUE);
-			}
-			else
-			{
-				if (GetIsDead(oMember) == FALSE)
-				{
-					return (TRUE);
-				}
-			}
+			return TRUE;
 		}
 	}
-
-	return (FALSE);
+	return FALSE;
 }
 
-//Retrieves the group a creature is in
-//returns the string of the group name, or "" if creature is not in a group
-//		NOTE: may be some problem with creatures who were formerly in a group having the residual variable
+// Retrieves the group a creature is in
+// returns the string of the group name, or "" if creature is not in a group
+// NOTE: may be some problem with creatures who were formerly in a group having the residual variable
 string GetGroupName(object oMember)
 {
-	return GetLocalString(oMember,OBJ_GROUP_MY_GROUP);
+	return GetLocalString(oMember, OBJ_GROUP_MY_GROUP);
 }
 
-// Return TRUE, if all remaining members are dominated
-int GetIsGroupDominated( string sGroupName )
+// Return TRUE if all remaining members are dominated
+int GetIsGroupDominated(string sGroupName)
 {
-	int nMax = GroupGetNumObjects( sGroupName );
+	int nMax = GroupGetNumObjects(sGroupName);
 
 	object oGM;
 	int i;
-	for ( i = 0; i <= nMax; i++ )
+	for (i = 0; i <= nMax; ++i)
 	{
-		oGM = GroupGetObjectIndex( sGroupName, i );
+		oGM = GroupGetObjectIndex(sGroupName, i);
 
 		// If member is valid, alive, and not dominated
-		if ( ( GetIsObjectValid(oGM) == TRUE ) &&
-			 ( GetIsDead(oGM) == FALSE ) &&
-			 ( GetHasEffectType(oGM, EFFECT_TYPE_DOMINATED) == FALSE ) )
+		if (GetIsObjectValid(oGM)
+			&& !GetIsDead(oGM)
+			&& !GetHasEffectType(oGM, EFFECT_TYPE_DOMINATED))
 		{
-			return ( FALSE );
+			return FALSE;
 		}
 	}
-
-	return ( TRUE );
+	return TRUE;
 }
 
 //---------------------------------------------------------------
@@ -439,7 +423,7 @@ int GetIsGroupDominated( string sGroupName )
 object GroupGetObjectIndex(string sGroupName, int iIndex)
 {
 	string sThisObj = OBJ_GROUP_PREFIX + sGroupName + IntToString(iIndex);
-	return (GetGlobalObject(sThisObj));
+	return GetGlobalObject(sThisObj);
 }
 
 void GroupSetObjectIndex(string sGroupName, int iIndex, object oObject)
@@ -461,7 +445,7 @@ void GroupDeleteObjectIndex(string sGroupName, int iIndex)
 int GetGroupInt(string sGroupName, string sVarName)
 {
 	string sThisInt = OBJ_GROUP_PREFIX + sGroupName + sVarName;
-	return (GetGlobalInt(sThisInt));
+	return GetGlobalInt(sThisInt);
 }
 
 void SetGroupInt(string sGroupName, string sVarName, int iValue)
@@ -482,7 +466,7 @@ void DeleteGroupInt(string sGroupName, string sVarName)
 float GetGroupFloat(string sGroupName, string sVarName)
 {
 	string sThisVar = OBJ_GROUP_PREFIX + sGroupName + sVarName;
-	return (GetGlobalFloat(sThisVar));
+	return GetGlobalFloat(sThisVar);
 }
 
 void SetGroupFloat(string sGroupName, string sVarName, float fValue)
@@ -503,7 +487,7 @@ void DeleteGroupFloat(string sGroupName, string sVarName)
 string GetGroupString(string sGroupName, string sVarName)
 {
 	string sThisVar = OBJ_GROUP_PREFIX + sGroupName + sVarName;
-	return (GetGlobalString(sThisVar));
+	return GetGlobalString(sThisVar);
 }
 
 void SetGroupString(string sGroupName, string sVarName, string sValue)
@@ -519,7 +503,7 @@ void SetGroupString(string sGroupName, string sVarName, string sValue)
 object GetGroupObject(string sGroupName, string sVarName)
 {
 	string sThisVar = OBJ_GROUP_PREFIX + sGroupName + sVarName;
-	return (GetGlobalObject(sThisVar));
+	return GetGlobalObject(sThisVar);
 }
 
 void SetGroupObject(string sGroupName, string sVarName, object oValue)
@@ -532,7 +516,7 @@ void SetGroupObject(string sGroupName, string sVarName, object oValue)
 // returns current index
 int GroupGetCurrentIndex(string sGroupName)
 {
-	return (GetGroupInt(sGroupName, OBJ_GROUP_INDEX));
+	return GetGroupInt(sGroupName, OBJ_GROUP_INDEX);
 }
 
 void GroupSetCurrentIndex(string sGroupName, int iIndex)
@@ -543,7 +527,7 @@ void GroupSetCurrentIndex(string sGroupName, int iIndex)
 // returns number of objects currently stored
 int GroupGetNumObjects(string sGroupName)
 {
-	return (GetGroupInt(sGroupName, OBJ_GROUP_NUM));
+	return GetGroupInt(sGroupName, OBJ_GROUP_NUM);
 }
 
 void GroupSetNumObjects(string sGroupName, int iNumObjects)
@@ -555,7 +539,7 @@ void GroupSetNumObjects(string sGroupName, int iNumObjects)
 // return current object
 object GroupGetCurrentObject(string sGroupName)
 {
-	return (GroupGetObjectIndex(sGroupName, GroupGetCurrentIndex(sGroupName)));
+	return GroupGetObjectIndex(sGroupName, GroupGetCurrentIndex(sGroupName));
 }
 
 // increments index if possible
@@ -565,15 +549,12 @@ int GroupIncrementIndex(string sGroupName)
 	int iNumObjects = GroupGetNumObjects(sGroupName);
 
 	if (iCurrentIndex >= iNumObjects)
-	{
-		return (0);
-	}
+		return 0;
 
-	iCurrentIndex = iCurrentIndex + 1;
-	GroupSetCurrentIndex(sGroupName, iCurrentIndex);
+	GroupSetCurrentIndex(sGroupName, ++iCurrentIndex);
 
-	PrintString("IncrementIndex: iCurrentIndex = " + IntToString (iCurrentIndex));
-	return (iCurrentIndex);
+	//PrintString("IncrementIndex: iCurrentIndex = " + IntToString (iCurrentIndex));
+	return iCurrentIndex;
 }
 
 // return first valid object in group starting w/ current.
@@ -585,52 +566,51 @@ object GetFirstValidInGroupFromCurrent(string sGroupName)
 	while (!GetIsObjectValid(oCurrent))
 	{
 		if (!GroupIncrementIndex(sGroupName))
-			return (OBJECT_INVALID);
+			return OBJECT_INVALID;
 
 		oCurrent = GroupGetCurrentObject(sGroupName);
 	}
 	return oCurrent;
-
 }
 
 // resets index and returns first object
 object GetFirstInGroup(string sGroupName)
 {
 	GroupSetCurrentIndex(sGroupName, 1);
-	return (GetFirstValidInGroupFromCurrent(sGroupName));
-	//return GroupGetCurrentObject(sGroupName);
+	return GetFirstValidInGroupFromCurrent(sGroupName);
+
+//	return GroupGetCurrentObject(sGroupName);
 }
 
 // increments index to next valid object and returns current object
 object GetNextInGroup(string sGroupName)
 {
 	if (!GroupIncrementIndex(sGroupName))
-		return (OBJECT_INVALID);
+		return OBJECT_INVALID;
 
-	return (GetFirstValidInGroupFromCurrent(sGroupName));
-
+	return GetFirstValidInGroupFromCurrent(sGroupName);
 }
 
 // bOverridePrevGroup - add someone already in another group?
 int InsertIntoGroup(string sGroupName, object oObject, int bOverridePrevGroup = FALSE)
 {
-	if (!GetIsObjectValid(oObject)) {
+	if (!GetIsObjectValid(oObject))
+	{
 		PrintString ("ginc_group: InsertIntoGroup - failed - invalid object!");
 		return 0;
 	}
+
 	// if not ok to override, then check if already in group.
-	if (!bOverridePrevGroup)
+	if (!bOverridePrevGroup && GetLocalString(oObject, OBJ_GROUP_MY_GROUP) != "")
 	{
-		if (GetLocalString(oObject, OBJ_GROUP_MY_GROUP) != ""){
-			PrintString ("ginc_group: InsertIntoGroup - failed - " + GetName(oObject) + " already in another group");
-			return 0;
-		}
+		PrintString ("ginc_group: InsertIntoGroup - failed - " + GetName(oObject) + " already in another group");
+		return 0;
 	}
+
 	// track num object?
 	int iNumObjects = GroupGetNumObjects(sGroupName);
-	iNumObjects = iNumObjects + 1;
-	GroupSetNumObjects (sGroupName, iNumObjects);
-	PrintString("InsertIntoGroup - iNumObjects: " + IntToString(iNumObjects));
+	GroupSetNumObjects (sGroupName, ++iNumObjects);
+	//PrintString("InsertIntoGroup - iNumObjects: " + IntToString(iNumObjects));
 
 	// assign object
 	GroupSetObjectIndex(sGroupName, iNumObjects, oObject);
@@ -638,7 +618,7 @@ int InsertIntoGroup(string sGroupName, object oObject, int bOverridePrevGroup = 
 	// let object know what group he is in.
 	SetLocalString(oObject, OBJ_GROUP_MY_GROUP, sGroupName);
 
-	return (iNumObjects);
+	return iNumObjects;
 }
 
 
@@ -651,42 +631,39 @@ int InsertIntoGroup(string sGroupName, object oObject, int bOverridePrevGroup = 
 // 5 4 6
 vector GetBMAFormationStartPosition(vector vPosition, int nIndex, float fSpacing, float fFacing)
 {
-	int nCase = nIndex % 5;	// determine starting position if index > 6
+	if (nIndex == 0 || nIndex == 1)
+		nIndex = 4;
+	else
+		nIndex = nIndex % 5;
 
-	if ((nIndex == 0) || (nIndex == 1))
-	{
-		nCase = 4;
-	}
-
-	vector vNewPosition = vPosition;
-	switch (nCase)
+	switch (nIndex)
 	{
 		case 0: // column 1 (left most)
-			vNewPosition = GetChangedPosition(vPosition, fSpacing * 2, fFacing + 180.0);
-			break;
-
-		case 2: // column 2 (left)
-			fSpacing = sqrt(pow(fSpacing, 2.0) * 2);
-			vNewPosition = GetChangedPosition(vPosition, fSpacing, fFacing + 225.0);
-			break;
-
-		case 4: // column 3 (center)
-			fSpacing = sqrt(pow(fSpacing, 2.0) * 2) * 2;
-			vNewPosition = GetChangedPosition(vPosition, fSpacing, fFacing + 225.0);
-			break;
-
-		case 3: // column 4 (right)
-			fSpacing = sqrt(pow(fSpacing, 2.0) * 2);
-			vNewPosition = GetChangedPosition(vPosition, fSpacing, fFacing + 135.0);
+			vPosition = GetChangedPosition(vPosition, fSpacing * 2, fFacing + 180.0);
 			break;
 
 		case 1: // column 5 (right most)
 			fSpacing = sqrt(pow(fSpacing, 2.0) * 2) * 2;
-			vNewPosition = GetChangedPosition(vPosition, fSpacing, fFacing + 135.0);
+			vPosition = GetChangedPosition(vPosition, fSpacing, fFacing + 135.0);
+			break;
+
+		case 2: // column 2 (left)
+			fSpacing = sqrt(pow(fSpacing, 2.0) * 2);
+			vPosition = GetChangedPosition(vPosition, fSpacing, fFacing + 225.0);
+			break;
+
+		case 3: // column 4 (right)
+			fSpacing = sqrt(pow(fSpacing, 2.0) * 2);
+			vPosition = GetChangedPosition(vPosition, fSpacing, fFacing + 135.0);
+			break;
+
+		case 4: // column 3 (center)
+			fSpacing = sqrt(pow(fSpacing, 2.0) * 2) * 2;
+			vPosition = GetChangedPosition(vPosition, fSpacing, fFacing + 225.0);
 			break;
 	}
 
-	return vNewPosition;
+	return vPosition;
 }
 
 
@@ -697,27 +674,24 @@ vector GetBMAFormationStartPosition(vector vPosition, int nIndex, float fSpacing
 //      7 8  etc.
 location GetBMALocation(location lToJumpTo, int nIndex, float fSpacing)
 {
-	PrintString("GetBMALocation(" + IntToString(nIndex));
+	//PrintString("GetBMALocation(" + IntToString(nIndex));
 	object oArea = GetAreaFromLocation(lToJumpTo);
 	vector vPosition = GetPositionFromLocation(lToJumpTo);
 	float fFacing = GetFacingFromLocation(lToJumpTo);
-
-	int nOffset = (nIndex - 2) / 5; // round to floor, determines row offset for indices > 6
 
 	if (nIndex >= 2)
 	{
 		vPosition = GetBMAFormationStartPosition(vPosition, nIndex, fSpacing, fFacing);
 
 		// Pushes the location back per row (indicies 7,8,9, etc.)
+		int nOffset = (nIndex - 2) / 5; // round to floor, determines row offset for indices > 6
 		if (nOffset >= 0)
 		{
 			vPosition = GetChangedPosition(vPosition, IntToFloat(nOffset) * fSpacing * 2, fFacing + 180.0);
 		}
 	}
 
-	location lNewLocation = Location(oArea, vPosition, fFacing);
-
-	return lNewLocation;
+	return Location(oArea, vPosition, fFacing);
 }
 
 
@@ -726,46 +700,49 @@ location GetRectangleLocation(location lDestination, int nMemberIndex, int nColu
 	object oArea = GetAreaFromLocation(lDestination);
 	vector vPosition = GetPositionFromLocation(lDestination);
 	float fFacing = GetFacingFromLocation(lDestination);
-	int nRow, nCol;
-	nMemberIndex -= 1;	//Convert to 0-indexing for the math we're doing below
 
-	nCol = (nMemberIndex % nColumns);
+	nMemberIndex -= 1; // Convert to 0-indexing for the math we're doing below
 
-	//No divide by 0!
-	if(nColumns == 0)
+	int nCol = nMemberIndex % nColumns;
+
+	// No divide by 0!
+	if (nColumns == 0)
 	{
 		nColumns = 1;
 		PrintString("Error: Invalid parameter value for nColumns in rectangle formation");
 	}
-	nRow = nMemberIndex / nColumns;
 
-	if(nCol != 0)
+	int nRow = nMemberIndex / nColumns;
+
+	if (nCol != 0)
 	{
 		vPosition = GetChangedPosition(vPosition, fSpacing * nCol, fFacing - 90.f);
 	}
-	if(nRow != 0)
+
+	if (nRow != 0)
 	{
 		vPosition = GetChangedPosition(vPosition, fSpacing * nRow, fFacing + 180.f);
 	}
 
-	location lNewLocation = Location(oArea, vPosition, fFacing);
-
-	return lNewLocation;
+	return Location(oArea, vPosition, fFacing);
 }
 
 
-location GetHuddleLocation(location lDestination, int iMemberIndex, int iNumObjects, float fRadius=10.0f, int iFaceType=FORMATION_HUDDLE_FACE_IN)
+location GetHuddleLocation(location lDestination, int iMemberIndex, int iNumObjects, float fRadius = 10.0f, int iFaceType = FORMATION_HUDDLE_FACE_IN)
 {
-	//avoid divide-by-0 errors
-	if(iNumObjects == 0)
+	// avoid divide-by-0 errors
+	if (iNumObjects == 0)
 		iNumObjects = 1;
-	iMemberIndex -= 1;	//Convert to 0-indexing so first in group goes direction of waypoint.
+
+	iMemberIndex -= 1; // Convert to 0-indexing so first in group goes direction of waypoint.
 
 	float fIncrement;
 
-	if(iFaceType == FORMATION_SEMICIRCLE_FACE_OUT || iFaceType == FORMATION_SEMICIRCLE_FACE_IN)
+	if (iFaceType == FORMATION_SEMICIRCLE_FACE_OUT || iFaceType == FORMATION_SEMICIRCLE_FACE_IN)
 	{
-		if(iNumObjects == 1) iNumObjects == 2;	//hack fix for divide-by-0
+		if (iNumObjects == 1)
+			iNumObjects == 2; // hack fix for divide-by-0
+
 		fIncrement = 180.f / IntToFloat(iNumObjects - 1);
 	}
 	else
@@ -775,44 +752,43 @@ location GetHuddleLocation(location lDestination, int iMemberIndex, int iNumObje
 
 	float fAngle = fIncrement * iMemberIndex;
 
-	//for a semicircle, it matters at what angle the semicircle begins.  We will use the
-	//base location's facing value (usually a waypoint), and start the semicircle 90 degrees
-	//prior, so the midpoint on the semicircle arc is in the direction the waypoint points.
-	if(iFaceType == FORMATION_SEMICIRCLE_FACE_OUT || iFaceType == FORMATION_SEMICIRCLE_FACE_IN)
+	// for a semicircle, it matters at what angle the semicircle begins.  We will use the
+	// base location's facing value (usually a waypoint), and start the semicircle 90 degrees
+	// prior, so the midpoint on the semicircle arc is in the direction the waypoint points.
+	if (iFaceType == FORMATION_SEMICIRCLE_FACE_OUT || iFaceType == FORMATION_SEMICIRCLE_FACE_IN)
 	{
 		fAngle += GetFacingFromLocation(lDestination) - 90.f;
-
 	}
 
-	// location lRet = GetHuddleLocation(lDestination, fAngle, fRadius);
+//	location lRet = GetHuddleLocation(lDestination, fAngle, fRadius);
 	object oArea = GetAreaFromLocation(lDestination);
-    float fFacing;
-    vector vPos = fRadius * AngleToVector(fAngle); // create vector starting on origin
+	float fFacing;
+	vector vPos = fRadius * AngleToVector(fAngle); // create vector starting on origin
 	switch (iFaceType)
 	{
 		case FORMATION_HUDDLE_FACE_IN:
 		case FORMATION_SEMICIRCLE_FACE_IN:
-    		fFacing = VectorToAngle(-1.0 * vPos);
+			fFacing = VectorToAngle(-1.0 * vPos);
 			break;
 
 		case FORMATION_HUDDLE_FACE_OUT:
 		case FORMATION_SEMICIRCLE_FACE_OUT:
-    		fFacing = VectorToAngle(vPos);
+			fFacing = VectorToAngle(vPos);
 			break;
 
 		case FORMATION_HUDDLE_FACE_FORWARD:
-    		fFacing = GetFacingFromLocation(lDestination);
+			fFacing = GetFacingFromLocation(lDestination);
 			break;
 
 		default:
-    		fFacing = VectorToAngle(-1.0 * vPos);
+			fFacing = VectorToAngle(-1.0 * vPos);
 			break;
 	}
 
-    vector vCenter = GetPositionFromLocation(lDestination);
-    vPos = vPos + vCenter;	// move vector to offset
+	vector vCenter = GetPositionFromLocation(lDestination);
+	vPos += vCenter; // move vector to offset
 
-    return Location(oArea, vPos, fFacing);
+	return Location(oArea, vPos, fFacing);
 }
 
 // Get new line location from center of row
@@ -827,9 +803,8 @@ location GetLineLocation(location lDestination, int iMemberIndex, float fSpacing
 	if (iMemberIndex <= 0)
 		return lDestination;
 
-	int bOddIndex = (iMemberIndex % 2);
-
-	if (bOddIndex == TRUE)
+	int bOddIndex = iMemberIndex % 2;
+	if (bOddIndex)
 	{
 		// if odd add right
 		vNewPosition = GetChangedPosition(vNewPosition, ((iMemberIndex + 1) / 2) * fSpacing, fNewFacing - 90.0f);
@@ -853,24 +828,21 @@ location GetLineLocation(location lDestination, int iMemberIndex, float fSpacing
 // and removes local string indicating group from all objects in group
 void ResetGroup(string sGroupName)
 {
-	int i;
 	int iNumObjects = GroupGetNumObjects(sGroupName);
-	string sThisObj;
 	object oObject;
 
 	// set objects to invalid
-	for (i=1; i <= iNumObjects; i++)
+	int i;
+	for (i = 1; i <= iNumObjects; ++i)
 	{
 		oObject = GroupGetObjectIndex(sGroupName, i);
-		if ( GetIsObjectValid(oObject) )
+		if (GetIsObjectValid(oObject) && GetGroupName(oObject) == sGroupName)
 		{
-			if ( GetGroupName(oObject) == sGroupName )
-			{
-				DeleteLocalString( oObject, OBJ_GROUP_MY_GROUP );
-			}
+			DeleteLocalString(oObject, OBJ_GROUP_MY_GROUP);
 		}
 		GroupDeleteObjectIndex(sGroupName, i);
 	}
+
 	GroupSetNumObjects(sGroupName, 0);
 	GroupSetCurrentIndex(sGroupName, 0);
 
@@ -888,10 +860,7 @@ void ResetGroup(string sGroupName)
 
 int IsGroupEmpty(string sGroupName)
 {
-	int iRet = FALSE;
-	if (GroupGetNumObjects(sGroupName) == 0)
-		iRet = TRUE;
-	return (iRet);
+	return GroupGetNumObjects(sGroupName) == 0;
 }
 
 //---------------------------------------------------------------
@@ -904,34 +873,32 @@ string GetPartyGroup(object oPC)
 {
 	string sGroupName = PARTY_GROUP_NAME;
 	ResetGroup(sGroupName);
-	//FactionToGroup(oPC, sGroupName, GROUP_LEADER_FIRST, TRUE);
+//	FactionToGroup(oPC, sGroupName, GROUP_LEADER_FIRST, TRUE);
 	GroupAddFaction(sGroupName, oPC, GROUP_LEADER_FIRST, TRUE);
 	GroupSetBMAFormation(sGroupName);
-	return (sGroupName);
+
+	return sGroupName;
 }
 
 // Add creature to group sGroupName
-void GroupAddMember(string sGroupName, object oMember, int bOverridePrevGroup=FALSE)
+void GroupAddMember(string sGroupName, object oMember, int bOverridePrevGroup = FALSE)
 {
 	InsertIntoGroup(sGroupName, oMember, bOverridePrevGroup);
 }
 
 // Add creatures with factions matching oFactionMember to group sGroupName
-void GroupAddFaction(string sGroupName, object oFactionMember, int nLeaderPos=GROUP_LEADER_FIRST, int bOverridePrevGroup=FALSE)
+void GroupAddFaction(string sGroupName, object oFactionMember, int nLeaderPos = GROUP_LEADER_FIRST, int bOverridePrevGroup = FALSE)
 {
 	object oLeader = GetFactionLeader(oFactionMember);
 	if (!GetIsObjectValid(oLeader))
-	{
 		oLeader = oFactionMember;
-	}
-
-	object oMember = GetFirstFactionMember(oFactionMember, FALSE);
 
 	if (nLeaderPos == GROUP_LEADER_FIRST)	// add Leader first
 	{
 		InsertIntoGroup(sGroupName, oLeader, bOverridePrevGroup);
 	}
 
+	object oMember = GetFirstFactionMember(oFactionMember, FALSE);
 	while (GetIsObjectValid(oMember))
 	{
 		if (oMember != oLeader)				// skip Leader
@@ -952,25 +919,24 @@ void GroupAddTag(string sGroupName, string sTag, int iMax=20, int bOverridePrevG
 {
 	int iCount = 0;
 	object oMember = GetObjectByTag(sTag, iCount);
-	while (GetIsObjectValid(oMember) && (iCount < iMax))
+	while (GetIsObjectValid(oMember) && iCount < iMax)
 	{
 		InsertIntoGroup(sGroupName, oMember, bOverridePrevGroup);
-		iCount++;
-		oMember = GetObjectByTag(sTag, iCount);
+		oMember = GetObjectByTag(sTag, ++iCount);
 	}
 }
 
 // Add up to iMax creatures with tag sTag to group sGroupName
-void GroupAddNearestTag(string sGroupName, string sTag, object oTarget = OBJECT_SELF, int iMax=20, int bOverridePrevGroup=FALSE)
+void GroupAddNearestTag(string sGroupName, string sTag, object oTarget = OBJECT_SELF, int iMax = 20, int bOverridePrevGroup = FALSE)
 {
 	int iCount = 0;
 
-	//the + 1 is because GetNearestObjectByTag is 1-indexed, rather than 0-indexed like GetObjectByTag(). -EPF
+	// the + 1 is because GetNearestObjectByTag is 1-indexed, rather than 0-indexed like GetObjectByTag(). - EPF
 	object oMember = GetNearestObjectByTag(sTag, oTarget, iCount + 1);
-	while (GetIsObjectValid(oMember) && (iCount < iMax))
+	while (GetIsObjectValid(oMember) && iCount < iMax)
 	{
 		InsertIntoGroup(sGroupName, oMember, bOverridePrevGroup);
-		iCount++;
+		++iCount;
 		oMember = GetNearestObjectByTag(sTag, oTarget, iCount + 1);
 	}
 }
@@ -978,29 +944,32 @@ void GroupAddNearestTag(string sGroupName, string sTag, object oTarget = OBJECT_
 
 // Add encounter spawned creatures to group sGroupName
 // bWander 0 - no wander
-//			1 - wander
-//			2 - don't set (ude default - currently wander)
-void GroupAddEncounter(string sGroupName, int bWander=2, int bOverridePrevGroup=FALSE)
+//         1 - wander
+//         2 - don't set (use default - currently wander)
+void GroupAddEncounter(string sGroupName, int bWander = 2, int bOverridePrevGroup = FALSE)
 {
 	//SpawnScriptDebugger();
 	//PrettyDebug("Examining all the creatures in the area");
+
 	object oMember = GetFirstObjectInArea();
-	//int iIsEncounter;
-	//int iIsValid = GetIsObjectValid(oMember);
-	//PrettyDebug("First Obj oin area : " + GetTag(oMember) + " and valid: " + IntToString(iIsValid));
+
+//	int iIsEncounter;
+//	int iIsValid = GetIsObjectValid(oMember);
+	//PrettyDebug("First Obj in area : " + GetTag(oMember) + " and valid: " + IntToString(iIsValid));
+
 	while (GetIsObjectValid(oMember))
 	{
 		if (GetObjectType(oMember) == OBJECT_TYPE_CREATURE)
 		{
-			//iIsEncounter = GetIsEncounterCreature(oMember);
+//			iIsEncounter = GetIsEncounterCreature(oMember);
 			//PrettyDebug(GetName(oMember) + " encounter status is : " + IntToString(iIsEncounter));
+
 			if (GetIsEncounterCreature(oMember))
-			{
-				InsertIntoGroup(sGroupName, oMember, bOverridePrevGroup);	// adds
-			}
+				InsertIntoGroup(sGroupName, oMember, bOverridePrevGroup); // adds
 		}
 		oMember = GetNextObjectInArea();
 	}
+
 	if (bWander != 2)
 	{
 		GroupSetSpawnInCondition(sGroupName, NW_FLAG_AMBIENT_ANIMATIONS, bWander);
@@ -1010,8 +979,8 @@ void GroupAddEncounter(string sGroupName, int bWander=2, int bOverridePrevGroup=
 // Note this will only properly place creatures in formation if the group was previously empty.
 void GroupSpawnAtWaypoint(string sGroupName, string sTemplate, string sWaypoint, int nNum)
 {
-	object oPC = GetObjectByTag(sWaypoint);
-	location lLoc = GetLocation(oPC);
+	object oWp = GetObjectByTag(sWaypoint);
+	location lLoc = GetLocation(oWp);
 	GroupSpawnAtLocation(sGroupName, sTemplate, lLoc, nNum);
 }
 
@@ -1021,45 +990,52 @@ void GroupSpawnAtLocation(string sGroupName, string sTemplate, location lLocatio
 {
 	object oMember;
 	location lDestination;
-	int nCount;
 
-	float fFacingNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING);
+	float fFacingNoise   = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING);
 	float fLocationNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_LOCATION);
 
-	int nFormation = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE);
-	int nFormCols = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_COLS);
+	int nFormation     = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE);
+	int nFormCols      = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_COLS);
 	float fFormSpacing = GetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING);
 
-	for (nCount = 1; nCount <= nNum; nCount++)
+	int nCount;
+	for (nCount = 1; nCount <= nNum; ++nCount)
 	{
 		switch (nFormation)
 		{
 			case FORMATION_NONE:
 				lDestination = lLocation;
 				break;
+
 			case FORMATION_HUDDLE_FACE_IN:
 			case FORMATION_HUDDLE_FACE_OUT:
 			case FORMATION_HUDDLE_FACE_FORWARD:
 				lDestination = GetHuddleLocation(lLocation, nCount, nNum, fFormSpacing, nFormation);
 				break;
+
 			case FORMATION_RECTANGLE:
 				lDestination = GetRectangleLocation(lLocation, nCount, nFormCols, fFormSpacing);
 				break;
+
 			case FORMATION_BMA:
 				lDestination = GetBMALocation(lLocation, nCount, fFormSpacing);
 				break;
+
 			case FORMATION_LINE:
 				// 0-based index
 				lDestination = GetLineLocation(lLocation, nCount - 1, fFormSpacing);
 				break;
+
 			case FORMATION_SEMICIRCLE_FACE_IN:
 			case FORMATION_SEMICIRCLE_FACE_OUT:
 				lDestination = GetHuddleLocation(lLocation, nCount, nNum, fFormSpacing, nFormation);
 				break;
+
 			default:
 				lDestination = lLocation;
 				break;
 		}
+
 		lDestination = GetNearbyLocation(lDestination, fLocationNoise, fFacingNoise);
 		oMember = UT_CreateObjectAtLocation(sTemplate, lDestination, "", FALSE);
 		GroupAddMember(sGroupName, oMember);
@@ -1070,54 +1046,56 @@ void GroupSpawnAtLocation(string sGroupName, string sTemplate, location lLocatio
 // add a new a creature to a group (fails if object is already in another group)
 int AddToGroup(string sGroupName, object oObject)
 {
-	//OldFunctionMessage("AddToGroup", "GroupAddMember");
-	return (InsertIntoGroup(sGroupName, oObject, FALSE));
+	//OldFunctionMessage("AddToGroup", "InsertIntoGroup");
+	return InsertIntoGroup(sGroupName, oObject, FALSE);
 }
 
+// *** old versions
 // adds all members of a faction to the specified Group
-void FactionToGroup(object oFactionMember, string sGroupName, int iLeaderPos=GROUP_LEADER_FIRST, int bOverridePrevGroup = FALSE)
+void FactionToGroup(object oFactionMember, string sGroupName, int iLeaderPos = GROUP_LEADER_FIRST, int bOverridePrevGroup = FALSE)
 {
-	OldFunctionMessage("FactionToGroup", "GroupAddFaction");
+	//OldFunctionMessage("FactionToGroup", "GroupAddFaction");
 	GroupAddFaction(sGroupName, oFactionMember, iLeaderPos, bOverridePrevGroup);
 }
 
+// *** old versions
 // add all encounter creatures in area to specified group
 // bWander 0 - no wander
-//			1 - wander
-//			2 - don't set (ude default - currently wander)
-void EncounterToGroup(string sGroupName, int bWander=2)
+//         1 - wander
+//         2 - don't set (use default - currently wander)
+void EncounterToGroup(string sGroupName, int bWander = 2)
 {
-	OldFunctionMessage("EncounterToGroup", "GroupAddEncounter");
+	//OldFunctionMessage("EncounterToGroup", "GroupAddEncounter");
 	GroupAddEncounter(sGroupName, bWander);
 }
 
 // spawn creatures in - in BMA formation - and add them to a group
 // if there are creatures already in the group, the new ones will be tacked on to the end and placed
 // in formation accordingly.
-void SpawnCreaturesInGroupAtWP(int iNum, string sTemplate, string sGroupName, string sWayPoint="SPAWN_POINT")
+void SpawnCreaturesInGroupAtWP(int iNum, string sTemplate, string sGroupName, string sWayPoint = "SPAWN_POINT")
 {
-	int i;
-	object oCreature;
-	location lThisDest;
 	location lDestination = GetWPLocation(sWayPoint);
-	int iIndex;
 
-	for (i=1; i<=iNum; i++)
+	int iIndex;
+	location lThisDest;
+	object oCreature;
+
+	int i;
+	for (i = 1; i <= iNum; ++i)
 	{
 		iIndex = GroupGetNumObjects(sGroupName)+1; // GroupGetCurrentIndex(sGroupName) + 1;
 		lThisDest = GetBMALocation(lDestination, iIndex, DEFAULT_SPACING);
 		oCreature = CreateObject(OBJECT_TYPE_CREATURE, sTemplate, lThisDest); //, bUseAppearAnimation, sNewTag);
-		//AddToGroup(sGroupName, oCreature);
+
 		InsertIntoGroup(sGroupName, oCreature, FALSE);
 	}
-
-	return;
 }
 
+// *** old versions
 // adds all in the area w/ tag to a group up to specified max.
-void AddNearestWithTagToGroup(string sGroupName, string sTag, int iMax=20)
+void AddNearestWithTagToGroup(string sGroupName, string sTag, int iMax = 20)
 {
-	OldFunctionMessage("AddNearestWithTagToGroup", "GroupAddNearestTag");
+	//OldFunctionMessage("AddNearestWithTagToGroup", "GroupAddNearestTag");
 	GroupAddNearestTag(sGroupName, sTag, OBJECT_SELF, iMax);
 }
 
@@ -1137,16 +1115,16 @@ void GroupSetNoFormation(string sGroupName)
 //      2 3
 //     5 4 6
 //      7 8  etc.
-void GroupSetBMAFormation(string sGroupName, float fSpacing=1.8f)
+void GroupSetBMAFormation(string sGroupName, float fSpacing = 1.8f)
 {
 	SetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE, FORMATION_BMA);
 	SetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING, fSpacing); // to be implemented
 }
 
-// creates a circle, fRadius out from the waypoint.  First in group will go in direction of waypoints arrow.
-// int iFormation 	- Formation to use
-// float fRadius	- radius for huddles
-void GroupSetCircleFormation(string sGroupName, int iFacing=FORMATION_HUDDLE_FACE_IN , float fRadius=5.0f)
+// creates a circle, fRadius out from the waypoint. First in group will go in direction of waypoints arrow.
+// int iFormation - Formation to use
+// float fRadius  - radius for huddles
+void GroupSetCircleFormation(string sGroupName, int iFacing = FORMATION_HUDDLE_FACE_IN , float fRadius = 5.0f)
 {
 	SetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE, iFacing);
 	SetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING, fRadius);
@@ -1161,18 +1139,18 @@ void GroupSetSemicircleFormation(string sGroupName, int nFacing = FORMATION_SEMI
 
 // Create standard single row formation, leader in middle
 // 6 4 2 0 1 3 5
-void GroupSetLineFormation(string sGroupName, float fSpacing=DEFAULT_SPACING)
+void GroupSetLineFormation(string sGroupName, float fSpacing = DEFAULT_SPACING)
 {
 	SetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE, FORMATION_LINE);
 	SetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING, fSpacing);
 }
 
 
-// creates a rectangle with creatures facing direction of waypoint.  Waypoint indicates top left most
+// creates a rectangle with creatures facing direction of waypoint. Waypoint indicates top left most
 // corner of the rectangle.
-// float fSpacing - spacing in units between creatures.  There are 10 units in a single tile square
-// int nColumns - number of columns to form.
-void GroupSetRectangleFormation(string sGroupName, float fSpacing=1.8f, int nColumns=2)
+// float fSpacing	- spacing in units between creatures. There are 10 units in a single tile square
+// int nColumns		- number of columns to form.
+void GroupSetRectangleFormation(string sGroupName, float fSpacing = 1.8f, int nColumns = 2)
 {
 	SetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE, FORMATION_RECTANGLE);
 	SetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING, fSpacing);
@@ -1183,7 +1161,7 @@ void GroupSetRectangleFormation(string sGroupName, float fSpacing=1.8f, int nCol
 // fStartNoise		- delay in start time for creatures to move
 // fFacingNoise		- max degrees to turn from facing
 // fLocationNoise	- max x and y units to deviate from location
-void GroupSetNoise(string sGroupName, float fStartNoise=1.0f, float fFacingNoise=10.0f, float fLocationNoise=1.0f)
+void GroupSetNoise(string sGroupName, float fStartNoise = 1.0f, float fFacingNoise = 10.0f, float fLocationNoise = 1.0f)
 {
 	SetGroupFloat(sGroupName, OBJ_GROUP_NOISE_START, fStartNoise);
 	SetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING, fFacingNoise);
@@ -1194,7 +1172,7 @@ void GroupSetNoise(string sGroupName, float fStartNoise=1.0f, float fFacingNoise
 // Group On Death
 //------------------------
 
-// When group dies, start a conversation.  Works with gg_death_talk
+// When group dies, start a conversation. Works with gg_death_talk
 // Do not add to a group after calling this (as the object's death script will not get assigned).
 // Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
 void GroupOnDeathBeginConversation(string sGroupName, string sTalkerTag, string sConversation)
@@ -1211,61 +1189,61 @@ void GroupOnDeathBeginConversation(string sGroupName, string sTalkerTag, string 
 }
 
 
-// When group dies, set a Local Int on the specified target.  Works with gg_death_l_var
+// When group dies, set a Local Int on the specified target. Works with gg_death_l_var
 // Do not add to a group after calling this (as the object's death script will not get assigned).
 // Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
-void GroupOnDeathSetLocalInt( string sGroupName, object oTargetObject, string sVariableName, int nNewValue )
+void GroupOnDeathSetLocalInt(string sGroupName, object oTargetObject, string sVariableName, int nNewValue)
 {
 	// set groups death script
-	GroupSetLocalString ( sGroupName, "DeathScript", "gg_death_l_var" );
+	GroupSetLocalString(sGroupName, "DeathScript", "gg_death_l_var");
 
 	// set vars for later use
-	SetGroupObject( sGroupName, "TargetObject", oTargetObject );
-	SetGroupString( sGroupName, "VarName", sVariableName );
-	SetGroupInt( sGroupName, "VarValue", nNewValue );
-	SetGroupInt( sGroupName, "VarType", TYPE_INT );
-
-	// reset num killed (in case group name was used before)
-	SetGroupInt( sGroupName, "NumKilled", 0 );
-}
-
-// When group dies, set a Local Float on the specified target.  Works with gg_death_l_var
-// do not add to a group after calling this (as the object's death script will not get assigned).
-// Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
-void GroupOnDeathSetLocalFloat( string sGroupName, object oTargetObject, string sVariableName, float fNewValue )
-{
-	// set groups death script
-	GroupSetLocalString (sGroupName, "DeathScript", "gg_death_l_var" );
-
-	// set vars for later use
-	SetGroupObject( sGroupName, "TargetObject", oTargetObject );
-	SetGroupString( sGroupName, "VarName", sVariableName );
-	SetGroupFloat( sGroupName, "VarValue", fNewValue );
-	SetGroupInt( sGroupName, "VarType", TYPE_FLOAT );
+	SetGroupObject(sGroupName, "TargetObject", oTargetObject);
+	SetGroupString(sGroupName, "VarName", sVariableName);
+	SetGroupInt(sGroupName, "VarValue", nNewValue);
+	SetGroupInt(sGroupName, "VarType", TYPE_INT);
 
 	// reset num killed (in case group name was used before)
 	SetGroupInt(sGroupName, "NumKilled", 0);
 }
 
-// When group dies, set a Local String on the specified target.  Works with gg_death_l_var
+// When group dies, set a Local Float on the specified target. Works with gg_death_l_var
 // do not add to a group after calling this (as the object's death script will not get assigned).
 // Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
-void GroupOnDeathSetLocalString( string sGroupName, object oTargetObject, string sVariableName, string sNewValue )
+void GroupOnDeathSetLocalFloat(string sGroupName, object oTargetObject, string sVariableName, float fNewValue)
 {
 	// set groups death script
-	GroupSetLocalString (sGroupName, "DeathScript", "gg_death_l_var" );
+	GroupSetLocalString(sGroupName, "DeathScript", "gg_death_l_var");
 
 	// set vars for later use
-	SetGroupObject( sGroupName, "TargetObject", oTargetObject );
-	SetGroupString( sGroupName, "VarName", sVariableName );
-	SetGroupString( sGroupName, "VarValue", sNewValue );
-	SetGroupInt( sGroupName, "VarType", TYPE_STRING );
+	SetGroupObject(sGroupName, "TargetObject", oTargetObject);
+	SetGroupString(sGroupName, "VarName", sVariableName);
+	SetGroupFloat(sGroupName, "VarValue", fNewValue);
+	SetGroupInt(sGroupName, "VarType", TYPE_FLOAT);
 
 	// reset num killed (in case group name was used before)
 	SetGroupInt(sGroupName, "NumKilled", 0);
 }
 
-// When group dies, Add a Journal Quest Entry.  Works with gg_death_journal
+// When group dies, set a Local String on the specified target. Works with gg_death_l_var
+// do not add to a group after calling this (as the object's death script will not get assigned).
+// Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
+void GroupOnDeathSetLocalString(string sGroupName, object oTargetObject, string sVariableName, string sNewValue)
+{
+	// set groups death script
+	GroupSetLocalString(sGroupName, "DeathScript", "gg_death_l_var");
+
+	// set vars for later use
+	SetGroupObject(sGroupName, "TargetObject", oTargetObject);
+	SetGroupString(sGroupName, "VarName", sVariableName);
+	SetGroupString(sGroupName, "VarValue", sNewValue);
+	SetGroupInt(sGroupName, "VarType", TYPE_STRING);
+
+	// reset num killed (in case group name was used before)
+	SetGroupInt(sGroupName, "NumKilled", 0);
+}
+
+// When group dies, add a Journal Quest Entry. Works with gg_death_journal
 // Do not add to a group after calling this (as the object's death script will not get assigned).
 // Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
 void GroupOnDeathSetJournalEntry(string sGroup, string sQuestTag, int nEntry, int bAllowOverride = FALSE)
@@ -1276,19 +1254,19 @@ void GroupOnDeathSetJournalEntry(string sGroup, string sQuestTag, int nEntry, in
 	SetGroupInt(sGroup, "bOverride", bAllowOverride);
 }
 
-// When group dies, execute a custom script.  Works with gg_death_custom_script
+// When group dies, execute a custom script. Works with gg_death_custom_script
 // Do not add to a group after calling this (as the object's death script will not get assigned).
 // Only 1 of the GroupOnDeath functions can be applied per group - a previous GroupOnDeath function will be "overwritten" when a new one is applied.
 void GroupOnDeathExecuteCustomScript(string sGroupName, string sScriptName)
 {
 	// set groups death script
-	GroupSetLocalString ( sGroupName, "DeathScript", "gg_death_custom_script" );
+	GroupSetLocalString(sGroupName, "DeathScript", "gg_death_custom_script");
 
 	// set vars for later use
-	SetGroupString( sGroupName, "CustomScript", sScriptName );
+	SetGroupString(sGroupName, "CustomScript", sScriptName);
 
 	// reset num killed (in case group name was used before)
-	SetGroupInt( sGroupName, "NumKilled", 0 );
+	SetGroupInt(sGroupName, "NumKilled", 0);
 }
 
 
@@ -1296,7 +1274,7 @@ void GroupOnDeathExecuteCustomScript(string sGroupName, string sScriptName)
 // Group Commands
 
 //
-void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun=FALSE, float fTimeout=30.0f)
+void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun = FALSE, float fTimeout = 30.0f)
 {
 	int nNumMembers = GroupGetNumObjects(sGroupName);
 
@@ -1311,28 +1289,33 @@ void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun
 	float fFormSpacing = GetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING);
 
 	int nCount;
-	for (nCount = 1; nCount <= nNumMembers; nCount++)
+	for (nCount = 1; nCount <= nNumMembers; ++nCount)
 	{
 		switch (nFormation)
 		{
 			case FORMATION_NONE:
 				lNewDest = lDestination;
 				break;
+
 			case FORMATION_HUDDLE_FACE_IN:
 			case FORMATION_HUDDLE_FACE_OUT:
 			case FORMATION_HUDDLE_FACE_FORWARD:
 				lDestination = GetHuddleLocation(lDestination, nCount, nNumMembers, fFormSpacing, nFormation);
 				break;
+
 			case FORMATION_RECTANGLE:
 				lNewDest = GetRectangleLocation(lDestination, nCount, nFormCols, fFormSpacing);
 				break;
+
 			case FORMATION_BMA:
 				lNewDest = GetBMALocation(lDestination, nCount, fFormSpacing);
 				break;
+
 			case FORMATION_LINE:
 				// 0-based index
 				lNewDest = GetLineLocation(lDestination, nCount - 1, fFormSpacing);
 				break;
+
 			case FORMATION_SEMICIRCLE_FACE_IN:
 			case FORMATION_SEMICIRCLE_FACE_OUT:
 				lDestination = GetHuddleLocation(lDestination, nCount, nNumMembers, fFormSpacing, nFormation);
@@ -1342,6 +1325,7 @@ void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun
 				lNewDest = lDestination;
 				break;
 		}
+
 		lNewDest = GetNearbyLocation(lNewDest, fLocationNoise, fFacingNoise);
 		PrettyMessage("ginc_group: force moving " + GetName(oMember));
 		AssignCommand(oMember, ActionForceMoveToLocation(lNewDest, bRun, fTimeout));
@@ -1353,24 +1337,24 @@ void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun
 // string sGroupName - name of group to move (created using AddToGroup())
 // string sWayPoint - Tag of the Base waypoint for the formation
 // int iMoveType	- specifies type of locomotion - MOVE_WALK, MOVE_JUMP, etc.
-void GroupMoveToWP(string sGroupName, string sWayPoint, int iMoveType=MOVE_WALK)
+void GroupMoveToWP(string sGroupName, string sWayPoint, int iMoveType = MOVE_WALK)
 {
 	location lDestination = GetWPLocation(sWayPoint);
 	GroupMoveToFormationLocation(sGroupName, lDestination, iMoveType);
 }
 
-void GroupMoveToObject(string sGroupName, object oTarget, int iMoveType=MOVE_WALK)
+void GroupMoveToObject(string sGroupName, object oTarget, int iMoveType = MOVE_WALK)
 {
 	location lDestination = GetLocation(oTarget);
 	GroupMoveToFormationLocation(sGroupName, lDestination, iMoveType);
 }
 
-void GroupFleeToExit(string sGroupName, string sWaypoint, int iMoveType=MOVE_WALK)
+void GroupFleeToExit(string sGroupName, string sWaypoint, int iMoveType = MOVE_WALK)
 {
 	GroupMoveToWP(sGroupName, sWaypoint, iMoveType);
 
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, ActionDoCommand(DestroyObject(oMember)));
 		oMember = GetNextInGroup(sGroupName);
@@ -1381,13 +1365,14 @@ void GroupFleeToExit(string sGroupName, string sWaypoint, int iMoveType=MOVE_WAL
 void GroupJumpToWP(string sGroupName, string sWaypoint)
 {
 	GroupMoveToWP(sGroupName, sWaypoint, MOVE_JUMP_INSTANT);
-	//location lDestination = GetWPLocation(sWaypoint);
-	//GroupMoveToFormationLocation(sGroupName, lDestination, MOVE_JUMP_INSTANT);
+
+//	location lDestination = GetWPLocation(sWaypoint);
+//	GroupMoveToFormationLocation(sGroupName, lDestination, MOVE_JUMP_INSTANT);
 }
 
 
 // move to the specified destination in the specified way.
-void DoMoveType(object oMember, location lThisDest, int iMoveType=MOVE_WALK, float fStartNoise=0.0f, float fForceMoveTimeout=30.0f)
+void DoMoveType(object oMember, location lThisDest, int iMoveType = MOVE_WALK, float fStartNoise = 0.0f, float fForceMoveTimeout = 30.0f)
 {
 	switch (iMoveType)
 	{
@@ -1426,66 +1411,74 @@ void DoMoveType(object oMember, location lThisDest, int iMoveType=MOVE_WALK, flo
 }
 
 // locomote a group to a specified location (formation and noise should be set first)
-// string sGroupName - name of group to move (created using AddToGroup())
-// location lDestination - Base location for the formation
-// int iMoveType	- specifies type of locomotion - MOVE_WALK, MOVE_JUMP, etc.
-void GroupMoveToFormationLocation(string sGroupName, location lDestination, int iMoveType=MOVE_WALK)
+// string sGroupName		- name of group to move (created using AddToGroup())
+// location lDestination	- Base location for the formation
+// int iMoveType			- specifies type of locomotion - MOVE_WALK, MOVE_JUMP, etc.
+void GroupMoveToFormationLocation(string sGroupName, location lDestination, int iMoveType = MOVE_WALK)
 {
-	object oMember = GetFirstInGroup(sGroupName);
 	location lThisDest;
 	float fFacing;
 	int iMemberIndex;
 
 	// get stored noise
-	float fStartNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_START);
-	float fFacingNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING);
+	float fStartNoise    = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_START);
+	float fFacingNoise   = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING);
 	float fLocationNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_LOCATION);
 
 	// get formation vars
-	int iFormation 	= GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE);
+	int iFormation  = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE);
 	int iNumObjects = GroupGetNumObjects(sGroupName);
-	int iCols		= GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_COLS);
-	float fSpacing 	= GetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING);
+	int iCols       = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_COLS);
+	float fSpacing  = GetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING);
 
+	object oMember = GetFirstInGroup(sGroupName);
 	while (GetIsObjectValid(oMember))
 	{
 		iMemberIndex = GroupGetCurrentIndex(sGroupName);
-		//lThisDest = GetFormationLocationByIndex(lDestination, sGroupName, iFormation, fRadius);
-		//lThisDest = GetFormationLocationByIndex(lDestination, sGroupName);
+
+//		lThisDest = GetFormationLocationByIndex(lDestination, sGroupName, iFormation, fRadius);
+//		lThisDest = GetFormationLocationByIndex(lDestination, sGroupName);
+
 		switch (iFormation)
 		{
 			case FORMATION_NONE:
 				lThisDest = lDestination;
 				break;
+
 			case FORMATION_HUDDLE_FACE_IN: // do a huddle
 			case FORMATION_HUDDLE_FACE_OUT: // do a backward huddle
 			case FORMATION_HUDDLE_FACE_FORWARD: // forward moving circle
 				lThisDest = GetHuddleLocation(lDestination, iMemberIndex, iNumObjects, fSpacing, iFormation);
 				break;
+
 			case FORMATION_RECTANGLE:
 				lThisDest = GetRectangleLocation(lDestination, iMemberIndex, iCols, fSpacing);
 				break;
+
 			case FORMATION_BMA:
 				lThisDest = GetBMALocation(lDestination, iMemberIndex, fSpacing);
 				break;
+
 			case FORMATION_LINE:
 				// 0-based index what val does iMemberIndex start at?
 				lThisDest = GetLineLocation(lDestination, iMemberIndex - 1, fSpacing);
 				break;
+
 			case FORMATION_SEMICIRCLE_FACE_IN:
 			case FORMATION_SEMICIRCLE_FACE_OUT:
 				lThisDest = GetHuddleLocation(lDestination, iMemberIndex, iNumObjects, fSpacing, iFormation);
 				break;
+
 			default:
 				lThisDest = GetBMALocation(lDestination, iMemberIndex, DEFAULT_SPACING);
 				break;
 		}
-		PrintString("ginc_group: GroupMoveToWP() object " + GetName(oMember) + " type " + IntToString(iMoveType));
+
+		//PrintString("ginc_group: GroupMoveToWP() object " + GetName(oMember) + " type " + IntToString(iMoveType));
 		lThisDest = GetNearbyLocation(lThisDest, fLocationNoise);
 		DoMoveType(oMember, lThisDest, iMoveType, fStartNoise);
 
-		/*
-		switch (iMoveType)
+/*		switch (iMoveType)
 		{
 			case MOVE_WALK:
 				AssignCommand(oMember, ActionWait(RandomFloat(fStartNoise)));
@@ -1518,8 +1511,8 @@ void GroupMoveToFormationLocation(string sGroupName, location lDestination, int 
 				PrintString("ginc_group: invalid iMoveType case");
 				AssignCommand(oMember, ActionMoveToLocation(lThisDest));
 				break;
-		}
-		*/
+		} */
+
 		// face the same way as the location destination + some noise
 		fFacing = GetNormalizedDirection(GetFacingFromLocation(lThisDest) + RandomDelta(fFacingNoise));
 		AssignCommand(oMember, ActionDoCommand(SetFacing(fFacing)));
@@ -1531,10 +1524,9 @@ void GroupMoveToFormationLocation(string sGroupName, location lDestination, int 
 // have group attak target
 // string sGroupName - name of group
 // object oTarget - target to attack
-void GroupAttack(string sGroupName, object oTarget, int bSetToHostile=TRUE)
+void GroupAttack(string sGroupName, object oTarget, int bSetToHostile = TRUE)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
 		StandardAttack(oMember, oTarget, bSetToHostile);
@@ -1548,7 +1540,6 @@ void GroupAttack(string sGroupName, object oTarget, int bSetToHostile=TRUE)
 void GroupClearAllActions(string sGroupName, int nClearCombatState = FALSE)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, ClearAllActions(nClearCombatState));
@@ -1559,12 +1550,12 @@ void GroupClearAllActions(string sGroupName, int nClearCombatState = FALSE)
 
 
 // makes a group play an animation
-void GroupPlayAnimation(string sGroupName, int nAnimation, float fStartNoise=1.0f, float fSpeedBase=1.0f, float fSpeedRange=1.0f, float fDurationSectondsBase=0.0f, float fDurationSectondsRange=0.0f)
+void GroupPlayAnimation(string sGroupName, int nAnimation, float fStartNoise = 1.0f, float fSpeedBase = 1.0f, float fSpeedRange = 1.0f, float fDurationSectondsBase = 0.0f, float fDurationSectondsRange = 0.0f)
 {
-	object oMember = GetFirstInGroup(sGroupName);
 	float fSpeed;
 	float fDurationSectonds;
 
+	object oMember = GetFirstInGroup(sGroupName);
 	while (GetIsObjectValid(oMember))
 	{
 		if (fStartNoise > EPSILON)
@@ -1572,11 +1563,11 @@ void GroupPlayAnimation(string sGroupName, int nAnimation, float fStartNoise=1.0
 
 		fSpeed = fSpeedBase;
 		if (fSpeedRange > EPSILON)
-			fSpeed = fSpeed + RandomFloat(fStartNoise);
+			fSpeed += RandomFloat(fStartNoise);
 
 		fDurationSectonds = fDurationSectondsBase;
 		if (fDurationSectondsRange > EPSILON)
-			fDurationSectonds = fDurationSectonds + RandomFloat(fDurationSectondsRange);
+			fDurationSectonds += RandomFloat(fDurationSectondsRange);
 
 		AssignCommand(oMember, ActionPlayAnimation(nAnimation, fSpeed, fDurationSectonds));
 
@@ -1585,10 +1576,9 @@ void GroupPlayAnimation(string sGroupName, int nAnimation, float fStartNoise=1.0
 }
 
 // all in group wait
-void GroupActionWait(string sGroupName, float fSeconds=0.0f)
+void GroupActionWait(string sGroupName, float fSeconds = 0.0f)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, ActionWait(fSeconds));
@@ -1598,30 +1588,31 @@ void GroupActionWait(string sGroupName, float fSeconds=0.0f)
 
 // causes all in group to change facing
 // uses start noise
-void GroupActionOrientToTag(string sGroupName, string sTag, int iOrientation=ORIENT_FACE_TARGET, int bIgnoreWait=FALSE)
+void GroupActionOrientToTag(string sGroupName, string sTag, int iOrientation = ORIENT_FACE_TARGET, int bIgnoreWait = FALSE)
 {
-	object oMember = GetFirstInGroup(sGroupName);
 	float fStartNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_START);
 
+	object oMember = GetFirstInGroup(sGroupName);
 	while (GetIsObjectValid(oMember))
 	{
-		if (bIgnoreWait == FALSE) AssignCommand(oMember, ActionWait(RandomFloat(fStartNoise)));
+		if (!bIgnoreWait)
+			AssignCommand(oMember, ActionWait(RandomFloat(fStartNoise)));
+
 		AssignCommand(oMember, ActionOrientToTag(sTag, iOrientation));
 		oMember = GetNextInGroup(sGroupName);
 	}
 }
 
-void GroupResurrect(string sGroupName, int bIgnoreWait=FALSE)
+void GroupResurrect(string sGroupName, int bIgnoreWait = FALSE)
 {
-	object oMember = GetFirstInGroup(sGroupName);
 	float fStartNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_START);
 	float fDelay = 0.0f;
-	while (GetIsObjectValid(oMember) == TRUE)
+
+	object oMember = GetFirstInGroup(sGroupName);
+	while (GetIsObjectValid(oMember))
 	{
-		if (bIgnoreWait == FALSE)
-		{
+		if (!bIgnoreWait)
 			fDelay = RandomFloat(fStartNoise);
-		}
 
 		AssignCommand(oMember, DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectResurrection(), oMember)));
 		oMember = GetNextInGroup(sGroupName);
@@ -1632,10 +1623,9 @@ void GroupResurrect(string sGroupName, int bIgnoreWait=FALSE)
 void GroupSetLocalString (string sGroupName, string sVarName, string sValue)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
-		PrintString("ginc_group: GroupSetLocalString() group " + sGroupName + " object " + GetName(oMember) + " var " + sVarName + " = " + sValue);
+		//PrintString("ginc_group: GroupSetLocalString() group " + sGroupName + " object " + GetName(oMember) + " var " + sVarName + " = " + sValue);
 		SetLocalString(oMember, sVarName, sValue);
 		oMember = GetNextInGroup(sGroupName);
 	}
@@ -1646,7 +1636,6 @@ void GroupSetLocalString (string sGroupName, string sVarName, string sValue)
 void GroupSetLocalObject (string sGroupName, string sVarName, object oValue)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
 		//PrintString("ginc_group: GroupSetLocalObject() group " + sGroupName + " object " + GetName(oMember) + " var " + sVarName + " = " + GetName(oValue));
@@ -1659,7 +1648,6 @@ void GroupSetLocalObject (string sGroupName, string sVarName, object oValue)
 void GroupSetLocalInt (string sGroupName, string sVarName, int iValue)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
 		//PrintString("ginc_group: GroupSetLocalObject() group " + sGroupName + " object " + GetName(oMember) + " var " + sVarName + " = " + GetName(oValue));
@@ -1673,7 +1661,6 @@ void GroupSetLocalInt (string sGroupName, string sVarName, int iValue)
 void GroupSetLocalFloat (string sGroupName, string sVarName, float fValue)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
 		//PrintString("ginc_group: GroupSetLocalFloat() group " + sGroupName + " object " + GetName(oMember) + " var " + sVarName + " = " + GetName(oValue));
@@ -1688,10 +1675,9 @@ void GroupSetLocalFloat (string sGroupName, string sVarName, float fValue)
 void GroupSetSpawnInCondition(string sGroupName, int nCondition, int bValid = TRUE)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
-        AssignCommand(oMember, SetSpawnInCondition(nCondition, bValid)); // Aqvilinus fix - AssignCommand()
+		AssignCommand(oMember, SetSpawnInCondition(nCondition, bValid)); // Aqvilinus fix - AssignCommand()
 		oMember = GetNextInGroup(sGroupName);
 	}
 }
@@ -1700,10 +1686,9 @@ void GroupSetSpawnInCondition(string sGroupName, int nCondition, int bValid = TR
 void GroupWander(string sGroupName, int bValid = TRUE)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
-        AssignCommand(oMember, SetSpawnInCondition(NW_FLAG_AMBIENT_ANIMATIONS, bValid)); // Aqvilinus fix - AssignCommand()
+		AssignCommand(oMember, SetSpawnInCondition(NW_FLAG_AMBIENT_ANIMATIONS, bValid)); // Aqvilinus fix - AssignCommand()
 		if (bValid)
 			AssignCommand(oMember, PlayMobileAmbientAnimations());
 		else
@@ -1714,10 +1699,9 @@ void GroupWander(string sGroupName, int bValid = TRUE)
 }
 
 // forces all in group to go to destination and then destroy self.
-void GroupActionForceExit(string sGroupName, string sWPTag = "WP_EXIT", int bRun=FALSE)
+void GroupActionForceExit(string sGroupName, string sWPTag = "WP_EXIT", int bRun = FALSE)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, ActionForceExit(sWPTag, bRun));
@@ -1734,11 +1718,11 @@ void GroupActionForceExit(string sGroupName, string sWPTag = "WP_EXIT", int bRun
 void GroupChangeFaction(string sGroupName, string sTargetFactionMember)
 {
 	object oTargetFactionMember = GetObjectByTag(sTargetFactionMember);
-	object oMember = GetFirstInGroup(sGroupName);
 
+	object oMember = GetFirstInGroup(sGroupName);
 	while (GetIsObjectValid(oMember))
 	{
- 		ChangeFaction(oMember, oTargetFactionMember);
+		ChangeFaction(oMember, oTargetFactionMember);
 		//PrintString ("Changed to same faction as " + GetName(oTarget));
 		oMember = GetNextInGroup(sGroupName);
 	}
@@ -1752,7 +1736,6 @@ void GroupChangeFaction(string sGroupName, string sTargetFactionMember)
 void GroupChangeToStandardFaction(string sGroupName, int iFaction)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
 		ChangeToStandardFaction(oMember, iFaction);
@@ -1765,30 +1748,31 @@ void GroupChangeToStandardFaction(string sGroupName, int iFaction)
 void GroupActionMoveToObject(string sGroupName, object oTarget, int bRun = FALSE, float fRange = 1.0f)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
-		AssignCommand(oMember, ActionMoveToObject( oTarget, bRun, fRange));
+		AssignCommand(oMember, ActionMoveToObject(oTarget, bRun, fRange));
 		oMember = GetNextInGroup(sGroupName);
 	}
 }
 
 
-// have group attak targets in another group
+// have group attack targets in another group
 // string sAttackerGroupName - name of attacking group
 // string sAttackedGroupName - name of attacked group
-void GroupAttackGroup(string sAttackerGroupName, string sAttackedGroupName, int bSetToHostile=TRUE)
+void GroupAttackGroup(string sAttackerGroupName, string sAttackedGroupName, int bSetToHostile = TRUE)
 {
-	object oMember = GetFirstInGroup(sAttackerGroupName);
 	object oTarget = GetFirstInGroup(sAttackedGroupName);
 
+	object oMember = GetFirstInGroup(sAttackerGroupName);
 	while (GetIsObjectValid(oMember))
 	{
 		StandardAttack(oMember, oTarget, bSetToHostile);
-		oMember = GetNextInGroup(sAttackerGroupName);
+
 		oTarget = GetNextInGroup(sAttackedGroupName);
-		if (oTarget == OBJECT_INVALID)
+		if (!GetIsObjectValid(oTarget))
 			oTarget = GetFirstInGroup(sAttackedGroupName);
+
+		oMember = GetNextInGroup(sAttackerGroupName);
 	}
 }
 
@@ -1797,7 +1781,7 @@ void GroupAttackGroup(string sAttackerGroupName, string sAttackedGroupName, int 
 void GroupSetFacingPoint(string sGroupName, vector vPoint)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, SetFacingPoint(vPoint));
 		oMember = GetNextInGroup(sGroupName);
@@ -1809,10 +1793,9 @@ void GroupSetFacingPoint(string sGroupName, vector vPoint)
 void DestroyObjectsInGroup(string sGroupName, float fDelay = 0.0f)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-
 	while (GetIsObjectValid(oMember))
 	{
-		PrintString("ginc_group: DestroyObjectsInGroup() destroying " + GetName(oMember) + " of group " + sGroupName);
+		//PrintString("ginc_group: DestroyObjectsInGroup() destroying " + GetName(oMember) + " of group " + sGroupName);
 		DestroyObject(oMember, fDelay);
 		oMember = GetNextInGroup(sGroupName);
 	}
@@ -1821,7 +1804,7 @@ void DestroyObjectsInGroup(string sGroupName, float fDelay = 0.0f)
 void GroupSetImmortal(string sGroupName, int bImmortal)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		SetImmortal(oMember, bImmortal);
 		oMember = GetNextInGroup(sGroupName);
@@ -1831,7 +1814,7 @@ void GroupSetImmortal(string sGroupName, int bImmortal)
 void GroupSetPlotFlag(string sGroupName, int bPlotFlag)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		SetPlotFlag(oMember, bPlotFlag);
 		oMember = GetNextInGroup(sGroupName);
@@ -1844,7 +1827,7 @@ void GroupSetPlotFlag(string sGroupName, int bPlotFlag)
 void GroupActionForceFollowObject(string sGroupName, object oMaster, float fFollowDistance = 5.0f)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, ActionForceFollowObject(oMaster, fFollowDistance));
 		PrintString(GetName(oMember) + " following " + GetName(oMaster));
@@ -1856,16 +1839,16 @@ void GroupActionForceFollowObject(string sGroupName, object oMaster, float fFoll
 // the prospective followers must use heartbeat script "gb_follow_hb" for the effect to persist.
 void GroupStartFollowLeader(string sGroupName, object oMaster, float fFollowDistance = 5.0f)
 {
-		GroupSetLocalObject (sGroupName, "Leader", oMaster);
-		GroupSetLocalFloat (sGroupName, "FollowDistance", fFollowDistance);
-		GroupActionForceFollowObject(sGroupName, oMaster, fFollowDistance);
+	GroupSetLocalObject(sGroupName, "Leader", oMaster);
+	GroupSetLocalFloat(sGroupName, "FollowDistance", fFollowDistance);
+	GroupActionForceFollowObject(sGroupName, oMaster, fFollowDistance);
 }
 
-// cuases group to stop following master
+// causes group to stop following master
 void GroupStopFollowLeader(string sGroupName)
 {
-		GroupSetLocalObject (sGroupName, "Leader", OBJECT_INVALID);
-		GroupClearAllActions(sGroupName);
+	GroupSetLocalObject(sGroupName, "Leader", OBJECT_INVALID);
+	GroupClearAllActions(sGroupName);
 }
 
 
@@ -1873,10 +1856,11 @@ void GroupStopFollowLeader(string sGroupName)
 void GroupDetermineCombatRound(string sGroupName)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
-		//AssignCommand(oMember, DetermineCombatRound());
-		//ExecuteScript(SCRIPT_DCR, oMember);
+//		AssignCommand(oMember, DetermineCombatRound());
+//		ExecuteScript(SCRIPT_DCR, oMember);
+
 		AssignDCR(oMember);
 		oMember = GetNextInGroup(sGroupName);
 	}
@@ -1893,7 +1877,7 @@ void GroupGoHostile(string sGroupName)
 void GroupSurrenderToEnemies(string sGroupName)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, SurrenderToEnemies());
 		oMember = GetNextInGroup(sGroupName);
@@ -1903,7 +1887,7 @@ void GroupSurrenderToEnemies(string sGroupName)
 void GroupActionMoveAwayFromObject(string sGroupName, object oFleeFrom, int bRun = FALSE, float fMoveAwayRange = 40.0f)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, ActionMoveAwayFromObject(oFleeFrom, bRun, fMoveAwayRange));
 		oMember = GetNextInGroup(sGroupName);
@@ -1914,7 +1898,7 @@ void GroupActionMoveAwayFromObject(string sGroupName, object oFleeFrom, int bRun
 void GroupActionCastFakeSpellAtObject(string sGroupName, int nSpell, object oTarget, int nProjectilePathType = PROJECTILE_PATH_TYPE_DEFAULT)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		AssignCommand(oMember, ActionCastFakeSpellAtObject(nSpell, oTarget, nProjectilePathType));
 		oMember = GetNextInGroup(sGroupName);
@@ -1924,7 +1908,7 @@ void GroupActionCastFakeSpellAtObject(string sGroupName, int nSpell, object oTar
 void GroupApplyEffectToObject(string sGroupName, int nDurationType, effect eEffect, float fDuration = 0.0f)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		ApplyEffectToObject(nDurationType, eEffect, oMember, fDuration);
 		oMember = GetNextInGroup(sGroupName);
@@ -1934,7 +1918,7 @@ void GroupApplyEffectToObject(string sGroupName, int nDurationType, effect eEffe
 void GroupRemoveEffectOfType(string sGroupName, int nEffectType)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		RemoveEffectOfType(oMember, nEffectType);
 		oMember = GetNextInGroup(sGroupName);
@@ -1944,7 +1928,7 @@ void GroupRemoveEffectOfType(string sGroupName, int nEffectType)
 void GroupSignalEvent(string sGroupName, event eEvent)
 {
 	object oMember = GetFirstInGroup(sGroupName);
-	while (GetIsObjectValid(oMember) == TRUE)
+	while (GetIsObjectValid(oMember))
 	{
 		SignalEvent(oMember, eEvent);
 		oMember = GetNextInGroup(sGroupName);
@@ -1961,29 +1945,28 @@ void GroupSetScriptHidden(string sGroupName, int bHidden)
 	}
 }
 
-int IncGroupNumKilled( string sGroupName )
+int IncGroupNumKilled(string sGroupName)
 {
-	int nNumKilled = GetGroupInt( sGroupName, GROUP_VAR_NUM_KILLED ) + 1;
-	SetGroupInt( sGroupName, GROUP_VAR_NUM_KILLED, nNumKilled );
-	return ( nNumKilled );
+	int nNumKilled = GetGroupInt(sGroupName, GROUP_VAR_NUM_KILLED) + 1;
+	SetGroupInt(sGroupName, GROUP_VAR_NUM_KILLED, nNumKilled);
+	return nNumKilled;
 }
 
-int GetGroupNumKilled( string sGroupName )
+int GetGroupNumKilled(string sGroupName)
 {
-	int nNumKilled = GetGroupInt( sGroupName, GROUP_VAR_NUM_KILLED );
-	return ( nNumKilled );
+	return GetGroupInt(sGroupName, GROUP_VAR_NUM_KILLED);
 }
 
 // Sets destroyable status of members in sGroupName
 // - bDestroyable: If FALSE, members do not fade out and stick around as corpses.
 // - bRaisable: If TRUE, members can be raised via resurrection.
 // - bSelectableWhenDead: If TRUE, members are selectable after death.
-void GroupSetIsDestroyable( string sGroupName, int bDestroyable, int bRaisable=TRUE, int bSelectableWhenDead=FALSE )
+void GroupSetIsDestroyable(string sGroupName, int bDestroyable, int bRaisable=TRUE, int bSelectableWhenDead=FALSE)
 {
-	object oGM = GetFirstInGroup( sGroupName );
-	while ( GetIsObjectValid( oGM ) == TRUE )
+	object oGM = GetFirstInGroup(sGroupName);
+	while (GetIsObjectValid(oGM))
 	{
-		AssignCommand( oGM, SetIsDestroyable( bDestroyable, bRaisable, bSelectableWhenDead ) );
-		oGM = GetNextInGroup( sGroupName );
+		AssignCommand(oGM, SetIsDestroyable(bDestroyable, bRaisable, bSelectableWhenDead));
+		oGM = GetNextInGroup(sGroupName);
 	}
 }
