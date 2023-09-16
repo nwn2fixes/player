@@ -766,8 +766,9 @@ location GetHuddleLocation(location lDestination, int iMemberIndex, int iNumObje
 	vector vPos = fRadius * AngleToVector(fAngle); // create vector starting on origin
 	switch (iFaceType)
 	{
-		case FORMATION_HUDDLE_FACE_IN:
-		case FORMATION_SEMICIRCLE_FACE_IN:
+		default:
+//		case FORMATION_HUDDLE_FACE_IN:
+//		case FORMATION_SEMICIRCLE_FACE_IN:
 			fFacing = VectorToAngle(-1.0 * vPos);
 			break;
 
@@ -778,10 +779,6 @@ location GetHuddleLocation(location lDestination, int iMemberIndex, int iNumObje
 
 		case FORMATION_HUDDLE_FACE_FORWARD:
 			fFacing = GetFacingFromLocation(lDestination);
-			break;
-
-		default:
-			fFacing = VectorToAngle(-1.0 * vPos);
 			break;
 	}
 
@@ -991,11 +988,11 @@ void GroupSpawnAtLocation(string sGroupName, string sTemplate, location lLocatio
 	object oMember;
 	location lDestination;
 
-	float fFacingNoise   = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING);
+	float fFacingNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING);
 	float fLocationNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_LOCATION);
 
-	int nFormation     = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE);
-	int nFormCols      = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_COLS);
+	int nFormation = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE);
+	int nFormCols = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_COLS);
 	float fFormSpacing = GetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING);
 
 	int nCount;
@@ -1003,13 +1000,16 @@ void GroupSpawnAtLocation(string sGroupName, string sTemplate, location lLocatio
 	{
 		switch (nFormation)
 		{
-			case FORMATION_NONE:
+			default:
+//			case FORMATION_NONE:
 				lDestination = lLocation;
 				break;
 
 			case FORMATION_HUDDLE_FACE_IN:
 			case FORMATION_HUDDLE_FACE_OUT:
 			case FORMATION_HUDDLE_FACE_FORWARD:
+			case FORMATION_SEMICIRCLE_FACE_IN:
+			case FORMATION_SEMICIRCLE_FACE_OUT:
 				lDestination = GetHuddleLocation(lLocation, nCount, nNum, fFormSpacing, nFormation);
 				break;
 
@@ -1024,15 +1024,6 @@ void GroupSpawnAtLocation(string sGroupName, string sTemplate, location lLocatio
 			case FORMATION_LINE:
 				// 0-based index
 				lDestination = GetLineLocation(lLocation, nCount - 1, fFormSpacing);
-				break;
-
-			case FORMATION_SEMICIRCLE_FACE_IN:
-			case FORMATION_SEMICIRCLE_FACE_OUT:
-				lDestination = GetHuddleLocation(lLocation, nCount, nNum, fFormSpacing, nFormation);
-				break;
-
-			default:
-				lDestination = lLocation;
 				break;
 		}
 
@@ -1293,14 +1284,17 @@ void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun
 	{
 		switch (nFormation)
 		{
-			case FORMATION_NONE:
+			default:
+//			case FORMATION_NONE:
 				lNewDest = lDestination;
 				break;
 
 			case FORMATION_HUDDLE_FACE_IN:
 			case FORMATION_HUDDLE_FACE_OUT:
 			case FORMATION_HUDDLE_FACE_FORWARD:
-				lDestination = GetHuddleLocation(lDestination, nCount, nNumMembers, fFormSpacing, nFormation);
+			case FORMATION_SEMICIRCLE_FACE_IN:
+			case FORMATION_SEMICIRCLE_FACE_OUT:
+				lNewDest = GetHuddleLocation(lDestination, nCount, nNumMembers, fFormSpacing, nFormation); // kL_changed: that was assigning to 'lDestination' (fix is untested - 2023 sep 15)
 				break;
 
 			case FORMATION_RECTANGLE:
@@ -1314,15 +1308,6 @@ void GroupForceMoveToLocation(string sGroupName, location lDestination, int bRun
 			case FORMATION_LINE:
 				// 0-based index
 				lNewDest = GetLineLocation(lDestination, nCount - 1, fFormSpacing);
-				break;
-
-			case FORMATION_SEMICIRCLE_FACE_IN:
-			case FORMATION_SEMICIRCLE_FACE_OUT:
-				lDestination = GetHuddleLocation(lDestination, nCount, nNumMembers, fFormSpacing, nFormation);
-				break;
-
-			default:
-				lNewDest = lDestination;
 				break;
 		}
 
@@ -1398,10 +1383,12 @@ void DoMoveType(object oMember, location lThisDest, int iMoveType = MOVE_WALK, f
 		case MOVE_FORCE_WALK:
 			AssignCommand(oMember, ActionWait(RandomFloat(fStartNoise)));
 			AssignCommand(oMember, ActionForceMoveToLocation(lThisDest, FALSE, fForceMoveTimeout));
+			break; // kL_add
 
 		case MOVE_FORCE_RUN:
 			AssignCommand(oMember, ActionWait(RandomFloat(fStartNoise)));
 			AssignCommand(oMember, ActionForceMoveToLocation(lThisDest, TRUE, fForceMoveTimeout));
+			break; // kL_add
 
 		default:
 			PrintString("ginc_group: invalid iMoveType case");
@@ -1421,15 +1408,15 @@ void GroupMoveToFormationLocation(string sGroupName, location lDestination, int 
 	int iMemberIndex;
 
 	// get stored noise
-	float fStartNoise    = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_START);
-	float fFacingNoise   = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING);
+	float fStartNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_START);
+	float fFacingNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_FACING);
 	float fLocationNoise = GetGroupFloat(sGroupName, OBJ_GROUP_NOISE_LOCATION);
 
 	// get formation vars
-	int iFormation  = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE);
+	int iFormation = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_TYPE);
 	int iNumObjects = GroupGetNumObjects(sGroupName);
-	int iCols       = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_COLS);
-	float fSpacing  = GetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING);
+	int iCols = GetGroupInt(sGroupName, OBJ_GROUP_FORMATION_COLS);
+	float fSpacing = GetGroupFloat(sGroupName, OBJ_GROUP_FORMATION_SPACING);
 
 	object oMember = GetFirstInGroup(sGroupName);
 	while (GetIsObjectValid(oMember))
@@ -1448,6 +1435,8 @@ void GroupMoveToFormationLocation(string sGroupName, location lDestination, int 
 			case FORMATION_HUDDLE_FACE_IN: // do a huddle
 			case FORMATION_HUDDLE_FACE_OUT: // do a backward huddle
 			case FORMATION_HUDDLE_FACE_FORWARD: // forward moving circle
+			case FORMATION_SEMICIRCLE_FACE_IN:
+			case FORMATION_SEMICIRCLE_FACE_OUT:
 				lThisDest = GetHuddleLocation(lDestination, iMemberIndex, iNumObjects, fSpacing, iFormation);
 				break;
 
@@ -1462,11 +1451,6 @@ void GroupMoveToFormationLocation(string sGroupName, location lDestination, int 
 			case FORMATION_LINE:
 				// 0-based index what val does iMemberIndex start at?
 				lThisDest = GetLineLocation(lDestination, iMemberIndex - 1, fSpacing);
-				break;
-
-			case FORMATION_SEMICIRCLE_FACE_IN:
-			case FORMATION_SEMICIRCLE_FACE_OUT:
-				lThisDest = GetHuddleLocation(lDestination, iMemberIndex, iNumObjects, fSpacing, iFormation);
 				break;
 
 			default:
@@ -1502,10 +1486,12 @@ void GroupMoveToFormationLocation(string sGroupName, location lDestination, int 
 			case MOVE_FORCE_WALK:
 				AssignCommand(oMember, ActionWait(RandomFloat(fStartNoise)));
 				AssignCommand(oMember, ActionForceMoveToLocation(lThisDest));
+				break; // kL_add
 
 			case MOVE_FORCE_RUN:
 				AssignCommand(oMember, ActionWait(RandomFloat(fStartNoise)));
 				AssignCommand(oMember, ActionForceMoveToLocation(lThisDest, TRUE));
+				break; // kL_add
 
 			default:
 				PrintString("ginc_group: invalid iMoveType case");
@@ -1517,6 +1503,7 @@ void GroupMoveToFormationLocation(string sGroupName, location lDestination, int 
 		fFacing = GetNormalizedDirection(GetFacingFromLocation(lThisDest) + RandomDelta(fFacingNoise));
 		AssignCommand(oMember, ActionDoCommand(SetFacing(fFacing)));
 		AssignCommand(oMember, ActionWait(0.5f)); // wait for facing
+
 		oMember = GetNextInGroup(sGroupName);
 	}
 }
