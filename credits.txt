@@ -2243,3 +2243,14 @@ files:
 f36_skullcrusher.DLG
 
 
+Overland Map PartyLeader fix by Akhacha - modified by kevL
+v.230915
+When PC enters an overland map and the 'oPartyLeader' variable has not been set
+on the module-object, changing the leader can cause an awkward jump to the new
+party leader. Fix is to ensure that the 'oPartyLeader' variable gets set to
+GetFactionLeader(GetFirstPC()) in the OnEnter script for overland map areas.
+files:
+- Campaign
+nx2_ol_client_enter.NSS
+
+

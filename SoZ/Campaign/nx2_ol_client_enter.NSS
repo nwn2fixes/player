@@ -4,13 +4,14 @@
 */
 // JH/EF-OEI: 01/17/08
 // Akhacha 2023.09.09 - ensure that "oPartyLeader" is valid on the module-object
+// kevL 2023.09.09 - tidy and refactor
 
 #include "ginc_overland"
 #include "ginc_overland_constants"
 #include "kinc_trade"
 #include "ginc_cutscene"
 
-// Disables actionmodes that hurt movement on the overland map - JWR-OEI
+// Disables actionmodes that hinder movement on the overland map - JWR-OEI
 void StripOLMapModes(object oPC)
 {
 	if (GetActionMode(oPC, ACTION_MODE_STEALTH))
@@ -31,17 +32,18 @@ void DisplayOLMapTutorial()
 {
 	SetPause(TRUE);
 
-	object oPlayer = GetFirstFactionMember(GetFirstPC(), TRUE);
+	object oFirstPC = GetFirstPC();
+	object oPlayer = GetFirstFactionMember(oFirstPC);
 
 	// Add the Tutorial Journal Entries
-	AddJournalQuestEntry("tut_olmap", 900, oPlayer);
+	AddJournalQuestEntry("tut_olmap",        900, oPlayer);
 	AddJournalQuestEntry("tut_olmap_dialog", 900, oPlayer);
 	AddJournalQuestEntry("tut_olmap_skills", 900, oPlayer);
 
 	while (GetIsObjectValid(oPlayer))
 	{
 		DisplayMessageBox(oPlayer, 234265, "", "gui_olmap_tutorial_2", "gui_tutorial_close", TRUE, "SCREEN_MESSAGEBOX_TUTORIAL", 181415);
-		oPlayer = GetNextFactionMember(GetFirstPC(), TRUE);
+		oPlayer = GetNextFactionMember(oFirstPC);
 	}
 }
 
@@ -61,15 +63,15 @@ int StartingConditional()
 	}
 	oPC = GetFirstEnteringPC(); // Resetting this for the rest of the script :)
 
-	if (GetGlobalInt("bOLMapTutorialDone") != TRUE)
+	if (!GetGlobalInt("bOLMapTutorialDone"))
 	{
-		DisplayOLMapTutorial();
 		SetGlobalInt("bOLMapTutorialDone", TRUE);
+		DisplayOLMapTutorial();
 	}
 
 
 	// Akhacha_fix - modified by kevL
-	object oLeader = GetFactionLeader(GetFirstPC());
+	object oLeader = GetFactionLeader(oPC);
 	SetLocalObject(GetModule(), "oPartyLeader", oLeader);
 	// Akhacha_end
 
@@ -126,19 +128,18 @@ int StartingConditional()
 			}
 		}
 
-		if (GetLocalInt(oParty, "pcshrunk") == FALSE)
+		if (!GetLocalInt(oParty, "pcshrunk"))
 		{
-			RemoveAllEffects(oParty, FALSE);
-			ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSetScale(0.5, 0.5, 0.5),oParty);
 			SetLocalInt(oParty, "pcshrunk", TRUE);
+
+			RemoveAllEffects(oParty, FALSE);
+			ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSetScale(0.5, 0.5, 0.5), oParty);
 		}
 
 		// JWR-OEI Changing this per Nathaniel's request
 		// DON'T HIT ME!!!!!
-		if (GetLocalInt(oParty, "bLoaded") != TRUE)
-		{
+		if (!GetLocalInt(oParty, "bLoaded"))
 			SetLocalInt(oParty, "bLoaded", TRUE);
-		}
 
 		if (oParty != oLeader)
 			SetScriptHidden(oParty, TRUE, FALSE);
@@ -152,51 +153,37 @@ int StartingConditional()
 	string sSpawnScript = GetLocalString(OBJECT_SELF, "sSpawnScript");
 	if (sSpawnScript != "")
 	{
-		ExecuteScript(sSpawnScript, OBJECT_SELF);
+		ExecuteScript(sSpawnScript, OBJECT_SELF); // kL_note: Aint gonna happen
 	}
 
 	if (!IsMarkedAsDone())
 	{
+		MarkAsDone();
+
 		InitializeNeutralEncounter(oPC);
 
 		PrettyDebug("I'm in the client enter!");
 
-		int nDay = GetCalendarDay();
-		int nMonth = GetCalendarMonth();
-		int nYear = GetCalendarYear();
+		SetGlobalInt(VAR_CURRENT_DAY,   GetCalendarDay());
+		SetGlobalInt(VAR_CURRENT_MONTH, GetCalendarMonth());
+		SetGlobalInt(VAR_CURRENT_YEAR,  GetCalendarYear());
 
-		SetGlobalInt(VAR_CURRENT_DAY, nDay);
-		SetGlobalInt(VAR_CURRENT_MONTH, nMonth);
-		SetGlobalInt(VAR_CURRENT_YEAR, nYear);
-
-		int nGoodiesTotal = GetLocalInt(OBJECT_SELF, VAR_GOODIES_TOTAL);
-		int nGoodiesPerSpawn = nGoodiesTotal / 10;
+		int nGoodiesPerSpawn = GetLocalInt(OBJECT_SELF, VAR_GOODIES_TOTAL) / 10;
 
 		float fDelay = 0.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
-		fDelay += 1.0f;
-		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
 
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn)); fDelay += 1.0f;
+		DelayCommand(fDelay, GerminateGoodies(nGoodiesPerSpawn));
 
 		ResetSpecialEncounterTimer();
-
-		MarkAsDone();
 	}
 
 	ProcessCaravansOnEnter();
