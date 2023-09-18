@@ -1,4 +1,4 @@
-// ginc_var_ops
+// 'ginc_var_ops'
 //
 // include file for common functionality with g*_global_* and g*_local_* scripts
 // ChazM 4/12/05 (mod)
@@ -6,6 +6,7 @@
 // ChazM 6/15/05 modified CompareInts() to be able to reference a companion's influence
 // BMA-OEI 1/13/06 modified CheckVariableFloat for EPSILON check
 // ChazM 8/24/06 CompareInts() no longer able to reference a companion's influence to remove dependency on kinc_companion
+// kevL 2023 sep 18 - style
 
 #include "ginc_companion"
 #include "ginc_math"
@@ -25,28 +26,28 @@ int CalcNewIntValue(int nOldValue, string sChange, int bDefaultIsDelta = FALSE);
 // sOperator is =, >, <, or ! (for not equals)
 int CheckVariableFloat(float fValue, string sOperator, float fCheck)
 {
-	//GREATER THAN
-	if ( sOperator == ">")
+	// GREATER THAN
+	if (sOperator == ">")
 	{
 		return (fValue > fCheck);
 	}
 
-	//LESS THAN
-	if ( sOperator == "<")
+	// LESS THAN
+	if (sOperator == "<")
 	{
 		return (fValue < fCheck);
 	}
 
-	//NOT EQUAL TO
-	if ( sOperator == "!")
+	// NOT EQUAL TO
+	if (sOperator == "!")
 	{
 		//return (fValue != fCheck);
 		fValue = fabs(fValue - fCheck);
 		return (fValue > EPSILON);
 	}
 
-	//EQUAL TO
-	if( sOperator == "=")
+	// EQUAL TO
+	if (sOperator == "=")
 	{
 		//return (fValue == fCheck);
 		fValue = fabs(fValue - fCheck);
@@ -63,26 +64,26 @@ int CheckVariableFloat(float fValue, string sOperator, float fCheck)
 // sOperator is =, >, <, or ! (for not equals)
 int CheckVariableInt(int nValue, string sOperator, int nCheck)
 {
-	//GREATER THAN
-	if ( sOperator == ">")
+	// GREATER THAN
+	if (sOperator == ">")
 	{
 		return (nValue > nCheck);
 	}
 
-	//LESS THAN
-	if ( sOperator == "<")
+	// LESS THAN
+	if (sOperator == "<")
 	{
 		return (nValue < nCheck);
 	}
 
-	//NOT EQUAL TO
-	if ( sOperator == "!")
+	// NOT EQUAL TO
+	if (sOperator == "!")
 	{
 		return (nValue != nCheck);
 	}
 
-	//EQUAL TO
-	if( sOperator == "=")
+	// EQUAL TO
+	if (sOperator == "=")
 	{
 		return (nValue == nCheck);
 	}
@@ -100,13 +101,13 @@ int CompareInts(int nValue, string sCheck)
 	string sValue;
 	string sOperator = GetStringLeft(sCheck, 1);
 
-	//first we consider cases where the user specified an operator as the first character
+	// first we consider cases where the user specified an operator as the first character
 	//of sCheck
-	if(sOperator == ">" || sOperator == "<" || sOperator == "=" || sOperator == "!")
+	if (sOperator == ">" || sOperator == "<" || sOperator == "=" || sOperator == "!")
 	{
-		sValue = GetStringRight( sCheck,GetStringLength(sCheck)-1 );
+		sValue = GetStringRight(sCheck, GetStringLength(sCheck) - 1);
 	}
-	//default case -- no operator specified so use whole string as our check value
+	// default case - no operator specified so use whole string as our check value
 	else
 	{
 		sValue = sCheck;
@@ -117,9 +118,9 @@ int CompareInts(int nValue, string sCheck)
 	// check if sValue has a tag
 //	string sValueTag = GetStringLeft(sValue, 1);
 //
-//	if(sValueTag == "C" || sValueTag == "c")
+//	if (sValueTag == "C" || sValueTag == "c")
 //	{
-//		int nCompanion = StringToInt(GetStringRight( sValue,GetStringLength(sValue)-1 ));
+//		int nCompanion = StringToInt(GetStringRight( sValue,GetStringLength(sValue) - 1));
 //		nCheck = GetGlobalInt(GetCompInfluenceGlobVar(nCompanion));
 //	}
 //	else
@@ -127,7 +128,7 @@ int CompareInts(int nValue, string sCheck)
 		nCheck = StringToInt(sValue);
 //	}
 
-	return (CheckVariableInt(nValue, sOperator, nCheck));
+	return CheckVariableInt(nValue, sOperator, nCheck);
 }
 
 
@@ -145,15 +146,17 @@ struct ChangeComponents GetChangeComponents(string sChange, int bDefaultIsDelta)
 
 	string sOperator = GetStringLeft(sChange, 1);
 
-	if ((sOperator == "=") || (sOperator == "+") || (sOperator == "-")) {
+	if (sOperator == "=" || sOperator == "+" || sOperator == "-")
+	{
 		sChange = GetStringRight(sChange, GetStringLength(sChange) - 1);
 
 		// handle ++, --, +, -
 		string sChar2 = GetStringLeft(sChange, 1);
-		if ((sChar2 == "+") || (sChar2 == "-") || (sChar2 == ""))
+		if (sChar2 == "+" || sChar2 == "-" || sChar2 == "")
 			sChange = "1";
 	}
-	else { // doesn't start with operator
+	else // doesn't start with operator
+	{
 		if (bDefaultIsDelta)
 			sOperator = "+";
 		else
@@ -163,8 +166,7 @@ struct ChangeComponents GetChangeComponents(string sChange, int bDefaultIsDelta)
 	xChange.sOperator = sOperator;
 	xChange.sValue = sChange;
 
-
-	return (xChange);
+	return xChange;
 }
 
 
@@ -177,17 +179,22 @@ int CalcNewIntValue(int nOldValue, string sChange, int bDefaultIsDelta = FALSE)
 	struct ChangeComponents xChange = GetChangeComponents(sChange, bDefaultIsDelta);
 
 	int nValue = StringToInt(xChange.sValue);
-	int nNewValue;
 
+	int nNewValue;
 	if (xChange.sOperator == "+")
+	{
 		nNewValue = nOldValue + nValue;
+	}
 	else if (xChange.sOperator == "-")
+	{
 		nNewValue = nOldValue - nValue;
-	else { // if not + or - then just set the value
+	}
+	else // if not + or - then just set the value
+	{
 		nNewValue = nValue;
 	}
 
-	return(nNewValue);
+	return nNewValue;
 }
 
 /*
@@ -200,8 +207,8 @@ int OldCalcNewIntValue(int nOldValue, string sChange, int bDefaultIsDelta)
 	int nChange;
 	if (GetStringLeft(sChange, 1) == "=")
 	{
-	sChange = GetStringRight(sChange, GetStringLength(sChange) - 1);
-	nChange = StringToInt(sChange);
+		sChange = GetStringRight(sChange, GetStringLength(sChange) - 1);
+		nChange = StringToInt(sChange);
 	}
 	else if (GetStringLeft(sChange, 1) == "+")
 	{
@@ -210,9 +217,9 @@ int OldCalcNewIntValue(int nOldValue, string sChange, int bDefaultIsDelta)
 		{
 			nChange = nOldValue + 1;
 		}
-		else	// This means there's more than just "+"
+		else // This means there's more than just "+"
 		{
-			if (GetSubString(sChange, 1, 1) == "+") 	// "++" condition
+			if (GetSubString(sChange, 1, 1) == "+") // "++" condition
 			{
 				nChange = nOldValue + 1;
 			}
@@ -230,9 +237,9 @@ int OldCalcNewIntValue(int nOldValue, string sChange, int bDefaultIsDelta)
 		{
 			nChange = nOldValue - 1;
 		}
-		else	// This means there's more than just "-"
+		else // This means there's more than just "-"
 		{
-			if (GetSubString(sChange, 1, 1) == "-") 	// "--" condition
+			if (GetSubString(sChange, 1, 1) == "-") // "--" condition
 			{
 				nChange = nOldValue - 1;
 			}
@@ -246,13 +253,16 @@ int OldCalcNewIntValue(int nOldValue, string sChange, int bDefaultIsDelta)
 	else
 	{
 		if (sChange == "")
-		nChange = nOldValue + 1;
-	if (bDefaultIsDelta) {
-				nChange = nOldValue + StringToInt(sChange);
-	} else {
+			nChange = nOldValue + 1;
+
+		if (bDefaultIsDelta)
+		{
+			nChange = nOldValue + StringToInt(sChange);
+		}
+		else
+		{
 			nChange = StringToInt(sChange);
+		}
 	}
-	}
-	return(nChange);
-}
-*/
+	return nChange;
+} */
