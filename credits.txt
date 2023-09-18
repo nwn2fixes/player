@@ -949,6 +949,16 @@ ga_effect_polymorph.NSS
 ginc_param_const.nss
 
 
+More Ginc_Group fixes by kevL
+v.230917
+Add missing break statements to DoMoveType() and assign location to the correct
+variable in GroupForceMoveToLocation(). Scripts that may use these functions
+have NOT been recompiled.
+files:
+- scripts\inc
+ginc_group.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
