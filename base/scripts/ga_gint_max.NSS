@@ -21,7 +21,6 @@
 							1 - set to maximum value
 							2 - use least of either the original or the changed value. (result will be above iMax)
 */
-
 // ChazM 8/26/05
 
 #include "ginc_var_ops"
