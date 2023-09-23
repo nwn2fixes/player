@@ -959,6 +959,22 @@ files:
 ginc_group.NSS
 
 
+GetChangeComponents() fix by kevL
+v.230922
+GetChangeComponents() in 'ginc_var_ops' was incorrectly parsing input like "=-5"
+as decrement-by-one. This function is called by CalcNewIntValue() in 5 stock
+scripts. The fix is to rewrite the function and recompile the scripts.
+files:
+- scripts\inc
+ginc_var_ops.NSS
+- scripts
+ga_gint_max.NSS
+ga_gint_min.NSS
+ga_global_int.nss
+ga_henchman_setmax.NSS
+ga_local_int.nss
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder

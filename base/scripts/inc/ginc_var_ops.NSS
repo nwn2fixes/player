@@ -101,8 +101,7 @@ int CompareInts(int nValue, string sCheck)
 	string sValue;
 	string sOperator = GetStringLeft(sCheck, 1);
 
-	// first we consider cases where the user specified an operator as the first character
-	//of sCheck
+	// first we consider cases where the user specified an operator as the first character of sCheck
 	if (sOperator == ">" || sOperator == "<" || sOperator == "=" || sOperator == "!")
 	{
 		sValue = GetStringRight(sCheck, GetStringLength(sCheck) - 1);
@@ -138,34 +137,68 @@ struct ChangeComponents
 	string sValue;
 };
 
-// returns the operator and value from sChange.
-// bDefaultIsDelta affect whether operator is "+" or "=" when an operator is not provided
+// private.
+// Returns the operator and value from 'sChange'.
+// - bDefaultIsDelta : TRUE to treat 'sChange' as a stringified integer
+//   (addition or subtraction shall be applied as appropriate); FALSE to let the
+//   function parse 'sChange' in accord with the
+// rules
+// to set a value
+//   do not use "+" to set positive values (unless preceeded by "=")
+//   do not use "-" to set negative values (unless preceeded by "=")
+//   use "=" or "=+" for positive values and "=-" for negative values
+// to set a positive value
+//   input an integer as a string (do not use a prefix other than "=" or "=+")
+//   Eg "5" "=5" "=+5"
+// to set a negative value
+//   input an integer as a string prefixed by "="
+//   Eg "=-5"
+// to add a value
+//   use prefix "+"
+//   Eg "+5"
+// to subtract a value
+//   use prefix "-"
+//   Eg "-5"
+// to increment a value
+//   use "++" or "+" (without a string integer)
+//   Eg "++" "+"
+// to decrement a value
+//   use "--" or "-" (without a string integer)
+//   Eg "--" "-"
+// In short positive values can be set with (eg) "5" but setting negative values
+// REQUIRES a preceeding "=" because "-" specifies a subtraction.
 struct ChangeComponents GetChangeComponents(string sChange, int bDefaultIsDelta)
 {
-	struct ChangeComponents xChange; // return value
+	string sOperator = "";	// note that only "+" and "-" get handled by CalcNewIntValue()
+							// any other value of 'sOperator' results in a SET operation
 
-	string sOperator = GetStringLeft(sChange, 1);
-
-	if (sOperator == "=" || sOperator == "+" || sOperator == "-")
+	if (bDefaultIsDelta)
 	{
-		sChange = GetStringRight(sChange, GetStringLength(sChange) - 1);
-
-		// handle ++, --, +, -
-		string sChar2 = GetStringLeft(sChange, 1);
-		if (sChar2 == "+" || sChar2 == "-" || sChar2 == "")
-			sChange = "1";
+		sOperator = "+";
 	}
-	else // doesn't start with operator
+	else if (sChange == "") // reset the original variable
 	{
-		if (bDefaultIsDelta)
-			sOperator = "+";
-		else
-			sOperator = "=";
+		sChange = "0";
+	}
+	else if (sChange == "+" || sChange == "-" || sChange == "++" || sChange == "--")
+	{
+		sOperator = GetStringLeft(sChange, 1);
+		sChange = "1";
+	}
+	else
+	{
+		string sFirst = GetStringLeft(sChange, 1);
+		if (sFirst == "=" || sFirst == "+" || sFirst == "-")
+		{
+			sOperator = sFirst;
+			sChange = GetStringRight(sChange, GetStringLength(sChange) - 1);
+		}
+		// else do nothing - eg "5" - results in assignment
 	}
 
-	xChange.sOperator = sOperator;
-	xChange.sValue = sChange;
-
+	struct ChangeComponents xChange;
+							xChange.sOperator = sOperator;
+							xChange.sValue    = sChange;
 	return xChange;
 }
 
