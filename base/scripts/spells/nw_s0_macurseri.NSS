@@ -1,22 +1,21 @@
 //::///////////////////////////////////////////////
-//:: Mass Cure Light Wounds
-//:: 'nw_s0_macurligt'
-//:: Copyright (c) 2001 Bioware Corp.
+//:: Mass Cure Serious Wounds
+//:: 'nw_s0_macurseri'
 //:://////////////////////////////////////////////
 /*
-	Caster Level(s): Bard 5, Cleric 5, Druid 6
-	Innate Level: 5
+	Caster Level(s): Cleric 7, Druid 8
+	Innate Level: 7
 	School: Conjuration
-	Descriptor(s):
+	Descriptor(s): Healing
 	Component(s): Verbal, Somatic
-	Range: Close
-	Area of Effect / Target: One creature / level
-	Duration: Instant
+	Range: Short
+	Area of Effect/Target: One creature / level
+	Duration: Instantaneous
 	Save: Will 1/2
-	Spell Resistance: Yes
+	Spell Resistance: No
 
-	This spell heals 1d8 points of damage +1 point per caster level
-	(maximum +25). First, all party members are healed regardless of range, then
+	This spell heals 3d8 points of damage +1 point per caster level
+	(maximum +35). First, all party members are healed regardless of range, then
 	random targets within the targeted location are affected. Healing spells
 	have a reverse effect when used on undead, harming instead of healing them.
 	This spell can be spontaneously cast.
@@ -25,11 +24,9 @@
 //:: Created By: Jesse Reynolds (JLR - OEI)
 //:: Created On: August 01, 2005
 //:://////////////////////////////////////////////
-// JLR - OEI 08/01/05 NWN2 3.5 - Metamagic cleanup, Name change
-// JLR - OEI 08/23/05 - Metamagic changes
-// Brock H. - OEI 10/06/05 - Added code to heal faction, then nearby, and cap based on level
-// AFW-OEI 06/18/2007 - Will save for 1/2
-// Akhacha 2023/09/21 - Raised amount cured based on level to +25 per description
+// JLR - OEI 08/23/05 -- Metamagic changes
+// AFW-OEI 06/18/2007: Will save for 1/2.
+// JSH-OEI 8/17/07: Now actually cures/inflicts 3d8 instead of 4d8.
 // kevL 2023 oct 8 - tidy and refactor
 //                 - change description at the top of this script to that in Dialog.Tlk
 //                 - remove unused GetMetaMagicFeat() and args
@@ -69,12 +66,12 @@ void main()
 
 
 	effect eVishurt = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
-	effect eVisheal = EffectVisualEffect(VFX_IMP_HEALING_M);
+	effect eVisheal = EffectVisualEffect(VFX_IMP_HEALING_X);
 
 	int iCurable = GetCasterLevel(_oCaster = OBJECT_SELF);
 
 	int iBonus = iCurable;
-	if (iBonus > 25) iBonus = 25; // Akhacha_fix
+	if (iBonus > 35) iBonus = 35;
 
 	if ((iCurable -= CureFaction(iCurable, eVishurt, eVisheal, iBonus)) > 0) // kL_add safety
 		CureNearby(iCurable, eVishurt, eVisheal, iBonus);
@@ -137,7 +134,7 @@ int CureObject(object oTarget, effect eVishurt, effect eVisheal, int iBonus)
 			float fDelay = GetRandomDelay();
 			if (MyResistSpell(_oCaster, oTarget, fDelay) == SPELL_RESISTANCE_FAILURE)
 			{
-				int iHurt = ApplyMetamagicVariableMods(d8(), 8) + iBonus; // kL_fix: the constant bonus should not be modified
+				int iHurt = ApplyMetamagicVariableMods(d8(3), 24) + iBonus; // kL_fix: the constant bonus should not be modified
 				if (MySavingThrow(SAVING_THROW_WILL,
 								  oTarget,
 								  GetSpellSaveDC(),
@@ -163,7 +160,7 @@ int CureObject(object oTarget, effect eVishurt, effect eVisheal, int iBonus)
 	{
 		SignalEvent(oTarget, EventSpellCastAt(_oCaster, _iSpellId, FALSE));
 
-		int iHeal = ApplyMetamagicVariableMods(d8(), 8) + iBonus;
+		int iHeal = ApplyMetamagicVariableMods(d8(3), 24) + iBonus;
 		if (GetHasFeat(FEAT_AUGMENT_HEALING) && !GetIsObjectValid(GetSpellCastItem()))
 		{
 			iHeal += GetSpellLevel(_iSpellId) * 2;

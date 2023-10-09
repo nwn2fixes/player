@@ -975,6 +975,20 @@ ga_henchman_setmax.NSS
 ga_local_int.nss
 
 
+MassCure fixes by kevL and Akhacha
+v.231008
+The MassCure routines were tallying ineligible targets and counting them against
+the total. The scripts have been refactored and modified to count only eligible
+targets. Further, the MassCureLight spellscript incorrectly capped the maximum
+count at 20. This has been fixed to the proper value of 25.
+files:
+- scripts\spells
+nw_s0_macurcrit.NSS
+nw_s0_MaCurLigt.NSS
+nw_s0_macurmod.NSS
+nw_s0_macurseri.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
