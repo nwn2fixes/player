@@ -38,6 +38,7 @@
 //                 - add remarked code to bypass allies at full health from the
 //                   count (if desired)
 //                 - restrict affected factionmembers to the area of the caster
+//                 - undead save vs SAVING_THROW_TYPE_POSITIVE rather than _NONE
 
 #include "x2_inc_spellhook"
 #include "nwn2_inc_spells"
@@ -133,20 +134,20 @@ int CureObject(object oTarget, effect eVishurt, effect eVisheal, int iBonus)
 			float fDelay = GetRandomDelay();
 			if (MyResistSpell(_oCaster, oTarget, fDelay) == SPELL_RESISTANCE_FAILURE)
 			{
-				int iHurt = ApplyMetamagicVariableMods(d8(4), 32) + iBonus; // kL_fix: the constant bonus should not be modified
+				int iPositive = ApplyMetamagicVariableMods(d8(4), 32) + iBonus; // kL_fix: the constant bonus should not be modified
 				if (MySavingThrow(SAVING_THROW_WILL,
 								  oTarget,
 								  GetSpellSaveDC(),
-								  SAVING_THROW_TYPE_NONE,
+								  SAVING_THROW_TYPE_POSITIVE,
 								  _oCaster,
 								  fDelay) != SAVING_THROW_CHECK_FAILED)
 				{
-					iHurt /= 2;
+					iPositive /= 2;
 				}
 
-				if (iHurt > 0) // kL_add safety
+				if (iPositive > 0) // kL_add safety
 				{
-					effect ePositive = EffectDamage(iHurt, DAMAGE_TYPE_POSITIVE);
+					effect ePositive = EffectDamage(iPositive, DAMAGE_TYPE_POSITIVE);
 					ePositive = EffectLinkEffects(ePositive, eVishurt);
 					DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, ePositive, oTarget));
 				}
@@ -159,13 +160,13 @@ int CureObject(object oTarget, effect eVishurt, effect eVisheal, int iBonus)
 	{
 		SignalEvent(oTarget, EventSpellCastAt(_oCaster, _iSpellId, FALSE));
 
-		int iHeal = ApplyMetamagicVariableMods(d8(4), 32) + iBonus;
+		int iPositive = ApplyMetamagicVariableMods(d8(4), 32) + iBonus;
 		if (GetHasFeat(FEAT_AUGMENT_HEALING) && !GetIsObjectValid(GetSpellCastItem()))
 		{
-			iHeal += GetSpellLevel(_iSpellId) * 2;
+			iPositive += GetSpellLevel(_iSpellId) * 2;
 		}
 
-		effect eHeal = EffectHeal(iHeal);
+		effect eHeal = EffectHeal(iPositive);
 		eHeal = EffectLinkEffects(eHeal, eVisheal);
 		DelayCommand(GetRandomDelay(), ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget));
 
