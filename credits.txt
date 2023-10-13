@@ -989,6 +989,32 @@ nw_s0_macurmod.NSS
 nw_s0_macurseri.NSS
 
 
+MassInflict fixes by kevL and Akhacha
+v.231013
+The MassInflict routines were quite a mess. Some of the spellscripts did not
+apply a VFX at the spell location, others did; they all Empowered the constant
+bonus, which is not how Empower is supposed to work; none of them tallied a
+count of targets despite several of their descriptions saying that they should;
+an early return forced the loop to break as soon as a non-allied undead is
+found; Inflict Moderate applied an inflict VFX to undead targets instead of a
+heal VFX like the other spells in the line; Inflict Serious and Critical had
+their healing VFX switched. Further, the MassInflictLight spellscript
+incorrectly capped the maximum count at 20. This has been fixed to the proper
+value of 25.
+
+Note that the description for Mass Inflict Light in Dialog.Tlk (which was not
+updated from the 3e Circle of Doom spell perhaps) does not jive with the
+descriptions provided for the other spells in the line, and that preferences
+for these corrections comes from the descriptions of Mass Inflict Moderate,
+Serious, and Critical.
+files:
+- scripts\spells
+nw_s0_mainfcrit.NSS
+nw_s0_MaInfLigt.NSS
+nw_s0_mainfmod.NSS
+nw_s0_mainfseri.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
