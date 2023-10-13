@@ -27,7 +27,7 @@
 // JLR - OEI 08/23/05 -- Metamagic changes
 // AFW-OEI 06/18/2007: Will save for 1/2.
 // kevL 2023 oct 8 - tidy and refactor
-//                 - change description at the top of this script to that in Dialog.Tlk
+//                 - change description at the top of this script to that in Dialog.Tlk #113198
 //                 - remove unused GetMetaMagicFeat() and args
 //                 - remove int_return from CureNearby() (unused)
 //                 - pass 'iBonus' instead of 'iCasterlevel' to subfunctions

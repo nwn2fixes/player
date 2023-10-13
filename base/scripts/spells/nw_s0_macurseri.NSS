@@ -28,7 +28,7 @@
 // AFW-OEI 06/18/2007: Will save for 1/2.
 // JSH-OEI 8/17/07: Now actually cures/inflicts 3d8 instead of 4d8.
 // kevL 2023 oct 8 - tidy and refactor
-//                 - change description at the top of this script to that in Dialog.Tlk
+//                 - change description at the top of this script to that in Dialog.Tlk #113201
 //                 - remove unused GetMetaMagicFeat() and args
 //                 - remove int_return from CureNearby() (unused)
 //                 - pass 'iBonus' instead of 'iCasterlevel' to subfunctions

@@ -31,7 +31,7 @@
 // AFW-OEI 06/18/2007 - Will save for 1/2
 // Akhacha 2023/09/21 - Raised amount cured based on level to +25 per description
 // kevL 2023 oct 8 - tidy and refactor
-//                 - change description at the top of this script to that in Dialog.Tlk
+//                 - change description at the top of this script to that in Dialog.Tlk #6177
 //                 - remove unused GetMetaMagicFeat() and args
 //                 - remove int_return from CureNearby() (unused)
 //                 - pass 'iBonus' instead of 'iCasterlevel' to subfunctions
