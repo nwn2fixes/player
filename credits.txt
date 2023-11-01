@@ -982,11 +982,12 @@ the total. The scripts have been refactored and modified to count only eligible
 targets. Further, the MassCureLight spellscript incorrectly capped the maximum
 count at 20. This has been fixed to the proper value of 25.
 files:
-- scripts\spells
+- scripts\spells\curehurt
 nw_s0_macurcrit.NSS
-nw_s0_MaCurLigt.NSS
+nw_s0_macurligt.NSS
 nw_s0_macurmod.NSS
 nw_s0_macurseri.NSS
+n2f_curehurt_inc.nss [created]
 
 
 MassInflict fixes by kevL and Akhacha
@@ -1008,11 +1009,27 @@ descriptions provided for the other spells in the line, and that preferences
 for these corrections comes from the descriptions of Mass Inflict Moderate,
 Serious, and Critical.
 files:
-- scripts\spells
+- scripts\spells\curehurt
 nw_s0_mainfcrit.NSS
-nw_s0_MaInfLigt.NSS
+nw_s0_mainfligt.NSS
 nw_s0_mainfmod.NSS
 nw_s0_mainfseri.NSS
+n2f_curehurt_inc.nss [created]
+
+
+Heal, Mass Heal, Harm fixes by kevL
+v.231030
+Heal and Mass Heal remove bad effects per their descriptions in Dialog.Tlk. The
+subfunctions that deal with heal/harm/cure/inflict have been taken out of
+'nw_i0_spells' and 'nwn2_inc_spells' and refactored into 'n2f_curehurt_inc' - so
+the Harm spellscript comes along for the ride.
+files:
+- scripts\spells\curehurt
+nw_s0_harm.NSS
+nw_s0_heal.NSS
+nw_s0_masheal.NSS
+nw_s2_wpmasheal.NSS
+n2f_curehurt_inc.nss [created]
 
 
 --------------------------------------------------------------------------------
