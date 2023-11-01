@@ -2347,3 +2347,12 @@ files:
 nx2_ol_client_enter.NSS
 
 
+f10_a_spawn_shadows fix by Akhacha
+v.231001
+Fixed script checking GetArea(oWP) against OBJECT_SELF, rather than
+GetArea(OBJECT_SELF).
+files:
+- F_X2
+f10_a_spawn_shadows.NSS
+
+
