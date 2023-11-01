@@ -1032,6 +1032,16 @@ nw_s2_wpmasheal.NSS
 n2f_curehurt_inc.nss [created]
 
 
+Sunbeam fix by TonyK (impl/ kevL)
+v.231101
+In the script for the Sunbeam spell, nw_s0_sunbeam.nss, 'nCasterLevel = 4;' is
+called inside the shape loop. This will limit the damage rolled for undead in
+later calls.
+files:
+- scripts\spells
+nw_s0_sunbeam.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
