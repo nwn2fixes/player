@@ -33,6 +33,9 @@
 // kevL 2023 oct 21 - change description at the top of this script to Dialog.Tlk #6174
 //                  - ensure that 'oTarget' is valid and a creature
 //                  - #include "n2f_curehurt_inc"
+//                  - kL_change: Checking VAR_IMMUNE_TO_HEAL here optimizes the
+//                    code at the expense that SignalEvent() does not fire for
+//                    an otherwise valid target.
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"

@@ -54,6 +54,8 @@ effect _eVisheal,
 // Loops over the faction (in the area) excluding undead.
 // - exits early if count reaches total # targets
 // - returns the # cured
+// kL_change: Checking VAR_IMMUNE_TO_HEAL here optimizes the code at the expense
+// that SignalEvent() does not fire for an otherwise valid target.
 int n2f_HealFaction(int iCount) // returns the # HealHarmed
 {
 	object oArea = GetArea(_oCaster);
@@ -76,6 +78,8 @@ int n2f_HealFaction(int iCount) // returns the # HealHarmed
 
 // Loops over nonfaction and (any) undead in a 15' radius.
 // - exits early if count reaches total # targets
+// kL_change: Checking VAR_IMMUNE_TO_HEAL here optimizes the code at the expense
+// that SignalEvent() does not fire for an otherwise valid target.
 void n2f_HealNearby(int iCount) // returns the # HealHarmed
 {
 	location lSpell = GetSpellTargetLocation();

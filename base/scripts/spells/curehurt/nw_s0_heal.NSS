@@ -32,6 +32,9 @@
 //                  - remove bad effects per description
 //                  - ensure that 'oTarget' is valid and a creature
 //                  - #include "n2f_curehurt_inc"
+//                  - kL_change: Checking VAR_IMMUNE_TO_HEAL here optimizes the
+//                    code at the expense that SignalEvent() does not fire for
+//                    an otherwise valid target.
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"
