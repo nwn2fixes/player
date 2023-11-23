@@ -99,7 +99,7 @@ void n2f_HealNearby(int iCount) // returns the # HealHarmed
 }
 
 // This won't effect 'oTarget' unless it is a nonhostile nonundead or hostile
-// undead (affects nonhostile undead if Hardcore+ difficulty)
+// undead (affects nonhostile undead if Hardcore+ difficulty).
 // - returns TRUE if 'oTarget' is affected
 int n2f_HealObject()
 {
