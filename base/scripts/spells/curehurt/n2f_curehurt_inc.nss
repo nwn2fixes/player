@@ -124,7 +124,8 @@ int n2f_HealObject()
 // Heal and Harm calls this function directly.
 // 'nw_s0_heal' - n2f_HealHarmTarget(TRUE,  TRUE)
 // 'nw_s0_harm' - n2f_HealHarmTarget(FALSE, FALSE)
-// - bDoHurtTouch: TRUE only for Heal - not for Harm or MassHeal
+// - bDoHurtTouch: TRUE only for Heal (vs undead) and Harm (vs nonundead) - not
+//                 for MassHeal
 void n2f_HealHarmTarget(int bHeal, int bDoHurtTouch)
 {
 	if (_iSpellId == SPELL_UNDEFINED) // this prevents recalculating/reconstructing these values (for Mass effects) ->

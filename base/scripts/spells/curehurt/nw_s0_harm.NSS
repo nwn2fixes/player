@@ -55,6 +55,6 @@ void main()
 
 		_oCaster = OBJECT_SELF;
 
-		n2f_HealHarmTarget(FALSE, FALSE);
+		n2f_HealHarmTarget(FALSE, TRUE);
 	}
 }
