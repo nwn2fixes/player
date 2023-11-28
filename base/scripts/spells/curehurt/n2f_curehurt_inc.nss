@@ -122,8 +122,9 @@ int n2f_HealObject()
  */
 
 // Heal and Harm calls this function directly.
-// 'nw_s0_heal' - n2f_HealHarmTarget(TRUE,  TRUE)
-// 'nw_s0_harm' - n2f_HealHarmTarget(FALSE, FALSE)
+// 'nw_s0_heal'       - n2f_HealHarmTarget(TRUE,  TRUE)
+// 'nw_s0_harm'       - n2f_HealHarmTarget(FALSE, TRUE)
+// 'nx_s0_healanimal' - n2f_HealHarmTarget(TRUE,  FALSE)
 // - bDoHurtTouch: TRUE only for Heal (vs undead) and Harm (vs nonundead) - not
 //                 for MassHeal
 void n2f_HealHarmTarget(int bHeal, int bDoHurtTouch)
@@ -135,13 +136,14 @@ void n2f_HealHarmTarget(int bHeal, int bDoHurtTouch)
 		switch (_iSpellId = GetSpellId())
 		{
 			default:
-			case SPELL_HEAL:
-			case SPELL_HARM:
+//			case SPELL_HEAL:
+//			case SPELL_HARM:
+//			case SPELL_HEAL_ANIMAL_COMPANION: // note: Kaedrin's PrC Pack defines casterlevel w/ GetPalRngCasterLevel()
 				if (_iHealHurt > 150) _iHealHurt = 150;
 				break;
 
 			case SPELLABILITY_WARPRIEST_MASS_HEAL:
-				_iHealHurt = GetLevelByClass(CLASS_TYPE_WARPRIEST, _oCaster) * 10; // AFW-OEI 05/20/2006: only difference w/ Mass Heal
+				_iHealHurt = GetLevelByClass(CLASS_TYPE_WARPRIEST, _oCaster) * 10;
 				// no break;
 
 			case SPELL_MASS_HEAL:
