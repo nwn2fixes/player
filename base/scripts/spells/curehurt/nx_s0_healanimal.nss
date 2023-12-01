@@ -49,7 +49,7 @@ void main()
 
 			_oCaster = OBJECT_SELF;
 
-			n2f_HealHarmTarget(TRUE, FALSE);
+			n2f_HealHarmTarget(TRUE);
 		}
 		else
 			FloatingTextStrRefOnCreature(184683, OBJECT_SELF, FALSE); // "Target is immune to that effect."

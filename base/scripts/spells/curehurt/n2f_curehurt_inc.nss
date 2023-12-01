@@ -22,7 +22,7 @@ void n2f_HealNearby(int iCount);
 int  n2f_HealObject();
 
 // Heal/Harm functions (incl. Mass Heal)
-void n2f_HealHarmTarget(int bHeal, int bTouch);
+void n2f_HealHarmTarget(int bHeal, int bTouch = FALSE);
 void n2f_Restore();
 
 // General functions (Cure Heal/Harm Mass Heal)
@@ -190,7 +190,7 @@ int n2f_HealObject()
 
 	if (spellsIsTarget(_oTarget, iTargetType, _oCaster))
 	{
-		n2f_HealHarmTarget(TRUE, FALSE);
+		n2f_HealHarmTarget(TRUE);
 		return TRUE;
 	}
 	return FALSE;
@@ -203,7 +203,7 @@ int n2f_HealObject()
 
 // Heal and Harm calls this function directly.
 // - bTouch: TRUE to force a TouchAttack in the hurt routines
-void n2f_HealHarmTarget(int bHeal, int bTouch)
+void n2f_HealHarmTarget(int bHeal, int bTouch = FALSE)
 {
 	if (_iSpellId == SPELL_UNDEFINED) // this prevents recalculating/reconstructing these values (for Mass effects) ->
 	{
