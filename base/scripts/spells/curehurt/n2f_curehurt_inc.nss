@@ -1,6 +1,6 @@
 // 'n2f_curehurt_inc'
 /*
-	Functions for cure/heal and harm/hurt spells.
+	Functions for cure/heal and harm/inflict spells.
 
 	Taken and adapted from 'nw_i0_spells' and 'nwn2_inc_spells'.
 */
@@ -12,17 +12,24 @@
 const int SPELLABILITY_WARPRIEST_MASS_HEAL = 965;
 const int SPELL_UNDEFINED = -1;
 
+// Cure Wounds functions
+void n2f_spellsCure(int iHeal, int iMaxBonus, int iMaximized, int iVisheal, int iVishurt, int iSpellId);
+int  n2f_GetCureDamageTotal(int iHeal, int iMaxBonus, int iMaximized);
+
 // Mass Heal functions
 int  n2f_HealFaction(int iCount);
 void n2f_HealNearby(int iCount);
 int  n2f_HealObject();
 
 // Heal/Harm functions (incl. Mass Heal)
-void n2f_HealHarmTarget(int bHeal, int bDoHurtTouch);
-void n2f_spellsHealOrHarmTarget(int bHeal, int bDoHurtTouch);
-void n2f_DoHealing();
-void n2f_DoHarming(int iType, effect eVis, int bDoHurtTouch);
+void n2f_HealHarmTarget(int bHeal, int bTouch);
 void n2f_Restore();
+
+// General functions (Cure Heal/Harm Mass Heal)
+void n2f_spellsHealOrHarmTarget(int bHeal, int bTouch);
+void n2f_DoHealing();
+void n2f_DoHarming(int iType, effect eVis, int bTouch);
+void n2f_RemoveWounding();
 
 // Mass Cure functions
 int  n2f_CureFaction(int iCount);
@@ -31,6 +38,7 @@ int  n2f_CureObject();
 
 // Mass Inflict function
 void n2f_MassInflict(int iCount);
+
 
 // Script variables
 object _oCaster,
@@ -45,6 +53,77 @@ int _iDice,
 effect _eVisheal,
 	   _eVishurt,
 	   _eVisinfl;
+
+
+/**
+ * Cure Wounds functions
+ */
+
+//
+void n2f_spellsCure(int iHeal, int iMaxBonus, int iMaximized, int iVisheal, int iVishurt, int iSpellId)
+{
+	_oCaster = OBJECT_SELF;
+	_oTarget = GetSpellTargetObject();
+
+	_iHealHurt = n2f_GetCureDamageTotal(iHeal, iMaxBonus, iMaximized);
+
+	_eVisheal = EffectVisualEffect(iVisheal);
+	_eVishurt = EffectVisualEffect(iVishurt);
+
+	_iSpellId = iSpellId;
+
+	_iSaveDc = GetSpellSaveDC();
+
+	n2f_spellsHealOrHarmTarget(TRUE, TRUE);
+}
+
+// Adjusts the base variable heal 'iHeal' taking into account
+// - game difficulty
+// - metamagic
+// - Healing Domain power
+// - Augment Healing feat
+int n2f_GetCureDamageTotal(int iHeal, int iMaxBonus, int iMaximized)
+{
+	int iMeta = GetMetaMagicFeat();
+
+	if (GetIsObjectValid(GetFactionLeader(_oTarget))
+		&& GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES)
+	{
+		iHeal = iMaximized; // low or normal difficulty is treated as Maximized
+
+		if (iMeta == METAMAGIC_MAXIMIZE)
+		{
+			iHeal += iMaximized; // if low or normal difficulty then base Maximized is doubled
+		}
+		else if (iMeta == METAMAGIC_EMPOWER
+			|| (GetHasFeat(FEAT_HEALING_DOMAIN_POWER) && !GetIsObjectValid(GetSpellCastItem())))
+		{
+			iHeal += iHeal / 2;
+		}
+	}
+	else if (iMeta == METAMAGIC_MAXIMIZE)
+	{
+		iHeal = iMaximized;
+	}
+	else if (iMeta == METAMAGIC_EMPOWER
+		|| (GetHasFeat(FEAT_HEALING_DOMAIN_POWER) && !GetIsObjectValid(GetSpellCastItem())))
+	{
+		iHeal += iHeal / 2;
+	}
+
+
+	if (GetHasFeat(FEAT_AUGMENT_HEALING) && !GetIsObjectValid(GetSpellCastItem()))
+	{
+		iHeal += GetSpellLevel(_iSpellId) * 2;
+	}
+
+
+	int iBonus = GetCasterLevel(_oCaster);
+	if (iBonus > iMaxBonus)
+		iBonus = iMaxBonus;
+
+	return iHeal + iBonus;
+}
 
 
 /**
@@ -117,17 +196,14 @@ int n2f_HealObject()
 	return FALSE;
 }
 
+
 /**
  * Heal/Harm functions (incl. Mass Heal)
  */
 
 // Heal and Harm calls this function directly.
-// 'nw_s0_heal'       - n2f_HealHarmTarget(TRUE,  TRUE)
-// 'nw_s0_harm'       - n2f_HealHarmTarget(FALSE, TRUE)
-// 'nx_s0_healanimal' - n2f_HealHarmTarget(TRUE,  FALSE)
-// - bDoHurtTouch: TRUE only for Heal (vs undead) and Harm (vs nonundead) - not
-//                 for MassHeal
-void n2f_HealHarmTarget(int bHeal, int bDoHurtTouch)
+// - bTouch: TRUE to force a TouchAttack in the hurt routines
+void n2f_HealHarmTarget(int bHeal, int bTouch)
 {
 	if (_iSpellId == SPELL_UNDEFINED) // this prevents recalculating/reconstructing these values (for Mass effects) ->
 	{
@@ -158,90 +234,17 @@ void n2f_HealHarmTarget(int bHeal, int bDoHurtTouch)
 		_eVisinfl = EffectVisualEffect(VFX_HIT_SPELL_INFLICT_6);
 	}
 
-	n2f_spellsHealOrHarmTarget(bHeal, bDoHurtTouch);
+	n2f_spellsHealOrHarmTarget(bHeal, bTouch);
 }
 
-// This spell routes Heal, MassHeal, and Harm out depending on whether 'oTarget'
-// is undead or not.
-// - bDoHurtTouch: TRUE forces a MeleeTouchAttack if heal on undead or hurt on non-undead
-//                 - in practice only Heal against undead requires a TouchAttack
-//                 - Harm against non-undead should perhaps require a TouchAttack also
-void n2f_spellsHealOrHarmTarget(int bHeal, int bDoHurtTouch)
-{
-	int bHostile = FALSE;
-
-	if (GetRacialType(_oTarget) != RACIAL_TYPE_UNDEAD)
-	{
-		if (bHeal) // heal on non-undead heals
-		{
-			n2f_DoHealing();
-		}
-		else // harm on non-undead harms
-		{
-			n2f_DoHarming(DAMAGE_TYPE_NEGATIVE, _eVisinfl, bDoHurtTouch);
-			bHostile = TRUE;
-		}
-	}
-	else if (bHeal) // heal on undead harms
-	{
-		n2f_DoHarming(DAMAGE_TYPE_POSITIVE, _eVishurt, bDoHurtTouch);
-		bHostile = TRUE;
-	}
-	else // harm on undead heals
-	{
-		n2f_DoHealing();
-	}
-
-	SignalEvent(_oTarget, EventSpellCastAt(_oCaster, _iSpellId, bHostile));
-}
-
-// This could be a heal spell cast on nonundead or a harm spell cast on undead.
-void n2f_DoHealing()
-{
-	// cure spells remove the wounding effect which causes targets to bleed out - PKM-OEI 09.06.06
-	RemoveEffectOfType(_oTarget, EFFECT_TYPE_WOUNDING);
-
-	effect eHeal = EffectHeal(_iHealHurt);
-	eHeal = EffectLinkEffects(eHeal, _eVisheal);
-	ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, _oTarget);
-}
-
-// This could be a heal spell cast on undead a harm spell cast on nonundead.
-void n2f_DoHarming(int iType, effect eVis, int bDoHurtTouch)
-{
-	if (spellsIsTarget(_oTarget, SPELL_TARGET_STANDARDHOSTILE, _oCaster)
-		&& (!bDoHurtTouch || TouchAttackMelee(_oTarget) != TOUCH_ATTACK_RESULT_MISS)
-		&& MyResistSpell(_oCaster, _oTarget) == SPELL_RESISTANCE_FAILURE)
-	{
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, _oTarget);
-
-		int iSaveType = SAVING_THROW_TYPE_NONE; // kL_add: base the savetype on 'iType' ->
-		switch (iType)
-		{
-			case DAMAGE_TYPE_POSITIVE: iSaveType = SAVING_THROW_TYPE_POSITIVE; break;
-			case DAMAGE_TYPE_NEGATIVE: iSaveType = SAVING_THROW_TYPE_NEGATIVE; break;
-		}
-
-		int iHurt = _iHealHurt;
-		if (MySavingThrow(SAVING_THROW_WILL, _oTarget, _iSaveDc, iSaveType) == SAVING_THROW_CHECK_SUCCEEDED) // kL_changed: used to be WillSave()
-			iHurt /= 2;
-
-		if (iHurt > 0)
-		{
-			effect eHurt = EffectDamage(iHurt, iType);
-			DelayCommand(1.f, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHurt, _oTarget));
-		}
-	}
-}
-
-// Removes the harmful effects that are listed in the description.
+// Removes the harmful effects that are listed in the Tlk descriptions.
 // Note that the list of bad effects that should be removed varies depending on
 // what source you read. AbilityDecreased and Fatigued eg. should probably be
 // removed but they aren't listed in Dialog.Tlk - effects like Fatigued,
-// Nauseated, Sickened can't be strictly removed because they have no standard
+// Nauseated, Sickened can't be easily removed because they have no standard
 // EFFECT_TYPE; they are constructed as linked effects instead. Removing the
 // ability decreases for Fatigued or Exhausted would remove the linked movement
-// speed decrease also, and Sickened (Nauseated) has no SPELL constant either.
+// speed decrease also, and Sickened (Nauseated) has no SPELL_* constant either.
 // See 'nwn2_inc_spells'
 // - EffectFatigue()
 // - EffectExhausted()
@@ -283,6 +286,93 @@ void n2f_Restore()
 		{
 			RemoveEffect(_oTarget, eEffect);
 			eEffect = GetFirstEffect(_oTarget); // restart the loop
+		}
+		else
+			eEffect = GetNextEffect(_oTarget);
+	}
+}
+
+
+/**
+ * General functions (Cure Heal/Harm Mass Heal)
+ */
+
+// This spell routes Heal, MassHeal, and Harm out depending on whether 'oTarget'
+// is undead or not.
+// - bTouch: TRUE to force a TouchAttack in the hurt routines
+void n2f_spellsHealOrHarmTarget(int bHeal, int bTouch)
+{
+	int bUndead = GetRacialType(_oTarget) == RACIAL_TYPE_UNDEAD;
+
+	if ((bHeal && !bUndead) || (!bHeal && bUndead)) // heal on nonundead or hurt on undead
+	{
+		n2f_DoHealing();
+	}
+	else if (bHeal && bUndead) // heal on undead
+	{
+		n2f_DoHarming(DAMAGE_TYPE_POSITIVE, _eVishurt, bTouch);
+	}
+	else // (!bHeal && !bUndead) // hurt on nonundead
+	{
+		n2f_DoHarming(DAMAGE_TYPE_NEGATIVE, _eVisinfl, bTouch);
+	}
+}
+
+// This could be a heal spell cast on nonundead or a hurt spell cast on undead.
+// - clears EFFECT_TYPE_WOUNDING
+void n2f_DoHealing()
+{
+	SignalEvent(_oTarget, EventSpellCastAt(_oCaster, _iSpellId, FALSE));
+
+	n2f_RemoveWounding();
+
+	effect eHeal = EffectHeal(_iHealHurt);
+	eHeal = EffectLinkEffects(eHeal, _eVisheal);
+	ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, _oTarget);
+}
+
+// This could be a hurt spell cast on nonundead or a heal spell cast on undead.
+void n2f_DoHarming(int iType, effect eVis, int bTouch)
+{
+	if (spellsIsTarget(_oTarget, SPELL_TARGET_STANDARDHOSTILE, _oCaster))
+	{
+		SignalEvent(_oTarget, EventSpellCastAt(_oCaster, _iSpellId)); // kL_change: SignalEvent() after spellsIsTarget()
+
+		if ((!bTouch || TouchAttackMelee(_oTarget) != TOUCH_ATTACK_RESULT_MISS)
+			&& MyResistSpell(_oCaster, _oTarget) == SPELL_RESISTANCE_FAILURE)
+		{
+			ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, _oTarget);
+
+			int iSaveType = SAVING_THROW_TYPE_NONE; // kL_add: base the savetype on 'iType' ->
+			switch (iType)
+			{
+				case DAMAGE_TYPE_POSITIVE: iSaveType = SAVING_THROW_TYPE_POSITIVE; break;
+				case DAMAGE_TYPE_NEGATIVE: iSaveType = SAVING_THROW_TYPE_NEGATIVE; break;
+			}
+
+			int iHurt = _iHealHurt;
+			if (WillSave(_oTarget, _iSaveDc, iSaveType, _oCaster) == SAVING_THROW_CHECK_SUCCEEDED) // do not use MySavingThrow() <-
+				iHurt /= 2;
+
+			if (iHurt > 0)
+			{
+				effect eHurt = EffectDamage(iHurt, iType);
+				DelayCommand(1.f, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHurt, _oTarget)); // kL_TODO: shorten that delay
+			}
+		}
+	}
+}
+
+// kL - Removes any Wounding effects.
+void n2f_RemoveWounding()
+{
+	effect eEffect = GetFirstEffect(_oTarget);
+	while (GetIsEffectValid(eEffect))
+	{
+		if (GetEffectType(eEffect) == EFFECT_TYPE_WOUNDING)
+		{
+			RemoveEffect(_oTarget, eEffect);
+			eEffect = GetFirstEffect(_oTarget);
 		}
 		else
 			eEffect = GetNextEffect(_oTarget);
@@ -341,7 +431,8 @@ int n2f_CureObject()
 	if (GetRacialType(_oTarget) == RACIAL_TYPE_UNDEAD)
 	{
 		// can hurt allied undead if difficulty is Hardcore+
-		// note that spellsIsTarget() returns FALSE if 'oTarget' is deaddead (not just dying)
+		// note that spellsIsTarget() returns FALSE if 'oTarget' is deaddead
+		// (ie dying aka bleeding-out can return TRUE)
 		if (spellsIsTarget(_oTarget, SPELL_TARGET_STANDARDHOSTILE, _oCaster))
 		{
 			SignalEvent(_oTarget, EventSpellCastAt(_oCaster, _iSpellId));
@@ -370,10 +461,15 @@ int n2f_CureObject()
 			return TRUE;
 		}
 	}
-	else if (spellsIsTarget(_oTarget, SPELL_TARGET_ALLALLIES, _oCaster)
-		&& GetCurrentHitPoints(_oTarget) < GetMaxHitPoints(_oTarget)) // kL_add: dont heal (or count) unhurt targets
+	else if (spellsIsTarget(_oTarget, SPELL_TARGET_ALLALLIES, _oCaster))
+//		&& GetCurrentHitPoints(_oTarget) < GetMaxHitPoints(_oTarget) // kL_add: don't heal (or count) unhurt targets
+		// note that enabling this bypasses n2f_RemoveWounding() on targets that
+		// have EFFECT_TYPE_WOUNDING even though they can currently be at full HP
+		// So let's bypass that check and let any Wounding effects get removed
 	{
 		SignalEvent(_oTarget, EventSpellCastAt(_oCaster, _iSpellId, FALSE));
+
+		n2f_RemoveWounding(); // kL_add: clear bleedout effect for Mass Cure(s)
 
 		int iPositive = ApplyMetamagicVariableMods(d8(_iDice), _iDice * 8) + _iBonus;
 		if (GetHasFeat(FEAT_AUGMENT_HEALING) && !GetIsObjectValid(GetSpellCastItem()))
