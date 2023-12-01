@@ -555,7 +555,7 @@ void n2f_MassInflict(int iCount)
 				if (iNegative > 0) // kL_add safety
 				{
 					eEffect = EffectDamage(iNegative, DAMAGE_TYPE_NEGATIVE);
-					eEffect = EffectLinkEffects(eEffect, _eVishurt);
+					eEffect = EffectLinkEffects(eEffect, _eVisinfl);
 
 					DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, _oTarget));
 				}

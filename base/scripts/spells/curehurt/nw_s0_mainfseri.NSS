@@ -54,7 +54,7 @@ void main()
 
 	_iDice = 3;
 
-	_eVishurt = EffectVisualEffect(VFX_HIT_SPELL_INFLICT_4);
+	_eVisinfl = EffectVisualEffect(VFX_HIT_SPELL_INFLICT_4);
 	_eVisheal = EffectVisualEffect(VFX_IMP_HEALING_X); // kL_fix
 
 	n2f_MassInflict(iCount);
