@@ -169,7 +169,6 @@ void IgnoreTargetRulesRemoveEntry(object oCaster, int nEntry);
 // oTarget - the spell target.
 void IgnoreTargetRulesEnqueueTarget(object oCaster, object oTarget);
 
-
 // Enqueues a spell that will ignore the spellsIsTarget logic.
 // Does so by storing temporary variables on the caster of OK targets to bypass on.
 // Parameters the same as ActionCastSpellAtObject() in nwscript.nss
@@ -516,8 +515,8 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
 {
 	object oTarget = GetSpellTargetObject();
 	int nDamageTotal = GetCureDamageTotal(oTarget, nDamage, nMaxExtraDamage, nMaximized, nSpellID);
-	int bIsHealingSpell=TRUE;
-	int bHarmTouchAttack=TRUE;
+	int bIsHealingSpell = TRUE;
+	int bHarmTouchAttack = TRUE;
 	spellsHealOrHarmTarget(oTarget, nDamageTotal, vfx_impactHurt, vfx_impactHurt, vfx_impactHeal, nSpellID, bIsHealingSpell, bHarmTouchAttack);
 }
 
