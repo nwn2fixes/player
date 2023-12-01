@@ -41,6 +41,7 @@
 //                 - restrict affected factionmembers to the area of the caster
 //                 - undead save vs SAVING_THROW_TYPE_POSITIVE rather than _NONE
 //                 - #include "n2f_curehurt_inc"
+//                 - clear EFFECT_TYPE_WOUNDING
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"
