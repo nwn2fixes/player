@@ -201,8 +201,9 @@ int n2f_HealObject()
  * Heal/Harm functions (incl. Mass Heal)
  */
 
-// Heal and Harm calls this function directly.
-// - bTouch: TRUE to force a TouchAttack in the hurt routines
+// Heal and Harm calls this function directly as does Heal Animal (companion).
+// - bHeal  : TRUE if a heal spell; FALSE if a harm spell
+// - bTouch : TRUE to force a TouchAttack in the hurt routines
 void n2f_HealHarmTarget(int bHeal, int bTouch = FALSE)
 {
 	if (_iSpellId == SPELL_UNDEFINED) // this prevents recalculating/reconstructing these values (for Mass effects) ->
@@ -299,7 +300,8 @@ void n2f_Restore()
 
 // This spell routes Heal, MassHeal, and Harm out depending on whether 'oTarget'
 // is undead or not.
-// - bTouch: TRUE to force a TouchAttack in the hurt routines
+// - bHeal  : TRUE if a heal spell; FALSE if a harm spell
+// - bTouch : TRUE to force a TouchAttack in the hurt routines
 void n2f_spellsHealOrHarmTarget(int bHeal, int bTouch)
 {
 	int bUndead = GetRacialType(_oTarget) == RACIAL_TYPE_UNDEAD;
@@ -332,6 +334,7 @@ void n2f_DoHealing()
 }
 
 // This could be a hurt spell cast on nonundead or a heal spell cast on undead.
+// - bTouch : TRUE to force a TouchAttack
 void n2f_DoHarming(int iType, effect eVis, int bTouch)
 {
 	if (spellsIsTarget(_oTarget, SPELL_TARGET_STANDARDHOSTILE, _oCaster))
