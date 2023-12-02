@@ -50,9 +50,9 @@ int _iHealHurt;
 int _iDice,
 	_iBonus;
 
-effect _eVisheal,
-	   _eVishurt,
-	   _eVisinfl;
+effect _eVisheal, // cure or heal on nonundead; inflict or harm on undead
+	   _eVishurt, // cure or heal on undead
+	   _eVisinfl; // inflict or harm on nonundead
 
 
 /**
@@ -426,8 +426,8 @@ void n2f_CureNearby(int iCount)
 	}
 }
 
-// Heals (nonundead) SPELL_TARGET_ALLALLIES or damages
-// (SPELL_TARGET_STANDARDHOSTILE) undead.
+// Cures nonundead (SPELL_TARGET_ALLALLIES) or hurts undead
+// (SPELL_TARGET_STANDARDHOSTILE).
 // - returns TRUE if 'oTarget' is affected
 int n2f_CureObject()
 {
