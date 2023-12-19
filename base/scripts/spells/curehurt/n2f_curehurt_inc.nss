@@ -36,8 +36,11 @@ int  n2f_CureFaction(int iCount);
 void n2f_CureNearby(int iCount);
 int  n2f_CureObject();
 
-// Mass Inflict function
+// Mass Inflict Wounds function
 void n2f_MassInflict(int iCount);
+
+// Inflict Wounds function
+void n2f_spellsInflictTouchAttack(int iBonusCap, int iVisinfl, int iVisheal);
 
 
 // Script variables
@@ -59,7 +62,12 @@ effect _eVisheal, // cure or heal on nonundead; inflict or harm on undead
  * Cure Wounds functions
  */
 
-//
+// called by
+// - nw_s0_curminw - Cure Minor Wounds
+// - nw_s0_curlgtw - Cure Light Wounds
+// - nw_s0_curmodw - Cure Moderate Wounds
+// - nw_s0_curserw - Cure Serious Wounds
+// - nw_s0_curcrwn - Cure Critical Wounds
 void n2f_spellsCure(int iHeal, int iMaxBonus, int iMaximized, int iVisheal, int iVishurt, int iSpellId)
 {
 	_oCaster = OBJECT_SELF;
@@ -82,6 +90,8 @@ void n2f_spellsCure(int iHeal, int iMaxBonus, int iMaximized, int iVisheal, int 
 // - metamagic
 // - Healing Domain power
 // - Augment Healing feat
+// called by
+// - n2f_spellsCure()
 int n2f_GetCureDamageTotal(int iHeal, int iMaxBonus, int iMaximized)
 {
 	int iMeta = GetMetaMagicFeat();
@@ -135,6 +145,9 @@ int n2f_GetCureDamageTotal(int iHeal, int iMaxBonus, int iMaximized)
 // - returns the # cured
 // kL_change: Checking VAR_IMMUNE_TO_HEAL here optimizes the code at the expense
 // that SignalEvent() does not fire for an otherwise valid target.
+// called by
+// - nw_s0_masheal   - Mass Heal
+// - nw_s2_wpmasheal - Warpriest Mass Heal (feat)
 int n2f_HealFaction(int iCount) // returns the # HealHarmed
 {
 	object oArea = GetArea(_oCaster);
@@ -159,6 +172,8 @@ int n2f_HealFaction(int iCount) // returns the # HealHarmed
 // - exits early if count reaches total # targets
 // kL_change: Checking VAR_IMMUNE_TO_HEAL here optimizes the code at the expense
 // that SignalEvent() does not fire for an otherwise valid target.
+// - nw_s0_masheal   - Mass Heal
+// - nw_s2_wpmasheal - Warpriest Mass Heal (feat)
 void n2f_HealNearby(int iCount) // returns the # HealHarmed
 {
 	location lSpell = GetSpellTargetLocation();
@@ -177,9 +192,12 @@ void n2f_HealNearby(int iCount) // returns the # HealHarmed
 	}
 }
 
-// This won't effect 'oTarget' unless it is a nonhostile nonundead or hostile
+// This won't effect '_oTarget' unless it is a nonhostile nonundead or hostile
 // undead (affects nonhostile undead if Hardcore+ difficulty).
-// - returns TRUE if 'oTarget' is affected
+// - returns TRUE if '_oTarget' is affected
+// called by
+// - n2f_HealFaction()
+// - n2f_HealNearby()
 int n2f_HealObject()
 {
 	int iTargetType;
@@ -204,6 +222,11 @@ int n2f_HealObject()
 // Heal and Harm calls this function directly as does Heal Animal (companion).
 // - bHeal  : TRUE if a heal spell; FALSE if a harm spell
 // - bTouch : TRUE to force a TouchAttack in the hurt routines
+// called by
+// - nw_s0_heal       - Heal
+// - nw_s0_harm       - Harm
+// - nx_s0_healanimal - Heal Animal
+// - n2f_HealObject()
 void n2f_HealHarmTarget(int bHeal, int bTouch = FALSE)
 {
 	if (_iSpellId == SPELL_UNDEFINED) // this prevents recalculating/reconstructing these values (for Mass effects) ->
@@ -254,6 +277,10 @@ void n2f_HealHarmTarget(int bHeal, int bTouch = FALSE)
 // by using GetIsPositiveBuffSpellWithNegativeEffect() in 'x0_i0_talent' (note
 // that the stock version of that function does not contain a complete list of
 // relevant buff spells).
+// called by
+// - nw_s0_heal - Heal
+// - n2f_HealFaction()
+// - n2f_HealNearby()
 void n2f_Restore()
 {
 	int bRestore;
@@ -302,6 +329,9 @@ void n2f_Restore()
 // is undead or not.
 // - bHeal  : TRUE if a heal spell; FALSE if a harm spell
 // - bTouch : TRUE to force a TouchAttack in the hurt routines
+// called by
+// - n2f_spellsCure()
+// - n2f_HealHarmTarget()
 void n2f_spellsHealOrHarmTarget(int bHeal, int bTouch)
 {
 	int bUndead = GetRacialType(_oTarget) == RACIAL_TYPE_UNDEAD;
@@ -322,6 +352,8 @@ void n2f_spellsHealOrHarmTarget(int bHeal, int bTouch)
 
 // This could be a heal spell cast on nonundead or a hurt spell cast on undead.
 // - clears EFFECT_TYPE_WOUNDING
+// called by
+// - n2f_spellsHealOrHarmTarget()
 void n2f_DoHealing()
 {
 	SignalEvent(_oTarget, EventSpellCastAt(_oCaster, _iSpellId, FALSE));
@@ -329,12 +361,14 @@ void n2f_DoHealing()
 	n2f_RemoveWounding();
 
 	effect eHeal = EffectHeal(_iHealHurt);
-	eHeal = EffectLinkEffects(eHeal, _eVisheal);
+		   eHeal = EffectLinkEffects(eHeal, _eVisheal);
 	ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, _oTarget);
 }
 
 // This could be a hurt spell cast on nonundead or a heal spell cast on undead.
 // - bTouch : TRUE to force a TouchAttack
+// called by
+// - n2f_spellsHealOrHarmTarget()
 void n2f_DoHarming(int iType, effect eVis, int bTouch)
 {
 	if (spellsIsTarget(_oTarget, SPELL_TARGET_STANDARDHOSTILE, _oCaster))
@@ -367,6 +401,9 @@ void n2f_DoHarming(int iType, effect eVis, int bTouch)
 }
 
 // kL - Removes any Wounding effects.
+// called by
+// - n2f_DoHealing()
+// - n2f_CureObject()
 void n2f_RemoveWounding()
 {
 	effect eEffect = GetFirstEffect(_oTarget);
@@ -390,6 +427,11 @@ void n2f_RemoveWounding()
 // Loops over the faction (in the area) excluding undead.
 // - exits early if count reaches total # targets
 // - returns the # cured
+// called by
+// - nw_s0_macurligt - Mass Cure Light Wounds
+// - nw_s0_macurmod  - Mass Cure Moderate Wounds
+// - nw_s0_macurseri - Mass Cure Serious Wounds
+// - nw_s0_macurcrit - Mass Cure Critical Wounds
 int n2f_CureFaction(int iCount)
 {
 	object oArea = GetArea(_oCaster);
@@ -409,6 +451,11 @@ int n2f_CureFaction(int iCount)
 
 // Loops over nonfaction and (any) undead in a 15' radius.
 // - exits early if count reaches total # targets
+// called by
+// - nw_s0_macurligt - Mass Cure Light Wounds
+// - nw_s0_macurmod  - Mass Cure Moderate Wounds
+// - nw_s0_macurseri - Mass Cure Serious Wounds
+// - nw_s0_macurcrit - Mass Cure Critical Wounds
 void n2f_CureNearby(int iCount)
 {
 	_iSaveDc = GetSpellSaveDC();
@@ -429,6 +476,9 @@ void n2f_CureNearby(int iCount)
 // Cures nonundead (SPELL_TARGET_ALLALLIES) or hurts undead
 // (SPELL_TARGET_STANDARDHOSTILE).
 // - returns TRUE if 'oTarget' is affected
+// called by
+// - n2f_CureFaction()
+// - n2f_CureNearby()
 int n2f_CureObject()
 {
 	if (GetRacialType(_oTarget) == RACIAL_TYPE_UNDEAD)
@@ -492,10 +542,15 @@ int n2f_CureObject()
 
 
 /**
- * Mass Inflict function
+ * Mass Inflict Wounds function
  */
 
-// - used by Mass Inflict 'nw_s0_mainf*' scripts
+// Used by Mass Inflict scripts.
+// called by
+// - nw_s0_mainfligt - Mass Inflict Light Wounds
+// - nw_s0_mainfmod  - Mass Inflict Moderate Wounds
+// - nw_s0_mainfseri - Mass Inflict Serious Wounds
+// - nw_s0_mainfcrit - Mass Inflict Critical Wounds
 void n2f_MassInflict(int iCount)
 {
 	_iSpellId = GetSpellId();
@@ -565,6 +620,92 @@ void n2f_MassInflict(int iCount)
 			}
 		}
 		_oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, lSpell);
+	}
+}
+
+
+/**
+ * Inflict Wounds function
+ */
+
+// Inflicts wounds vs nonundead (with a touchattack) or heals undead.
+// - adapted from spellsInflictTouchAttack() in "x0_i0_spells"
+// - note that the kPrC Pack has oei_spellsInflictTouchAttack() in
+//   "oei_i0_spells"
+// - iBonusCap : limit (based on the level of spell) for bonus damage
+// - iVisinfl  : vis to play if hurt by spell (vs nonundead)
+// - iVisheal  : vis to play if healed by spell (vs undead)
+// called by
+// - x0_s0_inflict - Inflict Wounds (Minor, Light, Moderate, Serious, Critical
+//                   and Blackguard feats Serious, Critical)
+void n2f_spellsInflictTouchAttack(int iBonusCap, int iVisinfl, int iVisheal)
+{
+	switch (_iSpellId)
+	{
+		case SPELLABILITY_BG_INFLICT_SERIOUS_WOUNDS:
+		case SPELLABILITY_BG_INFLICT_CRITICAL_WOUNDS:
+//		case SPELL_BG_InflictSerious:  // kPrC
+//		case SPELL_BG_InflictCritical: // kPrC
+			_iBonus = GetLevelByClass(CLASS_TYPE_BLACKGUARD, _oCaster);
+//			_iBonus = GetBlackguardCasterLevel(_oCaster); // kPrC
+			break;
+
+		default:
+			_iBonus = GetCasterLevel(_oCaster);
+			break;
+	}
+	if (_iBonus > iBonusCap) _iBonus = iBonusCap;
+
+	_iHealHurt += _iBonus;
+
+
+	_oTarget = GetSpellTargetObject();
+
+	// note: Since these spells are flagged "HostileSetting" in Spells.2da
+	// it's gonna be kinda hard to target a nonhostile creature.
+
+	if (GetRacialType(_oTarget) == RACIAL_TYPE_UNDEAD)
+	{
+		SignalEvent(_oTarget, EventSpellCastAt(_oCaster, _iSpellId, FALSE));
+
+		_eVisheal = EffectVisualEffect(iVisheal);
+		effect eHeal = EffectHeal(_iHealHurt);
+			   eHeal = EffectLinkEffects(eHeal, _eVisheal);
+
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, _oTarget);
+	}
+	else if (spellsIsTarget(_oTarget, SPELL_TARGET_STANDARDHOSTILE, _oCaster))
+	{
+		SignalEvent(_oTarget, EventSpellCastAt(_oCaster, _iSpellId)); // kL_change: signalevent before touchattack
+
+		int iTouch = TouchAttackMelee(_oTarget);
+		if (iTouch != TOUCH_ATTACK_RESULT_MISS
+			&& MyResistSpell(_oCaster, _oTarget) == SPELL_RESISTANCE_FAILURE)
+		{
+			if (iTouch == TOUCH_ATTACK_RESULT_CRITICAL
+				&& !GetIsImmune(_oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
+			{
+				_iHealHurt *= 2;
+			}
+
+			if (MySavingThrow(SAVING_THROW_WILL,
+							  _oTarget,
+							  GetSpellSaveDC(),
+							  SAVING_THROW_TYPE_NEGATIVE,
+							  _oCaster) != SAVING_THROW_CHECK_FAILED)
+			{
+				_iHealHurt /= 2;
+			}
+
+			if (_iHealHurt != 0)
+			{
+				_eVisinfl = EffectVisualEffect(iVisinfl);
+				effect eNegative = EffectDamage(_iHealHurt, DAMAGE_TYPE_NEGATIVE);
+					   eNegative = EffectLinkEffects(eNegative, _eVisinfl);
+
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eNegative, _oTarget);
+			}
+		}
 	}
 }
 
