@@ -1042,6 +1042,16 @@ files:
 nw_s0_sunbeam.NSS
 
 
+Inflict Wounds fixes by kevL
+v.231219
+This mainly just standardizes the Inflict Wounds script into "n2f_curehurt_inc"
+but also contains several tweaks and fixes. See notes in "x0_s0_inflict".
+files:
+- scripts\spells\curehurt
+x0_s0_inflict.NSS
+n2f_curehurt_inc.nss [created]
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
