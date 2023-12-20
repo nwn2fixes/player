@@ -1052,6 +1052,14 @@ x0_s0_inflict.NSS
 n2f_curehurt_inc.nss [created]
 
 
+Scroll of Etherealness fix by Akhacha
+v.231220
+Corrected scroll of Etherealness, was set to Ethereal Jaunt.
+files:
+- blueprints
+n2_it_sparscr036.UTI
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
