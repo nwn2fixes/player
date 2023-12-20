@@ -148,7 +148,7 @@ int n2f_GetCureDamageTotal(int iHeal, int iMaxBonus, int iMaximized)
 // called by
 // - nw_s0_masheal   - Mass Heal
 // - nw_s2_wpmasheal - Warpriest Mass Heal (feat)
-int n2f_HealFaction(int iCount) // returns the # HealHarmed
+int n2f_HealFaction(int iCount)
 {
 	object oArea = GetArea(_oCaster);
 
@@ -174,7 +174,7 @@ int n2f_HealFaction(int iCount) // returns the # HealHarmed
 // that SignalEvent() does not fire for an otherwise valid target.
 // - nw_s0_masheal   - Mass Heal
 // - nw_s2_wpmasheal - Warpriest Mass Heal (feat)
-void n2f_HealNearby(int iCount) // returns the # HealHarmed
+void n2f_HealNearby(int iCount)
 {
 	location lSpell = GetSpellTargetLocation();
 	_oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lSpell);
@@ -432,6 +432,7 @@ void n2f_RemoveWounding()
 // - nw_s0_macurmod  - Mass Cure Moderate Wounds
 // - nw_s0_macurseri - Mass Cure Serious Wounds
 // - nw_s0_macurcrit - Mass Cure Critical Wounds
+// - nw_s2_wpmaclw   - Warpriest Mass Cure Light Wounds
 int n2f_CureFaction(int iCount)
 {
 	object oArea = GetArea(_oCaster);
@@ -456,6 +457,7 @@ int n2f_CureFaction(int iCount)
 // - nw_s0_macurmod  - Mass Cure Moderate Wounds
 // - nw_s0_macurseri - Mass Cure Serious Wounds
 // - nw_s0_macurcrit - Mass Cure Critical Wounds
+// - nw_s2_wpmaclw   - Warpriest Mass Cure Light Wounds
 void n2f_CureNearby(int iCount)
 {
 	_iSaveDc = GetSpellSaveDC();
@@ -507,7 +509,7 @@ int n2f_CureObject()
 				if (iPositive > 0) // kL_add safety
 				{
 					effect ePositive = EffectDamage(iPositive, DAMAGE_TYPE_POSITIVE);
-					ePositive = EffectLinkEffects(ePositive, _eVishurt);
+						   ePositive = EffectLinkEffects(ePositive, _eVishurt);
 					DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, ePositive, _oTarget));
 				}
 			}
@@ -531,7 +533,7 @@ int n2f_CureObject()
 		}
 
 		effect eHeal = EffectHeal(iPositive);
-		eHeal = EffectLinkEffects(eHeal, _eVisheal);
+			   eHeal = EffectLinkEffects(eHeal, _eVisheal);
 		DelayCommand(GetRandomDelay(), ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, _oTarget));
 
 		return TRUE;
