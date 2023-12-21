@@ -1208,6 +1208,17 @@ files:
 b12_nakkai_ritual.NSS
 
 
+Disarm Trap fix by kevL
+v.231220
+The fatal electrical trap in The Sloop (b11_sloop_inn) had a script for granting
+experience to the party that did not exist. Fix is to change its OnDisarmed
+handler to "go_xp_trap" via the area's OnClientEnter script.
+Reported by Akhacha.
+files:
+- B_X1
+b11_client_enter.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 OC Folder
