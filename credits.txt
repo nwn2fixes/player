@@ -1059,6 +1059,21 @@ files:
 - blueprints
 n2_it_sparscr036.UTI
 
+Disease.2da fixes by Akhacha
+v.231220
+Several entries were incorrect. According to contagion description, Shakes
+should be 1d8 DEX, but is actually 1d6 STR. Slimy Doom should be CON damage, but
+was set to DEX, so I fixed those two. There’s one more entry that is wrong,
+Filth Fever, but what to do with that is slightly more complicated. They’ve
+generally stuck to the PnP versions of diseases (mistakes aside), and there
+Filth Fever is supposed to be DEX and CON, but here it is set to CON and INT,
+which would be easily explained by accidentally inputting values 1 point too
+high. On the other hand, it is referenced in Swamp Lung description, where it
+says STR and DEX. As it is, I put it down as DEX and CON.
+files:
+- 2da
+disease.2da
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
