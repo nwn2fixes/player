@@ -1059,6 +1059,7 @@ files:
 - blueprints
 n2_it_sparscr036.UTI
 
+
 Disease.2da fixes by Akhacha
 v.231220
 Several entries were incorrect. According to contagion description, Shakes
@@ -1073,6 +1074,15 @@ says STR and DEX. As it is, I put it down as DEX and CON.
 files:
 - 2da
 disease.2da
+
+
+Soundset.2da fixes by kevL
+v.240121
+The fields in rows #467, #569, #570 did not align with the cols due to
+whitespace errors. Fixed.
+files:
+- 2da
+soundset.2da
 
 
 --------------------------------------------------------------------------------
