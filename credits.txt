@@ -1085,6 +1085,124 @@ files:
 soundset.2da
 
 
+Trap fixes by kevL
+v.240122
+Added blueprints for Fatal and Epic traps that are referenced in Traps.2da. In
+Traps.2da corrected the IconResRef for Fatal and Epic Blob of Acid traps (were
+Acid Splash resrefs). Added Fatal trap subtype to Iprp_Traps.2da; note that the
+strref will appear as "Deadly Trap" instead of "Fatal" (the latter is not in
+Dialog.Tlk). The strref for Deadly traps is simply "Deadly" which is sufficient
+to differentiate Fatal trapkits from Deadly trapkits - edit your Dialog.Tlk
+entry #134339 if you wish to fix this. Note that the Cost value for Epic traps
+is balanced for NwN Epic traps, which are generally much more powerful than the
+updated NwN2 Epic traps (the value should be lowered but has been left as-is). I
+had to make a judgment on the Cost value for Fatal traps and decided to just
+split the difference, as it were. The col Fatal has been added to
+Iprp_TrapCost.2da and references into Traps.2da for Epic traps have been changed
+from the NwN versions to the NwN2 versions where possible; Epic Frost trap is
+unchanged but Epic Fire, Electrical, and Sonic are updated. Note that the full
+set of Fatal and Epic traps were not implemented for NwN2 - which means that it
+is possible to create trapkits in the toolset that are in practice invalid
+traps. A suffix has been added to the Labels of the four NwN traps in Traps.2da
+to indicate that they are generally very powerful traps that have been
+superseded by their respective NwN2 traps; a further suffix "na" (not
+applicable) means that the NwN2 Epic trapkits will be created when such a trap
+is recovered, and the suffix "ob" means that the Epic trap is obsolete (although
+it is still considered valid). Also in Iprp_TrapCost.2da the references into
+Traps.2da for Minor through Deadly Frost and Acid Splash traps have been
+corrected.
+
+IMPORTANT: These trap fixes are incompatible with various trap fix packages in
+the Vault.
+
+All trapscripts have been rewritten, fixed where applicable, and consistently
+call functions in the created #include file "n2f_trap_inc".
+files:
+- 2da/traps
+iprp_trapcost.2da
+iprp_traps.2da
+traps.2da
+- blueprints/traps
+nx1_it_trap001.UTI [created] ->
+nx1_it_trap002.UTI
+nx1_it_trap003.UTI
+nx1_it_trap004.UTI
+nx1_it_trap005.UTI
+nx1_it_trap006.UTI
+nx1_it_trap007.UTI
+nx1_it_trap008.UTI
+nx1_it_trap009.UTI
+nx1_it_trap010.UTI
+x2_it_trap001.UTI
+x2_it_trap002.UTI
+x2_it_trap003.UTI
+x2_it_trap004.UTI
+- scripts/traps
+n2f_trap_inc.nss [created]
+nw_t1_acidavgc.NSS
+nw_t1_aciddeadc.NSS
+nw_t1_acidminoc.NSS
+nw_t1_acidstrc.NSS
+nw_t1_coldavgc.NSS
+nw_t1_colddeadc.NSS
+nw_t1_coldminoc.NSS
+nw_t1_coldstrc.NSS
+nw_t1_elecavgc.NSS
+nw_t1_elecdeadc.NSS
+nw_t1_elecminoc.NSS
+nw_t1_elecstrc.NSS
+nw_t1_fireavgc.NSS
+nw_t1_firedeadc.NSS
+nw_t1_fireminoc.NSS
+nw_t1_firestrc.NSS
+nw_t1_gasavgc.NSS
+nw_t1_gasavgc1.NSS
+nw_t1_gasdeadc.NSS
+nw_t1_gasdeadc1.NSS
+nw_t1_gasminoc.NSS
+nw_t1_gasminoc1.NSS
+nw_t1_gasstrc.NSS
+nw_t1_gasstrc1.NSS
+nw_t1_holyavgc.NSS
+nw_t1_holydeadc.NSS
+nw_t1_holyminoc.NSS
+nw_t1_holystrc.NSS
+nw_t1_negavgc.NSS
+nw_t1_negdeadc.NSS
+nw_t1_negminc.NSS
+nw_t1_negstrc.NSS
+nw_t1_soncavgc.NSS
+nw_t1_soncdeadc.NSS
+nw_t1_soncminc.NSS
+nw_t1_soncstrc.NSS
+nw_t1_spikeavgc.NSS
+nw_t1_spikedeadc.NSS
+nw_t1_spikeminoc.NSS
+nw_t1_spikestrc.NSS
+nw_t1_splshavgc.NSS
+nw_t1_splshdeadc.NSS
+nw_t1_splshminc.NSS
+nw_t1_splshstrc.NSS
+nw_t1_tangavgc.NSS
+nw_t1_tangdeadc.NSS
+nw_t1_tangminoc.NSS
+nw_t1_tangstrc.NSS
+nx_t1_acidepicc.NSS
+nx_t1_acidfatalc.NSS
+nx_t1_elecepicc.NSS
+nx_t1_elecfatalc.NSS
+nx_t1_fireepicc.NSS
+nx_t1_firefatalc.NSS
+nx_t1_holyepicc.NSS
+nx_t1_holyfatalc.NSS
+nx_t1_sonicepicc.NSS
+nx_t1_sonicfatalc.NSS
+x2_t1_coldepicc.NSS
+x2_t1_elecepicc.NSS
+x2_t1_fireepicc.NSS
+x2_t1_soncepicc.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
