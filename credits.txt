@@ -1203,6 +1203,15 @@ x2_t1_fireepicc.NSS
 x2_t1_soncepicc.NSS
 
 
+Zalantar Heavy Shield fix by bfair123
+v.240127
+Updated the .uti for Zalantar Heavy Shield to fix the bug where it is missing +2
+AC.
+files:
+- blueprints
+mwa_shhv_zal_3.UTI
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
