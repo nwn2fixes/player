@@ -1080,6 +1080,7 @@ Soundset.2da fixes by kevL
 v.240121
 The fields in rows #467, #569, #570 did not align with the cols due to
 whitespace errors. Fixed.
+Also fixed the typo on #198 ZorM: vs_zorxxxm -> vs_nzorxxxm
 files:
 - 2da
 soundset.2da
