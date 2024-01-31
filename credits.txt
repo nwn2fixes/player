@@ -1213,6 +1213,19 @@ files:
 mwa_shhv_zal_3.UTI
 
 
+Soundset fixes by kevL
+v.240130
+Fixes a few incorrect resrefs:
+vs_feltoorf - encumbered
+vs_fnx1mcastf - attack grunts
+vs_fvengaum - encumbered
+files:
+- soundsets
+vs_feltoorf.SSF
+vs_fnx1mcastf.SSF
+vs_fvengaum.SSF
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
