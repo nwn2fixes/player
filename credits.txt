@@ -867,17 +867,6 @@ files:
 effecticons.2da
 
 
-Soundset fixes by rjshae
-v.230201
-Some creature soundsets throw an exception in the toolset when you try to play
-them. For example, "Female, Playful" will throw when you attempt to play it from
-the pop-up menu button. The remedy is to place a repaired 'vs_fx0slinf.SSF' file
-in the Override folder.
-files:
-- sound
-*.SSF
-
-
 Model fixes (SoZ Ruins) by Gribo
 v.230221
 Camera goes under the terrain, into models and is generally hard to control when
@@ -1215,7 +1204,7 @@ mwa_shhv_zal_3.UTI
 
 Soundset fixes by kevL
 v.240130
-Fixes a few incorrect resrefs:
+Fixes a few incorrect voice resrefs:
 vs_feltoorf - encumbered
 vs_fnx1mcastf - attack grunts
 vs_fvengaum - encumbered
@@ -1224,6 +1213,17 @@ files:
 vs_feltoorf.SSF
 vs_fnx1mcastf.SSF
 vs_fvengaum.SSF
+
+
+Soundset unfixes by kevL
+v.240131
+Removed the previous SoundSetFile (SSF) changes from the /sound folder. The
+problem of the toolset throwing exceptions when the soundset preview button is
+pressed under creature properties is caused by faulty audiofiles (not the
+Soundsets).
+files REMOVED:
+- sound
+*.SFF
 
 
 --------------------------------------------------------------------------------
