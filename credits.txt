@@ -1220,7 +1220,7 @@ v.240131
 Removed the previous SoundSetFile (SSF) changes from the /sound folder. The
 problem of the toolset throwing exceptions when the soundset preview button is
 pressed under creature properties is caused by faulty audiofiles (not the
-Soundsets).
+Soundsets per se).
 files REMOVED:
 - sound
 *.SFF
