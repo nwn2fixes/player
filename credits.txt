@@ -2270,12 +2270,21 @@ i_10_cait_ring_aq.nss [created]
 Ember candle flame fix by travus
 v.230817
 There are many floating candle flame effects near the buildings in the
-1616_ember area (1600_Githyanki_Caves.mod). I’m guessing there used to be lamps
+1616_ember area (1600_Githyanki_Caves.mod). I'm guessing there used to be lamps
 on the sides of the buildings but then they got deleted. They just forgot to
 delete the flame effects too. [impl. kevL]
 files:
 - 1600_Githyanki_Caves
 1616_center.NSS
+
+
+Starling dogs fix by travus
+v.240208
+In OC West Harbour dogs don't attack enemies in Starling house. The dogs now
+attack the Duergar.
+files:
+- 1100_West_Harbor
+11_tr_star_fight.NSS
 
 
 --------------------------------------------------------------------------------
