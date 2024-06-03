@@ -1223,7 +1223,17 @@ pressed under creature properties is caused by faulty audiofiles (not the
 Soundsets per se).
 files REMOVED:
 - sound
-*.SFF
+*.SSF
+
+
+Find Traps fix by kevL
+v.240603
+The last condition in line 44 will abort the loop on the first trap which is non
+detectable, omitting all the traps in vicinity, which would be found if the loop
+weren't aborted. (reported by Mmat)
+files:
+- scripts/spells
+nw_s0_findtrap.NSS
 
 
 --------------------------------------------------------------------------------
