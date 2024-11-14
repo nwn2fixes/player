@@ -1,0 +1,12 @@
+2DA V2.0
+
+ Label LowViolence0 CriticalHit0 StandardHit0 StandardHit1
+0 BLOOD_NONE **** **** **** ****
+1 BLOOD_RED **** fx_blood_dust1.sef fx_blood_red1_L.sef fx_blood_red1.sef
+2 BLOOD_BLACK **** fx_blood_dust1.sef fx_blood_black1_L.sef fx_blood_black1.sef
+3 BLOOD_GREEN **** fx_blood_dust1.sef fx_blood_green1_L.sef fx_blood_green1.sef
+4 BLOOD_YELLOW **** fx_blood_dust1.sef fx_blood_yellow1_L.sef fx_blood_yellow1.sef
+5 BLOOD_DUST **** fx_blood_dust1.sef fx_blood_dust1_L.sef fx_blood_dust1.sef
+6 BLOOD_METAL **** fx_blood_dust1.sef fx_blood_metal1_L.sef fx_blood_metal1.sef
+7 BLOOD_WOOD **** fx_blood_dust1.sef fx_blood_wood1_L.sef fx_blood_wood1.sef
+8 BLOOD_STONE **** fx_blood_dust1.sef fx_blood_ston1_L.sef fx_blood_stone1.sef
