@@ -1230,10 +1230,36 @@ Find Traps fix by kevL
 v.240603
 The last condition in line 44 will abort the loop on the first trap which is non
 detectable, omitting all the traps in vicinity, which would be found if the loop
-weren't aborted. (reported by Mmat)
+weren't aborted. Reported by Mmat.
 files:
 - scripts/spells
 nw_s0_findtrap.NSS
+
+
+NWN2_BloodTypes.2da fix by kevL
+v.241030
+The 2da has cols without headers. Solution is to delete the cols. Also appended
+a missing ".sef" to one of the entries. Reported by rjshae.
+files:
+- 2da
+NWN2_BloodTypes.2da
+
+
+Nature's Balance fix by kevL
+v.241113
+Casterlevel changed (potentially) on each iteration of the loop. Fixed by using
+a different variable to calculate the spell's power. Reported by TonyK.
+files:
+- scripts/spells
+nw_s0_natavatar.nss
+
+
+Highlight include-file fixes by kevL
+v.241113
+The function GetIsEffectValid() was being used incorrectly. Replace usage with a
+reasonable GetIsEffectValid() routine.
+-scripts/inc
+x0_i0_highlight.NSS
 
 
 --------------------------------------------------------------------------------
