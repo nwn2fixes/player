@@ -1269,7 +1269,7 @@ The Cure/MassCure and Inflict/MassInflict spellscripts shall consider the
 casterlevel bonus as an integral part of the diceroll, hence affected by Empower
 metamagic.
 files:
-- scripts/curehurt
+- scripts/spells/curehurt
 n2f_curehurt_inc.nss [created]
 nw_s0_curcrwn.NSS
 nw_s0_curlgtw.NSS
