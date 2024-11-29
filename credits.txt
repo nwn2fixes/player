@@ -1053,8 +1053,8 @@ Disease.2da fixes by Akhacha
 v.231220
 Several entries were incorrect. According to contagion description, Shakes
 should be 1d8 DEX, but is actually 1d6 STR. Slimy Doom should be CON damage, but
-was set to DEX, so I fixed those two. There’s one more entry that is wrong,
-Filth Fever, but what to do with that is slightly more complicated. They’ve
+was set to DEX, so I fixed those two. There's one more entry that is wrong,
+Filth Fever, but what to do with that is slightly more complicated. They've
 generally stuck to the PnP versions of diseases (mistakes aside), and there
 Filth Fever is supposed to be DEX and CON, but here it is set to CON and INT,
 which would be easily explained by accidentally inputting values 1 point too
@@ -1258,7 +1258,8 @@ Highlight include-file fixes by kevL
 v.241113
 The function GetIsEffectValid() was being used incorrectly. Replace usage with a
 reasonable GetIsEffectValid() routine.
--scripts/inc
+files:
+- scripts/inc
 x0_i0_highlight.NSS
 
 
