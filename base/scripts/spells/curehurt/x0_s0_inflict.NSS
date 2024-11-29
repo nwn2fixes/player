@@ -35,47 +35,47 @@ void main()
 	switch (_iSpellId = GetSpellId())
 	{
 		case SPELL_INFLICT_MINOR_WOUNDS:
-			_iHealHurt       = 1;
-			iMaximized       = 1;
-			iCasterlevelCap  = 0;
-			iVisinfl         = VFX_HIT_SPELL_INFLICT_1;
-			iVisheal         = VFX_IMP_HEALING_S;
+			_iHealHurt      = 1;
+			iMaximized      = 1;
+			iCasterlevelCap = 0;
+			iVisinfl        = VFX_HIT_SPELL_INFLICT_1;
+			iVisheal        = VFX_IMP_HEALING_S;
 			break;
 
 		case SPELL_INFLICT_LIGHT_WOUNDS:
-			_iHealHurt       = d8();
-			iMaximized       = 8;
-			iCasterlevelCap  = 5;
-			iVisinfl         = VFX_HIT_SPELL_INFLICT_2;
-			iVisheal         = VFX_IMP_HEALING_M;
+			_iHealHurt      = d8();
+			iMaximized      = 8;
+			iCasterlevelCap = 5;
+			iVisinfl        = VFX_HIT_SPELL_INFLICT_2;
+			iVisheal        = VFX_IMP_HEALING_M;
 			break;
 
 		case SPELL_INFLICT_MODERATE_WOUNDS:
-			_iHealHurt       = d8(2);
-			iMaximized       = 16;
-			iCasterlevelCap  = 10;
-			iVisinfl         = VFX_HIT_SPELL_INFLICT_3;
-			iVisheal         = VFX_IMP_HEALING_L;
+			_iHealHurt      = d8(2);
+			iMaximized      = 16;
+			iCasterlevelCap = 10;
+			iVisinfl        = VFX_HIT_SPELL_INFLICT_3;
+			iVisheal        = VFX_IMP_HEALING_L;
 			break;
 
 		case SPELL_INFLICT_SERIOUS_WOUNDS:
 		case SPELLABILITY_BG_INFLICT_SERIOUS_WOUNDS:
 //		case SPELL_BG_InflictSerious: // kPrC
-			_iHealHurt       = d8(3);
-			iMaximized       = 24;
-			iCasterlevelCap  = 15;
-			iVisinfl         = VFX_HIT_SPELL_INFLICT_4;
-			iVisheal         = VFX_IMP_HEALING_X;
+			_iHealHurt      = d8(3);
+			iMaximized      = 24;
+			iCasterlevelCap = 15;
+			iVisinfl        = VFX_HIT_SPELL_INFLICT_4;
+			iVisheal        = VFX_IMP_HEALING_X;
 			break;
 
 		case SPELL_INFLICT_CRITICAL_WOUNDS:
 		case SPELLABILITY_BG_INFLICT_CRITICAL_WOUNDS:
 //		case SPELL_BG_InflictCritical: // kPrC
-			_iHealHurt       = d8(4);
-			iMaximized       = 32;
-			iCasterlevelCap  = 20;
-			iVisinfl         = VFX_HIT_SPELL_INFLICT_5;
-			iVisheal         = VFX_IMP_HEALING_G;
+			_iHealHurt      = d8(4);
+			iMaximized      = 32;
+			iCasterlevelCap = 20;
+			iVisinfl        = VFX_HIT_SPELL_INFLICT_5;
+			iVisheal        = VFX_IMP_HEALING_G;
 			break;
 
 		default:
