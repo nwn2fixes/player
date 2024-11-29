@@ -37,6 +37,7 @@
 //                  - use a heal VFX for healing undead (not the inflict VFX)
 //                  - apply VFX at spell location
 //                  - #include "n2f_curehurt_inc"
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"

@@ -39,10 +39,11 @@
 //                  - change description at the top of this script to Dialog.Tlk
 //                    #181182 (feat) and #6177 (spell)
 //                  - raise maximum amount cured to +25 per description
-//                  - was passing raw casterlevel to Maximized return instead of
-//                    the capped bonus based on the casterlevel
+//                  - was adding the raw casterlevel to the Maximized return vs
+//                    undead instead of the capped bonus
 //                  - remove redundant GetFactionEqual() check from
 //                    SPELL_TARGET_ALLALLIES scope
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"

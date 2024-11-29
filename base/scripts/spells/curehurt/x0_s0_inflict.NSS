@@ -16,6 +16,7 @@
 //                  - do not apply Empower to a constant bonus
 //                  - use (hopefully) more appropriate VFX
 //                  - do Save vs SAVING_THROW_TYPE_NEGATIVE
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"
@@ -29,54 +30,52 @@ void main()
 
 	_oCaster = OBJECT_SELF;
 
-	_iSpellId = GetSpellId();
+	int iMaximized, iCasterlevelCap, iVisinfl, iVisheal;
 
-	int iMaximized, iBonusCap, iVisinfl, iVisheal;
-
-	switch (_iSpellId)
+	switch (_iSpellId = GetSpellId())
 	{
 		case SPELL_INFLICT_MINOR_WOUNDS:
-			_iHealHurt = 1;
-			iMaximized = 1;
-			iBonusCap  = 0;
-			iVisinfl   = VFX_HIT_SPELL_INFLICT_1;
-			iVisheal   = VFX_IMP_HEALING_S;
+			_iHealHurt       = 1;
+			iMaximized       = 1;
+			iCasterlevelCap  = 0;
+			iVisinfl         = VFX_HIT_SPELL_INFLICT_1;
+			iVisheal         = VFX_IMP_HEALING_S;
 			break;
 
 		case SPELL_INFLICT_LIGHT_WOUNDS:
-			_iHealHurt = d8();
-			iMaximized = 8;
-			iBonusCap  = 5;
-			iVisinfl   = VFX_HIT_SPELL_INFLICT_2;
-			iVisheal   = VFX_IMP_HEALING_M;
+			_iHealHurt       = d8();
+			iMaximized       = 8;
+			iCasterlevelCap  = 5;
+			iVisinfl         = VFX_HIT_SPELL_INFLICT_2;
+			iVisheal         = VFX_IMP_HEALING_M;
 			break;
 
 		case SPELL_INFLICT_MODERATE_WOUNDS:
-			_iHealHurt = d8(2);
-			iMaximized = 16;
-			iBonusCap  = 10;
-			iVisinfl   = VFX_HIT_SPELL_INFLICT_3;
-			iVisheal   = VFX_IMP_HEALING_L;
+			_iHealHurt       = d8(2);
+			iMaximized       = 16;
+			iCasterlevelCap  = 10;
+			iVisinfl         = VFX_HIT_SPELL_INFLICT_3;
+			iVisheal         = VFX_IMP_HEALING_L;
 			break;
 
 		case SPELL_INFLICT_SERIOUS_WOUNDS:
 		case SPELLABILITY_BG_INFLICT_SERIOUS_WOUNDS:
 //		case SPELL_BG_InflictSerious: // kPrC
-			_iHealHurt = d8(3);
-			iMaximized = 24;
-			iBonusCap  = 15;
-			iVisinfl   = VFX_HIT_SPELL_INFLICT_4;
-			iVisheal   = VFX_IMP_HEALING_X;
+			_iHealHurt       = d8(3);
+			iMaximized       = 24;
+			iCasterlevelCap  = 15;
+			iVisinfl         = VFX_HIT_SPELL_INFLICT_4;
+			iVisheal         = VFX_IMP_HEALING_X;
 			break;
 
 		case SPELL_INFLICT_CRITICAL_WOUNDS:
 		case SPELLABILITY_BG_INFLICT_CRITICAL_WOUNDS:
 //		case SPELL_BG_InflictCritical: // kPrC
-			_iHealHurt = d8(4);
-			iMaximized = 32;
-			iBonusCap  = 20;
-			iVisinfl   = VFX_HIT_SPELL_INFLICT_5;
-			iVisheal   = VFX_IMP_HEALING_G;
+			_iHealHurt       = d8(4);
+			iMaximized       = 32;
+			iCasterlevelCap  = 20;
+			iVisinfl         = VFX_HIT_SPELL_INFLICT_5;
+			iVisheal         = VFX_IMP_HEALING_G;
 			break;
 
 		default:
@@ -84,7 +83,25 @@ void main()
 			return;
 	}
 
-	_iHealHurt = ApplyMetamagicVariableMods(_iHealHurt, iMaximized); // kL_change: Apply metamagic only to the variable portion of damage.
+	switch (_iSpellId)
+	{
+		case SPELLABILITY_BG_INFLICT_SERIOUS_WOUNDS:
+		case SPELLABILITY_BG_INFLICT_CRITICAL_WOUNDS:
+//		case SPELL_BG_InflictSerious:  // kPrC
+//		case SPELL_BG_InflictCritical: // kPrC
+			_iBonus = GetLevelByClass(CLASS_TYPE_BLACKGUARD, _oCaster);
+//			_iBonus = GetBlackguardCasterLevel(_oCaster); // kPrC
+			break;
+
+		default:
+			_iBonus = GetCasterLevel(_oCaster);
+			break;
+	}
+
+	if (_iBonus > iCasterlevelCap)
+		_iBonus = iCasterlevelCap;
+
+	_iHealHurt = ApplyMetamagicVariableMods(_iHealHurt + _iBonus, iMaximized + _iBonus);
 
 /*	// kPrC ->
 	// Use this instead of GetMeleeTouchSpecDamage() in "cmi_ginc_caster"
@@ -114,5 +131,5 @@ void main()
 		}
 	} */
 
-	n2f_spellsInflictTouchAttack(iBonusCap, iVisinfl, iVisheal);
+	n2f_spellsInflictTouchAttack(iVisinfl, iVisheal);
 }

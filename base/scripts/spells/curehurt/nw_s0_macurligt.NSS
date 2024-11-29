@@ -35,6 +35,8 @@
 //                 - remove unused GetMetaMagicFeat() and args
 //                 - remove int_return from CureNearby() (unused)
 //                 - pass 'iBonus' instead of 'iCasterlevel' to subfunctions
+//                 - was adding the raw casterlevel to the Maximized return vs
+//                   undead instead of the capped bonus
 //                 - do not Empower the constant bonus (fixed only for undead;
 //                   already correct for healing allies)
 //                 - add a bool_return to CureObject() so that nonallies and
@@ -45,6 +47,7 @@
 //                 - undead save vs SAVING_THROW_TYPE_POSITIVE rather than _NONE
 //                 - #include "n2f_curehurt_inc"
 //                 - clear EFFECT_TYPE_WOUNDING
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"

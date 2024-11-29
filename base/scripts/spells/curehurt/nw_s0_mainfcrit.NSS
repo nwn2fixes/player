@@ -35,6 +35,7 @@
 //                  - remove unused GetMetaMagicFeat()
 //                  - change VFX_IMP_HEALING_X (serious) to VFX_IMP_HEALING_G (critical)
 //                  - #include "n2f_curehurt_inc"
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"

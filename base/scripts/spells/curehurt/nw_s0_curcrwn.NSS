@@ -30,6 +30,8 @@
 // kevL 2023 nov 30 - do not Empower the constant bonus
 //                  - change description at the top of this script to that in Dialog.Tlk #6127
 //                  - #include "n2f_curehurt_inc"
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
+//                  - allow clerics with Healing Domain to auto-empower Maximized cures
 
 #include "x2_inc_spellhook"
 #include "n2f_curehurt_inc"
@@ -41,5 +43,5 @@ void main()
 		return;
 
 
-	n2f_spellsCure(d8(4), 20, 32, VFX_IMP_HEALING_G, VFX_IMP_SUNSTRIKE, GetSpellId());
+	n2f_spellsCure(d8(4), 32, 20, VFX_IMP_HEALING_G, VFX_IMP_SUNSTRIKE, GetSpellId());
 }

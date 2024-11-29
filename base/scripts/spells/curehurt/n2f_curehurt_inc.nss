@@ -5,6 +5,11 @@
 	Taken and adapted from 'nw_i0_spells' and 'nwn2_inc_spells'.
 */
 // kevL 2023 oct 21
+// kevL 2024 nov 28 - n2f_GetCureDamageTotal() is changed to add casterlevel
+//                    bonus before metamagic; also fixed to allow clerics with
+//                    the Healing Domain to auto-empower Maximized cures
+//                  - n2f_CureObject(), n2f_MassInflict(), n2f_spellsInflictTouchAttack()
+//                    have been changed to add casterlevel bonus before metamagic
 
 #include "nw_i0_spells"
 #include "nwn2_inc_metmag"
@@ -13,8 +18,8 @@ const int SPELLABILITY_WARPRIEST_MASS_HEAL = 965;
 const int SPELL_UNDEFINED = -1;
 
 // Cure Wounds functions
-void n2f_spellsCure(int iHeal, int iMaxBonus, int iMaximized, int iVisheal, int iVishurt, int iSpellId);
-int  n2f_GetCureDamageTotal(int iHeal, int iMaxBonus, int iMaximized);
+void n2f_spellsCure(int iVariable, int iMaximized, int iCasterlevelCap, int iVisheal, int iVishurt, int iSpellId);
+int  n2f_GetCureDamageTotal(int iVariable, int iMaximized, int iCasterlevelCap);
 
 // Mass Heal functions
 int  n2f_HealFaction(int iCount);
@@ -40,7 +45,7 @@ int  n2f_CureObject();
 void n2f_MassInflict(int iCount);
 
 // Inflict Wounds function
-void n2f_spellsInflictTouchAttack(int iBonusCap, int iVisinfl, int iVisheal);
+void n2f_spellsInflictTouchAttack(int iVisinfl, int iVisheal);
 
 
 // Script variables
@@ -68,12 +73,12 @@ effect _eVisheal, // cure or heal on nonundead; inflict or harm on undead
 // - nw_s0_curmodw - Cure Moderate Wounds
 // - nw_s0_curserw - Cure Serious Wounds
 // - nw_s0_curcrwn - Cure Critical Wounds
-void n2f_spellsCure(int iHeal, int iMaxBonus, int iMaximized, int iVisheal, int iVishurt, int iSpellId)
+void n2f_spellsCure(int iVariable, int iMaximized, int iCasterlevelCap, int iVisheal, int iVishurt, int iSpellId)
 {
 	_oCaster = OBJECT_SELF;
 	_oTarget = GetSpellTargetObject();
 
-	_iHealHurt = n2f_GetCureDamageTotal(iHeal, iMaxBonus, iMaximized);
+	_iHealHurt = n2f_GetCureDamageTotal(iVariable, iMaximized, iCasterlevelCap);
 
 	_eVisheal = EffectVisualEffect(iVisheal);
 	_eVishurt = EffectVisualEffect(iVishurt);
@@ -85,54 +90,62 @@ void n2f_spellsCure(int iHeal, int iMaxBonus, int iMaximized, int iVisheal, int 
 	n2f_spellsHealOrHarmTarget(TRUE, TRUE);
 }
 
-// Adjusts the base variable heal 'iHeal' taking into account
-// - game difficulty
+// Adjusts the base diceroll 'iVariable' taking into account
+// - game difficulty (player only)
 // - metamagic
 // - Healing Domain power
 // - Augment Healing feat
 // called by
 // - n2f_spellsCure()
-int n2f_GetCureDamageTotal(int iHeal, int iMaxBonus, int iMaximized)
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
+//                  - fixed to allow clerics with the Healing Domain to
+//                    auto-empower Maximized cures
+int n2f_GetCureDamageTotal(int iVariable, int iMaximized, int iCasterlevelCap)
 {
+	int iBonus = GetCasterLevel(_oCaster);
+	if (iBonus > iCasterlevelCap)
+		iBonus = iCasterlevelCap;
+
+
+	int bEasy = GetIsObjectValid(GetFactionLeader(_oTarget))
+			 && GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES;
+
+	if (bEasy)
+	{
+		iVariable = iMaximized + iBonus; // low or normal difficulty is treated as Maximized
+	}
+	else
+		iVariable += iBonus;
+
+
 	int iMeta = GetMetaMagicFeat();
 
-	if (GetIsObjectValid(GetFactionLeader(_oTarget))
-		&& GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES)
+	if (iMeta == METAMAGIC_MAXIMIZE)
 	{
-		iHeal = iMaximized; // low or normal difficulty is treated as Maximized
+		iVariable = iMaximized + iBonus;
 
-		if (iMeta == METAMAGIC_MAXIMIZE)
-		{
-			iHeal += iMaximized; // if low or normal difficulty then base Maximized is doubled
-		}
-		else if (iMeta == METAMAGIC_EMPOWER
-			|| (GetHasFeat(FEAT_HEALING_DOMAIN_POWER) && !GetIsObjectValid(GetSpellCastItem())))
-		{
-			iHeal += iHeal / 2;
-		}
+		if (bEasy)
+			iVariable += iMaximized; // if low or normal difficulty then base Maximized is doubled
 	}
-	else if (iMeta == METAMAGIC_MAXIMIZE)
-	{
-		iHeal = iMaximized;
-	}
-	else if (iMeta == METAMAGIC_EMPOWER
+
+	if (iMeta == METAMAGIC_EMPOWER
+		// clerics with Healing Domain
+		// - treat standard and Maximized meta as Empowered
+		// - note that the NwN wiki states that clerics with Healing Domain
+		//   shall empower item-casts also (not implemented)
 		|| (GetHasFeat(FEAT_HEALING_DOMAIN_POWER) && !GetIsObjectValid(GetSpellCastItem())))
 	{
-		iHeal += iHeal / 2;
+		iVariable += iVariable / 2;
 	}
 
 
+	// the Augment Healing bonus is NOT affected by metamagic
 	if (GetHasFeat(FEAT_AUGMENT_HEALING) && !GetIsObjectValid(GetSpellCastItem()))
 	{
-		iHeal += GetSpellLevel(_iSpellId) * 2;
+		iVariable += GetSpellLevel(_iSpellId) * 2;
 	}
 
-
-	int iBonus = GetCasterLevel(_oCaster);
-	if (iBonus > iMaxBonus)
-		iBonus = iMaxBonus;
-
-	return iHeal + iBonus;
+	return iVariable;
 }
 
 
@@ -481,6 +494,7 @@ void n2f_CureNearby(int iCount)
 // called by
 // - n2f_CureFaction()
 // - n2f_CureNearby()
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
 int n2f_CureObject()
 {
 	if (GetRacialType(_oTarget) == RACIAL_TYPE_UNDEAD)
@@ -495,7 +509,7 @@ int n2f_CureObject()
 			float fDelay = GetRandomDelay();
 			if (MyResistSpell(_oCaster, _oTarget, fDelay) == SPELL_RESISTANCE_FAILURE)
 			{
-				int iPositive = ApplyMetamagicVariableMods(d8(_iDice), _iDice * 8) + _iBonus; // kL_fix: the constant bonus should not be modified
+				int iPositive = ApplyMetamagicVariableMods(d8(_iDice) + _iBonus, _iDice * 8 + _iBonus);
 				if (MySavingThrow(SAVING_THROW_WILL,
 								  _oTarget,
 								  _iSaveDc,
@@ -526,7 +540,7 @@ int n2f_CureObject()
 
 		n2f_RemoveWounding(); // kL_add: clear bleedout effect for Mass Cure(s)
 
-		int iPositive = ApplyMetamagicVariableMods(d8(_iDice), _iDice * 8) + _iBonus;
+		int iPositive = ApplyMetamagicVariableMods(d8(_iDice) + _iBonus, _iDice * 8 + _iBonus);
 		if (GetHasFeat(FEAT_AUGMENT_HEALING) && !GetIsObjectValid(GetSpellCastItem()))
 		{
 			iPositive += GetSpellLevel(_iSpellId) * 2;
@@ -553,6 +567,7 @@ int n2f_CureObject()
 // - nw_s0_mainfmod  - Mass Inflict Moderate Wounds
 // - nw_s0_mainfseri - Mass Inflict Serious Wounds
 // - nw_s0_mainfcrit - Mass Inflict Critical Wounds
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
 void n2f_MassInflict(int iCount)
 {
 	_iSpellId = GetSpellId();
@@ -579,7 +594,7 @@ void n2f_MassInflict(int iCount)
 
 				--iCount;
 
-				iNegative = ApplyMetamagicVariableMods(d8(_iDice), _iDice * 8) + _iBonus; // kL_fix: the constant bonus should not be modified
+				iNegative = ApplyMetamagicVariableMods(d8(_iDice) + _iBonus, _iDice * 8 + _iBonus);
 
 				eEffect = EffectHeal(iNegative);
 				eEffect = EffectLinkEffects(eEffect, _eVisheal);
@@ -601,7 +616,7 @@ void n2f_MassInflict(int iCount)
 			fDelay = GetRandomDelay();
 			if (MyResistSpell(_oCaster, _oTarget, fDelay) == SPELL_RESISTANCE_FAILURE)
 			{
-				iNegative = ApplyMetamagicVariableMods(d8(_iDice), _iDice * 8) + _iBonus; // kL_fix: the constant bonus should not be modified
+				iNegative = ApplyMetamagicVariableMods(d8(_iDice) + _iBonus, _iDice * 8 + _iBonus);
 				if (MySavingThrow(SAVING_THROW_WILL,
 								  _oTarget,
 								  _iSaveDc,
@@ -634,33 +649,14 @@ void n2f_MassInflict(int iCount)
 // - adapted from spellsInflictTouchAttack() in "x0_i0_spells"
 // - note that the kPrC Pack has oei_spellsInflictTouchAttack() in
 //   "oei_i0_spells"
-// - iBonusCap : limit (based on the level of spell) for bonus damage
-// - iVisinfl  : vis to play if hurt by spell (vs nonundead)
-// - iVisheal  : vis to play if healed by spell (vs undead)
+// - iVisinfl : vis to play if hurt by spell (vs nonundead)
+// - iVisheal : vis to play if healed by spell (vs undead)
 // called by
 // - x0_s0_inflict - Inflict Wounds (Minor, Light, Moderate, Serious, Critical
 //                   and Blackguard feats Serious, Critical)
-void n2f_spellsInflictTouchAttack(int iBonusCap, int iVisinfl, int iVisheal)
+// kevL 2024 nov 28 - changed to add casterlevel bonus before metamagic
+void n2f_spellsInflictTouchAttack(int iVisinfl, int iVisheal)
 {
-	switch (_iSpellId)
-	{
-		case SPELLABILITY_BG_INFLICT_SERIOUS_WOUNDS:
-		case SPELLABILITY_BG_INFLICT_CRITICAL_WOUNDS:
-//		case SPELL_BG_InflictSerious:  // kPrC
-//		case SPELL_BG_InflictCritical: // kPrC
-			_iBonus = GetLevelByClass(CLASS_TYPE_BLACKGUARD, _oCaster);
-//			_iBonus = GetBlackguardCasterLevel(_oCaster); // kPrC
-			break;
-
-		default:
-			_iBonus = GetCasterLevel(_oCaster);
-			break;
-	}
-	if (_iBonus > iBonusCap) _iBonus = iBonusCap;
-
-	_iHealHurt += _iBonus;
-
-
 	_oTarget = GetSpellTargetObject();
 
 	// note: Since these spells are flagged "HostileSetting" in Spells.2da
