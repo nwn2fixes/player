@@ -2349,6 +2349,17 @@ files:
 11_tr_star_fight.NSS
 
 
+Tutorial Crossbow fix by kevL
+v.250824
+The tutorial's crossbow has an itemproperty that needs to grant Weapon 
+Proficiency (Simple). This fix changes the IP's subtype from 23 to 22, to
+reflect the change from Weapon Proficiency (Martial) to (Simple) in
+Iprp_Feats.2da.
+files:
+- 0_Tutorial
+0_tutorial_crossbow.UTI
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
