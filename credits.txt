@@ -2360,6 +2360,21 @@ files:
 0_tutorial_crossbow.UTI
 
 
+Starting Equipment fix by BrionT and Axe_Edge
+v.251221
+Updates the script "11_p_chest_open" in 1100_West_Harbor, which fires when
+opening the chest at the start of the OC (Farlong House, L2).
+- fixes typos in the original script which caused certain character classes to
+  not receive their handaxes
+- Favored Souls, Spirit Shamen, and Swashbucklers now receive gear in the chest
+  at the start of the OC
+- contains a fallthrough to give equipment to character classes that the script
+  doesn't recognize
+files:
+- 1100_West_Harbor
+11_p_chest_open.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
