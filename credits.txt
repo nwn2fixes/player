@@ -1288,6 +1288,16 @@ nw_s2_wpmaclw.NSS
 x0_s0_inflict.NSS
 
 
+Hellfire Shield fix by kevL
+v.260104
+The heartbeat script was checking targets for GetIsEnemy() but did not exclude
+ScriptHidden creatures. Fix is to check spellsIsTarget() instead. Reported by
+nemoudeis.
+files:
+- scripts/invocations
+nw_s2_hellfireshielda.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
