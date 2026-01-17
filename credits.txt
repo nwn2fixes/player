@@ -2396,6 +2396,17 @@ files:
 22_cs_ulip.NSS
 
 
+Candle Flame Misalignment fix by travus
+v.260116
+A candelabra in module 1700_Merchant_Quarter, area {1017}axle, has misaligned
+candle flame effects. This script is already in nwn2fixes. I added edits to
+destroy the misplaced candle flame effects and add new ones in the appropriate
+positions.
+files:
+- 1700_Port_Llast
+2017_cliententer.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
