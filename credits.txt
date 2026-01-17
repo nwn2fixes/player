@@ -2385,6 +2385,17 @@ files:
 11_p_chest_open.NSS
 
 
+Stuck Goblin fix by travus
+v.260116
+A goblin is stuck in the wall in module 2200_Port_Llast, area 2222_cavernupper.
+The fix is a simple destroy line I added in the '22_cs_ulip script' under case
+100. That script is fired from Ulip's dialog (22_ulip). His dialog is initially
+fired from his speak trigger.
+files:
+- 2200_Port_Llast
+22_cs_ulip.NSS
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 SOZ Folder
