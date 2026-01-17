@@ -2399,12 +2399,24 @@ files:
 Candle Flame Misalignment fix by travus
 v.260116
 A candelabra in module 1700_Merchant_Quarter, area {1017}axle, has misaligned
-candle flame effects. This script is already in nwn2fixes. I added edits to
+candle flame effects. This script is already in Nwn2Fixes. I added edits to
 destroy the misplaced candle flame effects and add new ones in the appropriate
 positions.
 files:
 - 1700_Port_Llast
 2017_cliententer.NSS
+
+
+Resolve Bevil dialog conflict by travus
+v.260116
+The '0_bevil.DLG' file that's already in Nwn2Fixes is causing a conflict with
+the same named file in the tutorial module. To solve this issue, I merged the
+'0_bevil.DLG' files from both the 1100_West_Harbor and 0_Tutorial modules. I
+then added gc_module("MODULE") conditions to all of the main NPC nodes (the
+three main nodes from the tutorial each got NOTgc_module("MODULE") conditions).
+files:
+- 1100_West_Harbor
+0_bevil.DLG
 
 
 --------------------------------------------------------------------------------
