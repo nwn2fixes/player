@@ -1298,6 +1298,19 @@ files:
 nw_s2_hellfireshielda.NSS
 
 
+Standard Mine Tile fix by travus
+v.260215
+The standard mine tile 1_Wall_1_Corner_Variant (WWCX) wall seams were not
+matching to adjacent tiles. Actions taken in Blender to fix:
+Repositioned the location of the TL_SM_WWCX_01 (wall portion) of the MDB.
+X = -0.0683
+Y = -0.018
+Set Origin to 3D cursor.
+files:
+- models
+TL_SM_WWCX_01.mdb
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
