@@ -1311,6 +1311,21 @@ files:
 TL_SM_WWCX_01.mdb
 
 
+Standard Castle Great Hall metatile fix by travus
+v.260219
+The standard castle great hall meta-tile (TL_SC_M0304_GHall.mdb) has many bugs.
+Several wall textures would disappear as you rotate the camera, no camera
+collision, doors would not set correctly to the hook points, targeting circles
+would not project on some of the tiles and would display on some walls, and
+floor tiles would not rotate with the rest of the hall. I’m pretty sure I
+corrected all of these issues. Additionally, I split some of the packets so they
+are more manageable. I also fixed the packet naming convention to be more
+logical and properly label the roofs and rotating floors.
+files:
+- models
+TL_SC_M0304_GHall.mdb
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
