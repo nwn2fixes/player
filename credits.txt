@@ -1326,6 +1326,23 @@ files:
 TL_SC_M0304_GHall.mdb
 
 
+More Tile fixes by travus
+v.260220
+Crypt, Door{1_Door_Room}
+Can walk through the back wall. Fixed by adjusting the walkmesh packet.
+Estate, 2_Walls_(1_Door)
+NOTE: This tile is already in nwn2fixes. This fix uses that mdb.
+There is an anomaly on the walkmesh which interferes with pathfinding. Fixed by
+adjusting the walkmesh packet.
+Standard Castle, 2_Walls_1_Corner, variant 3
+Can walk through the corner post. Fixed by adjusting the walkmesh packet.
+files:
+- models
+TL_CR_SPR1_01.mdb
+TL_ES_DDXW_01.mdb
+TL_SC_WWWC_03.mdb
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
