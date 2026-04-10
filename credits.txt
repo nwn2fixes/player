@@ -1343,6 +1343,26 @@ TL_ES_DDXW_01.mdb
 TL_SC_WWWC_03.mdb
 
 
+Folder changes by kevL
+v.260408
+Created subfolders under /base/models and moved .MDB files into their respective
+categories. IMPORTANT: Files deleted.
+files:
+- models/*.MDB            [deleted]
+- models/creatures/*.MDB  [created]
+- models/items/*.MDB      [created]
+- models/placeables/*.MDB [created]
+- models/player/*.MDB     [created]
+- models/tilesets/*.MDB   [created]
+
+
+Full Tile fixes by travus
+v.260408
+Extensive fixes to many tilesets.
+files:
+- models/tilesets/*.mdb
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
