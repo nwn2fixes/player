@@ -1363,6 +1363,22 @@ files:
 - models/tilesets/*.mdb
 
 
+Shadow Fortress Tile fixes by travus
+v.260503
+I found some SF tiles that had bad walkmeshes either preventing movement or
+interfering with pathing to other tiles. That issue is now fixed. Additionally,
+some of those same tiles didn't have any C3 packets which allowed you to pan the
+camera under the raised floor parts. That issue is also now fixed.
+files:
+- models/tilesets/TL_SF_CXXX_04.mdb
+- models/tilesets/TL_SF_CXXX_05.mdb
+- models/tilesets/TL_SF_CXXX_06.mdb
+- models/tilesets/TL_SF_CXXX_07.mdb
+- models/tilesets/TL_SF_WWWX_19.mdb
+- models/tilesets/TL_SF_WWWX_21.mdb
+- models/tilesets/TL_SF_WWWX_22.mdb
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
