@@ -1379,6 +1379,27 @@ files:
 - models/tilesets/TL_SF_WWWX_22.mdb
 
 
+More Shadow Fortress Tile fixes by travus
+v.260609
+More Shadow Fortress tileset shenanigans ...
+files:
+- models/tilesets/TL_SF_CXXX_04.mdb [changed]
+- models/tilesets/TL_SF_CXXX_05.mdb [changed]
+- models/tilesets/TL_SF_CXXX_06.mdb [changed]
+- models/tilesets/TL_SF_CXXX_07.mdb [changed]
+- models/tilesets/TL_SF_DDWW_01.mdb [changed]
+- models/tilesets/TL_SF_DDXX_05.mdb
+- models/tilesets/TL_SF_HHHH_05.mdb
+- models/tilesets/TL_SF_STD3_03.mdb
+- models/tilesets/TL_SF_STU3_01.mdb
+- models/tilesets/TL_SF_WWWX_19.mdb [changed]
+- models/tilesets/TL_SF_WWWX_20.mdb
+- models/tilesets/TL_SF_WWWX_21.mdb [changed]
+- models/tilesets/TL_SF_WWWX_22.mdb [changed]
+- models/tilesets/TL_SF_WWXX_17.mdb
+- models/tilesets/TL_SF_WWXX_18.mdb
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 MOTB Folder
